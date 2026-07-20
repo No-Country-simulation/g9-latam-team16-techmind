@@ -81,9 +81,9 @@ Como mínimo, cada registro deberá contener la siguiente información:
 
 | Variable | Tipo | Descripción |
 |----------|------|-------------|
-| id | Entero | Identificador único del documento. |
+| source_id | Texto | Identificador original del registro, cuando exista. |
 | title | Texto | Título del documento técnico. |
-| content | Texto | Contenido textual del documento. |
+| text | Texto | Contenido textual del documento. |
 | category | Texto | Categoría asignada al documento. |
 | source | Texto | Fuente de origen del documento. |
 | language | Texto | Idioma del documento. |
@@ -199,14 +199,14 @@ Cada dataset será evaluado considerando:
 
 Durante este sprint se evaluarán diferentes alternativas antes de seleccionar el dataset definitivo.
 
-| Fuente | Tipo | Dominio | Estado |
-|---------|------|---------|--------|
-| Kaggle | Plataforma | Ciencia de Datos | Pendiente |
-| Hugging Face Datasets | Plataforma | NLP / Machine Learning | Pendiente |
-| GitHub | Repositorios | Desarrollo de Software | Pendiente |
-| UCI Machine Learning Repository | Repositorio | Machine Learning | Pendiente |
-| Papers With Code | Repositorio | Investigación | Pendiente |
-| Google Dataset Search | Buscador | General | Pendiente |
+| Fuente | Tipo | Dominio | Resultado |
+|---------|------|----------|-----------|
+| Stack Exchange | Comunidad técnica | Desarrollo de software | Seleccionada |
+| GitHub | Documentación técnica | Desarrollo de software | Seleccionada |
+| Hugging Face Datasets | NLP / Machine Learning | Clasificación de texto | Seleccionada |
+| Kaggle | Repositorio de datasets | Ciencia de Datos | Fuente complementaria |
+| UCI Machine Learning Repository | Machine Learning | General | No seleccionada |
+| Papers With Code | Investigación | IA / ML | Fuente complementaria |
 
 
 # 7. Criterios de Selección
@@ -243,28 +243,16 @@ Cada criterio será calificado utilizando la siguiente escala:
 
 El dataset con mejor evaluación global será seleccionado para las siguientes etapas del proyecto.
 
+# 8. Estrategia de Construcción del Dataset Maestro
 
-# 8. Dataset(s) Seleccionado(s)
+Ninguna fuente pública cubre completamente el dominio funcional de TechMind.
 
-La selección definitiva se realizará una vez concluida la investigación de las fuentes identificadas durante este sprint.
+Por este motivo, se decidió construir una Base de Contenidos propia (Dataset Maestro) integrando información proveniente de múltiples fuentes públicas.
 
-Para cada alternativa se documentará:
+Esta estrategia permitirá obtener una mayor cobertura temática, mejorar la representatividad del dominio y facilitar futuras ampliaciones del conjunto de datos.
 
-- Nombre del dataset.
-- Plataforma de origen.
-- Autor.
-- Licencia.
-- Número de registros.
-- Número de categorías.
-- Idioma.
-- Formato.
-- Ventajas.
-- Limitaciones.
-- Compatibilidad con TechMind.
 
-Posteriormente se elaborará una matriz comparativa que justificará la decisión final.
-
-## 8.1 Comparativa Final
+## 8.1 Evaluación de las Fuentes
 
 Después de evaluar las diferentes alternativas, se concluye que ninguna fuente pública satisface por sí sola todos los requisitos definidos para TechMind.
 
@@ -282,7 +270,7 @@ La siguiente tabla resume la evaluación realizada.
 
 ## 8.2 Justificación de la Selección
 
-Se decidió construir un Dataset Maestro propio debido a que ninguna fuente individual representa completamente el dominio funcional de TechMind.
+Se decidió construir la Base de Contenidos TechMind (Dataset Maestro) mediante la integración controlada de múltiples fuentes públicas, ya que ninguna fuente individual representa completamente el dominio funcional del proyecto.
 
 La integración de múltiples fuentes permitirá:
 
@@ -294,50 +282,33 @@ La integración de múltiples fuentes permitirá:
 
 Esta estrategia mantiene el alcance del MVP y fortalece la calidad del entrenamiento del modelo.
 
-## 8.3 Dataset Maestro TechMind
+## 8.3 Base de Contenidos TechMind (Dataset Maestro)
 
-El Dataset Maestro será el conjunto de datos oficial utilizado para el entrenamiento del modelo.
+Como resultado del análisis realizado durante este sprint, se decidió que TechMind no utilizará un único dataset como fuente de entrenamiento.
 
-Será construido mediante la integración controlada de múltiples fuentes públicas previamente evaluadas.
+En su lugar, el proyecto construirá una Base de Contenidos propia (Dataset Maestro), integrada a partir de múltiples fuentes públicas previamente evaluadas.
 
-Su construcción será desarrollada durante el Sprint DS-03.
+Esta decisión permitirá:
 
+- Obtener una mayor cobertura temática del dominio técnico.
+- Incrementar la diversidad de contenidos para el entrenamiento.
+- Mantener una estructura de datos uniforme.
+- Incorporar nuevas fuentes de información en futuras versiones sin modificar la arquitectura del proyecto.
 
-flowchart TD
+La construcción de esta Base de Contenidos será desarrollada durante el Sprint DS-03 mediante un pipeline reproducible de integración de datos.
 
-stackExchange[Stack Exchange]
-githubReadme[GitHub README]
-huggingFace[Datasets Hugging Face]
+```mermaid
+flowchart LR
 
-integration[Proceso de Integración]
+Fuentes_Publicas["Fuentes públicas"]
+Evaluacion_Fuentes["Evaluación y selección de fuentes"]
+Construccion_Base_Contenidos["Construcción de la Base de Contenidos TechMind"]
+Base_Contenidos_TechMind["Base de Contenidos TechMind (Dataset Maestro)"]
 
-masterDataset[Dataset Maestro TechMind]
-
-stackExchange --> integration
-githubReadme --> integration
-huggingFace --> integration
-
-integration --> masterDataset
-
-
-# 10. Decisiones del Sprint
-
-Durante la ejecución del Sprint DS-02 se tomaron las siguientes decisiones:
-
-| Decisión | Justificación |
-|----------|---------------|
-| Se investigarán múltiples fuentes públicas. | Ninguna fuente individual cubre completamente el dominio de TechMind. |
-| Se priorizarán datasets con etiquetas existentes. | Reduce el esfuerzo de preparación del dataset. |
-| Se construirá un Dataset Maestro. | Permite integrar información complementaria de diferentes orígenes. |
-| Kaggle y UCI serán fuentes secundarias. | No representan completamente el dominio técnico requerido. |
-
-| Dataset   | Licencia  | Formato   | Idioma    | Etiquetas | Estado |
-| --------- | --------- | --------- | --------- | --------- | ------ |
-| Dataset A | Pendiente | Pendiente | Pendiente | Pendiente | ⏳      |
-| Dataset B | Pendiente | Pendiente | Pendiente | Pendiente | ⏳      |
-| Dataset C | Pendiente | Pendiente | Pendiente | Pendiente | ⏳      |
-
-
+Fuentes_Publicas --> Evaluacion_Fuentes
+Evaluacion_Fuentes --> Construccion_Base_Contenidos
+Construccion_Base_Contenidos --> Base_Contenidos_TechMind
+```
 
 
 
@@ -365,6 +336,8 @@ Durante la ejecución del Sprint DS-02 se tomaron las siguientes decisiones:
 | Se priorizarán datasets con etiquetas existentes. | Reduce el esfuerzo de preparación del dataset. |
 | Se construirá un Dataset Maestro. | Permite integrar información complementaria de diferentes orígenes. |
 | Kaggle y UCI serán fuentes secundarias. | No representan completamente el dominio técnico requerido. |
+| La Base de Contenidos TechMind será construida mediante un pipeline reproducible de integración. | Garantiza trazabilidad, mantenibilidad y facilita incorporar nuevas fuentes de información. |
+
 
 
 # 11. Lecciones Aprendidas
@@ -379,14 +352,13 @@ Las decisiones adoptadas durante este sprint reducirán riesgos en las etapas de
 
 | Entregable | Estado |
 |-------------|--------|
-| Definición del problema | ☐ |
-| Requisitos del dataset | ☐ |
-| Estrategia de investigación | ☐ |
-| Fuentes evaluadas | ☐ |
-| Matriz comparativa | ☐ |
-| Dataset seleccionado | ☐ |
-| Decisiones técnicas documentadas | ☐ |
-
+| Definición del problema | ✅ |
+| Requisitos del dataset | ✅ |
+| Estrategia de investigación | ✅ |
+| Fuentes evaluadas | ✅ |
+| Evaluación comparativa | ✅ |
+| Estrategia de construcción del Dataset Maestro | ✅ |
+| Decisiones técnicas documentadas | ✅ |
 
 
 # 13. Criterios de Aceptación
@@ -410,6 +382,6 @@ Durante el siguiente sprint se realizará:
 - Descarga de los datasets seleccionados.
 - Organización de los archivos dentro del proyecto.
 - Integración de múltiples fuentes, si aplica.
-- Homologación de estructuras.
-- Definición del dataset maestro.
+- Definición del esquema canónico.
+- Construcción de la Base de Contenidos TechMind (Dataset Maestro).
 - Validación inicial de la información.
