@@ -1,0 +1,44 @@
+# ==========================================================
+# TechMind
+# Requirements
+#
+# Python Version:
+#   3.14+
+#
+# Descripción:
+#   Dependencias del proyecto TechMind para desarrollo,
+#   procesamiento de datos, IA y pruebas.
+# ==========================================================
+
+# ==========================
+# Data Processing
+# ==========================
+
+pandas==2.3.3
+numpy==2.3.3
+
+# ==========================
+# Document Processing
+# ==========================
+
+pypdf==6.0.0
+
+# ==========================
+# Machine Learning
+# ==========================
+
+scikit-learn==1.7.2
+joblib==1.5.2
+
+# ==========================
+# Configuration
+# ==========================
+
+python-dotenv==1.1.1
+
+# ==========================
+# Testing
+# ==========================
+
+pytest==8.4.2
+pytest-cov==7.0.0

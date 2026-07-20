@@ -93,18 +93,16 @@ growth --> future
 
 ---
 
-# 4. Roadmap del MVP
+## 4. Roadmap del MVP
 
-El desarrollo inicial del proyecto se organiza en cuatro Sprint técnicos.
+El desarrollo del MVP se organiza en cuatro sprints principales, cada uno con objetivos específicos para avanzar de forma incremental hasta una versión funcional y documentada.
 
-| Sprint | Objetivo | Resultado Esperado |
-|----------|-----------|-------------------|
-| Sprint 0 | Definición de la arquitectura y preparación del entorno | Base del proyecto |
-| Sprint 1 | Construcción de los componentes principales | Backend y Ciencia de Datos |
-| Sprint 2 | Integración del sistema | MVP funcional |
-| Sprint 3 | Publicación y presentación | MVP desplegado y documentado |
-
-Cada Sprint incrementa las capacidades del sistema preservando la arquitectura definida en el SDS.
+| Sprint | Objetivo | Estado |
+|---------|----------|:------:|
+| Sprint 0 | Arquitectura, planificación y preparación del entorno | ✅ |
+| Sprint 1 | Desarrollo de los componentes Backend y Ciencia de Datos | 🚧 |
+| Sprint 2 | Integración entre componentes y validación funcional | ⏳ |
+| Sprint 3 | Pruebas finales, despliegue y presentación del MVP | ⏳ |
 
 ---
 
@@ -114,16 +112,17 @@ Cada Sprint incrementa las capacidades del sistema preservando la arquitectura d
 
 Objetivo:
 
-Entregar un Producto Mínimo Viable completamente funcional.
+Construir una plataforma funcional capaz de clasificar documentación técnica mediante un modelo de Machine Learning integrado a una API REST.
 
-Capacidades principales:
+Capacidades previstas:
 
-- Clasificación automática de contenido técnico.
-- Extracción de palabras clave.
-- Recomendación de documentos similares.
-- API REST.
-- Modelo entrenado mediante Machine Learning clásico.
-- Despliegue inicial utilizando Oracle Cloud Infrastructure.
+- API REST para clasificación de documentos.
+- Procesamiento de solicitudes desde Backend.
+- Construcción y preprocesamiento del dataset.
+- Entrenamiento del modelo de Machine Learning.
+- Predicción de categorías.
+- Documentación técnica completa.
+- Despliegue inicial en Oracle Cloud Infrastructure (OCI).
 
 ---
 

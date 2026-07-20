@@ -1,0 +1,25 @@
+# Bytecode de Python
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*$py.class
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

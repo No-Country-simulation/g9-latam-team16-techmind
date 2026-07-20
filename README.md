@@ -1,103 +1,91 @@
 # 🚀 TechMind – Organización Inteligente del Conocimiento Técnico
 
-> Sistema de clasificación inteligente de documentación técnica basado en Machine Learning, desarrollado para el **Hackathon Oracle Next Education (ONE)**.
+> Plataforma inteligente para la organización, clasificación y consulta de documentación técnica mediante Inteligencia Artificial y Machine Learning.
+
+Desarrollado por el equipo **G9 – LATAM Team 16** para el **Hackathon Oracle Next Education (ONE)**.
 
 ---
 
 # Estado del Proyecto
 
-| Elemento       | Estado        |
-| -------------- | ------------- |
-| Versión        | MVP           |
-| Estado         | En desarrollo |
-| Arquitectura   | Aprobada      |
-| Diseño Técnico | En desarrollo |
-| Licencia       | MIT           |
-
----
+| Elemento | Estado |
+|----------|:------:|
+| Versión | MVP |
+| Estado General | 🚧 En desarrollo |
+| Arquitectura | ✅ Aprobada |
+| Backend | 🚧 En desarrollo |
+| Ciencia de Datos | 🚧 En desarrollo |
+| Licencia | MIT |
 
 # Descripción
 
-TechMind es una aplicación diseñada para clasificar documentación técnica mediante técnicas tradicionales de Machine Learning.
+TechMind es una plataforma diseñada para centralizar, organizar y clasificar documentación técnica proveniente de diferentes fuentes de información.
 
-El sistema recibe el título y contenido de un documento, procesa la información utilizando un modelo entrenado y devuelve la categoría más probable mediante una API REST.
+El objetivo del proyecto es facilitar el acceso al conocimiento técnico mediante técnicas de Machine Learning, permitiendo clasificar documentos y servir como base para futuras funcionalidades de búsqueda inteligente y asistencia técnica.
 
-La solución sigue una arquitectura monolítica modular, priorizando simplicidad, mantenibilidad y facilidad de evolución.
-
----
-
-# Características
-
-* Clasificación automática de documentación técnica.
-* API REST desarrollada con FastAPI.
-* Modelo de Machine Learning basado en Scikit-Learn.
-* Extracción de características mediante TF-IDF.
-* Clasificación mediante Regresión Logística.
-* Arquitectura modular y desacoplada.
-* Documentación técnica basada en estándares de ingeniería.
-
----
+La solución está organizada en componentes independientes que facilitan el desarrollo colaborativo, la mantenibilidad y la evolución del sistema.
 
 # Arquitectura General
 
 ```mermaid
 flowchart LR
 
-    client["Cliente"]
+    User["Usuario"]
 
-    backend["Backend FastAPI"]
+    Backend["Backend"]
 
-    ds["Componente Ciencia de Datos"]
+    DataScience["Componente Data Science"]
 
-    model["Modelo Entrenado"]
+    MachineLearningModel["Modelo de Machine Learning"]
 
-    client --> backend
+    User --> Backend
 
-    backend -->|"predict(title, text)"| ds
+    Backend -->|"Solicita predicción"| DataScience
 
-    ds --> model
+    DataScience --> MachineLearningModel
 
-    model --> ds
+    MachineLearningModel --> DataScience
 
-    ds --> backend
+    DataScience --> Backend
 
-    backend --> client
+    Backend --> User
 ```
 
-El Backend representa el único punto de acceso público del sistema.
+El Backend constituye el único punto de acceso al sistema y coordina la comunicación con el componente de Ciencia de Datos, responsable del procesamiento y clasificación de documentos.
 
-El componente de Ciencia de Datos ejecuta localmente el modelo de Machine Learning y no expone servicios HTTP.
-
----
-
-# Stack Tecnológico
+# Componentes del Proyecto
 
 ## Backend
 
-* Python
-* FastAPI
-* Uvicorn
-* Pydantic
+El componente Backend es responsable de:
 
-## Ciencia de Datos
+- Exponer la API REST.
+- Gestionar las solicitudes de los usuarios.
+- Validar la información recibida.
+- Integrar el componente de Ciencia de Datos.
+- Documentar la API mediante Swagger/OpenAPI.
 
-* Pandas
-* NumPy
-* Scikit-Learn
-* TF-IDF
-* Logistic Regression
-* Cosine Similarity
-* Joblib
+📄 Documentación específica:
 
-## Infraestructura
-
-* Oracle Cloud Infrastructure (OCI)
-* OCI Object Storage
-* OCI Compute (Opcional)
+- `src/backend/README.md`
 
 ---
 
-# Estructura del Proyecto
+## Ciencia de Datos
+
+El componente de Ciencia de Datos es responsable de:
+
+- Construcción del dataset.
+- Preprocesamiento de datos.
+- Entrenamiento del modelo.
+- Evaluación.
+- Predicción de categorías.
+
+📄 Documentación específica:
+
+- `src/data_science/README.md`
+
+# Estructura del Repositorio
 
 ```text
 TechMind/
@@ -110,6 +98,8 @@ TechMind/
 │   └── Standards/
 │
 ├── src/
+│   ├── backend/
+│   └── data_science/
 │
 ├── tests/
 │
@@ -123,39 +113,58 @@ TechMind/
 └── requirements.txt
 ```
 
-La organización completa del repositorio se encuentra documentada en **docs/Architecture/RepositoryStructure.md**.
+La estructura detallada del proyecto se encuentra documentada en:
 
----
+- `docs/Architecture/RepositoryStructure.md`
 
-# Requisitos
+# Stack Tecnológico
 
-* Python 3.12 o superior
-* pip
-* Git
+## Backend
 
----
+- Python
+- FastAPI
+- Pydantic
+- Uvicorn
+
+## Ciencia de Datos
+
+- Pandas
+- NumPy
+- Scikit-Learn
+- Joblib
+
+## DevOps y Herramientas
+
+- Git
+- GitHub
+- GitHub Projects
+- GitHub Actions *(próximamente)*
+
+## Infraestructura
+
+- Oracle Cloud Infrastructure (OCI)
 
 # Instalación
 
-## 1. Clonar el repositorio
+## Clonar el repositorio
 
 ```bash
 git clone <URL_DEL_REPOSITORIO>
 ```
 
-## 2. Ingresar al proyecto
+## Ingresar al proyecto
 
 ```bash
 cd TechMind
 ```
 
-## 3. Crear un entorno virtual
+## Crear un entorno virtual
 
 ```bash
 python -m venv .venv
 ```
 
-## 4. Activar el entorno virtual
+## Activar el entorno virtual
 
 ### Windows
 
@@ -169,108 +178,87 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-## 5. Instalar dependencias
+## Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# Configuración
-
-La configuración del proyecto se gestiona mediante archivos de configuración y variables de entorno cuando corresponda.
-
-Las dependencias del proyecto se encuentran definidas en:
-
-```text
-requirements.txt
-```
-
----
-
-# Ejecución
-
-Iniciar el servidor FastAPI:
-
-```bash
-uvicorn src.api.main:app --reload
-```
-
-Por defecto, la aplicación estará disponible en:
-
-```text
-http://localhost:8000
-```
-
-Documentación automática:
-
-* Swagger UI: `http://localhost:8000/docs`
-* ReDoc: `http://localhost:8000/redoc`
-
----
-
-# Entrenamiento del Modelo
-
-El entrenamiento del modelo se realiza desde el componente de Ciencia de Datos utilizando los conjuntos de datos almacenados en el directorio:
-
-```text
-datasets/
-```
-
-Los artefactos generados durante el entrenamiento se almacenan en:
-
-```text
-artifacts/
-```
-
----
-
-# Ejecución de Pruebas
+# Testing
 
 Ejecutar todas las pruebas del proyecto:
 
 ```bash
-pytest
+python -m pytest
 ```
 
----
+Generar el reporte de cobertura:
+
+```bash
+python -m pytest --cov=src --cov-report=term-missing
+```
+
+## Estado actual
+
+| Métrica | Valor |
+|----------|------:|
+| Tests automatizados | 61 |
+| Cobertura del componente Data Science | 98% |
+
+> La cobertura corresponde al módulo de adquisición de datos del componente de Ciencia de Datos.
 
 # Documentación
 
-La documentación oficial del proyecto se encuentra organizada en el directorio `docs/`.
+La documentación del proyecto está organizada para facilitar la navegación y el mantenimiento.
 
-| Documento    | Descripción                                            |
-| ------------ | ------------------------------------------------------ |
-| SDS          | Especificación del Diseño de Software.                 |
-| ADR          | Registro de Decisiones Arquitectónicas.                |
-| Architecture | Arquitectura del Sistema y estructura del repositorio. |
-| Roadmap      | Evolución planificada del proyecto.                    |
-| Standards    | Estándares de desarrollo y documentación.              |
-
----
+| Documento | Descripción |
+|------------|-------------|
+| `README.md` | Visión general del proyecto. |
+| `src/backend/README.md` | Documentación del componente Backend. |
+| `src/data_science/README.md` | Documentación del componente de Ciencia de Datos. |
+| `docs/Architecture/` | Arquitectura del sistema y del repositorio. |
+| `docs/SDS/` | Software Design Specification. |
+| `docs/ADR/` | Architecture Decision Records. |
+| `docs/Roadmap/` | Plan de evolución del proyecto. |
+| `docs/Standards/` | Estándares de desarrollo y documentación. |
 
 # Roadmap
 
-La evolución del proyecto se gestiona mediante el **Technical Roadmap**, donde se documentan las fases, hitos y objetivos de desarrollo.
+## Arquitectura
 
----
+- ✅ Arquitectura General
+- ✅ Diseño Técnico
+
+## Backend
+
+- 🚧 API REST
+- 🚧 Integración con Ciencia de Datos
+- ⏳ Persistencia
+- ⏳ Despliegue
+
+## Ciencia de Datos
+
+- ✅ DS-01 – Arquitectura
+- ✅ DS-02 – Readers
+- ✅ DS-03 – Construcción del Dataset
+- ⏳ DS-04 – Preprocesamiento
+- ⏳ DS-05 – Entrenamiento del Modelo
+- ⏳ DS-06 – Evaluación
+- ⏳ DS-07 – Integración con Backend
 
 # Contribución
 
-Las contribuciones deberán respetar:
+Las contribuciones al proyecto deberán respetar:
 
-* La arquitectura definida en el SDS.
-* Los Architecture Decision Records (ADR).
-* Los Engineering Standards.
-* La estructura oficial del repositorio.
+- La arquitectura definida para el sistema.
+- Los estándares de desarrollo del equipo.
+- La documentación técnica vigente.
+- El flujo de trabajo basado en Git y Pull Requests.
 
-Antes de proponer cambios arquitectónicos, deberán justificarse técnicamente y ser aprobados por el equipo.
-
----
+Antes de proponer cambios arquitectónicos, estos deberán ser discutidos y aprobados por el equipo.
 
 # Licencia
 
 Este proyecto se distribuye bajo la licencia **MIT**.
 
-Consultar el archivo **LICENSE** para más información.
+Para más información, consultar el archivo `LICENSE`.
