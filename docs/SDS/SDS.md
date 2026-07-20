@@ -4,8 +4,8 @@
 
 | Campo                 | Valor                                 |
 | --------------------- | ------------------------------------- |
-| **Versión**           | 0.1                                   |
-| **Estado**            | Borrador (Draft)                      |
+| **Versión**           | 1.0                                   |
+| **Estado**            | Aprobado                              |
 | **Fecha**             | Julio 2026                            |
 | **Proyecto**          | Hackathon ONE – Oracle Next Education |
 | **Tipo de documento** | Software Design Specification (SDS)   |
@@ -1237,6 +1237,7 @@ La documentación oficial del proyecto incluye, entre otros:
 | Versión | Descripción |
 |----------|-------------|
 | 0.1 | Primera versión del Software Design Specification. |
+| 1.0 | Software Design Specification Aprobado |
 
 
 

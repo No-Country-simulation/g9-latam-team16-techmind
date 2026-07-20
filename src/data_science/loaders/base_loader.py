@@ -27,7 +27,7 @@ from typing import Any
 
 import pandas as pd
 
-from ..domain import DocumentRecord
+from ..data.domain import DocumentRecord
 from ..readers import ReaderFactory
 
 
