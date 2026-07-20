@@ -1,4 +1,4 @@
-# Acta de Reunión - Data Science
+# Acta de Reunión - GENERAL
 
 ## Información General
 
