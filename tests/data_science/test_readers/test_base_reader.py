@@ -20,7 +20,7 @@ Sprint:
 
 import pytest
 
-from src.data_science.readers.base_reader import BaseReader
+from data_science.readers.base_reader import BaseReader
 
 
 # ==========================================================

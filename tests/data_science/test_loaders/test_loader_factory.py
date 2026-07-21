@@ -16,16 +16,16 @@ Sprint:
 
 import pytest
 
-from src.data_science.loaders.github_loader import GitHubLoader
-from src.data_science.loaders.huggingface_loader import (
+from data_science.loaders.github_loader import GitHubLoader
+from data_science.loaders.huggingface_loader import (
     HuggingFaceLoader,
 )
-from src.data_science.loaders.loader_factory import LoaderFactory
-from src.data_science.loaders.mock_loader import MockLoader
-from src.data_science.loaders.stackexchange_loader import (
+from data_science.loaders.loader_factory import LoaderFactory
+from data_science.loaders.mock_loader import MockLoader
+from data_science.loaders.stackexchange_loader import (
     StackExchangeLoader,
 )
-from src.data_science.loaders.technical_docs_loader import (
+from data_science.loaders.technical_docs_loader import (
     TechnicalDocsLoader,
 )
 

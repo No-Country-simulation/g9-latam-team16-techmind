@@ -20,7 +20,7 @@ Sprint:
 
 import pandas as pd
 
-from src.data_science.loaders.mock_loader import MockLoader
+from data_science.loaders.mock_loader import MockLoader
 
 
 # ==========================================================

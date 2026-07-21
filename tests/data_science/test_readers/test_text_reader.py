@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pytest
 
-from src.data_science.readers.text_reader import TextReader
+from data_science.readers.text_reader import TextReader
 
 
 # ==========================================================

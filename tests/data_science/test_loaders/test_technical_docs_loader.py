@@ -23,7 +23,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from src.data_science.loaders.technical_docs_loader import (
+from data_science.loaders.technical_docs_loader import (
     TechnicalDocsLoader,
 )
 

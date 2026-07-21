@@ -19,7 +19,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from src.data_science.loaders.stackexchange_loader import (
+from data_science.loaders.stackexchange_loader import (
     StackExchangeLoader,
 )
 

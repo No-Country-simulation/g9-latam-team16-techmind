@@ -24,7 +24,7 @@ from pathlib import Path
 
 import pytest
 
-from src.data_science.readers.json_reader import JsonReader
+from data_science.readers.json_reader import JsonReader
 
 
 # ==========================================================

@@ -21,10 +21,11 @@ Sprint:
 
 from dataclasses import dataclass, field
 #from typing import Literal, TypedDict
-from typing import NotRequired, TypedDict
+#from typing import NotRequired, TypedDict
+from typing import Literal, NotRequired, TypedDict
 
 # ==========================================================
-# Domain Models
+# Modelos del Dataset
 # ==========================================================
 
 class DocumentRecord(TypedDict):
@@ -55,6 +56,9 @@ class ValidationIssue:
     column: str | None = None
     row: int | None = None
 
+# ==========================================================
+# Modelos de Validación
+# ==========================================================
 
 @dataclass(slots=True)
 class ValidationResult:
@@ -96,3 +100,19 @@ class ValidationResult:
             for issue in self.issues
             if issue.level == "WARNING"
         ]
+    
+@dataclass(slots=True)
+class ProcessedDocument:
+    """
+    Representa un documento después de completar el proceso
+    de preprocesamiento.
+
+    Conserva una referencia al documento original y almacena
+    los artefactos generados durante esta etapa del pipeline.
+    """
+
+    document: DocumentRecord
+    processed_text: str = ""
+    tokens: list[str] = field(default_factory=list)
+    lemmas: list[str] = field(default_factory=list)
+

@@ -22,11 +22,11 @@ from pathlib import Path
 
 import pytest
 
-from src.data_science.readers.csv_reader import CsvReader
-from src.data_science.readers.json_reader import JsonReader
-from src.data_science.readers.pdf_reader import PdfReader
-from src.data_science.readers.reader_factory import ReaderFactory
-from src.data_science.readers.text_reader import TextReader
+from data_science.readers.csv_reader import CsvReader
+from data_science.readers.json_reader import JsonReader
+from data_science.readers.pdf_reader import PdfReader
+from data_science.readers.reader_factory import ReaderFactory
+from data_science.readers.text_reader import TextReader
 
 
 # ==========================================================

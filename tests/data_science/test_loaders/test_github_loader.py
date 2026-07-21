@@ -23,7 +23,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from src.data_science.loaders.github_loader import GitHubLoader
+from data_science.loaders.github_loader import GitHubLoader
 
 
 # ==========================================================

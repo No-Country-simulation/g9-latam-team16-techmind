@@ -23,7 +23,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from src.data_science.readers.csv_reader import CsvReader
+from data_science.readers.csv_reader import CsvReader
 
 
 # ==========================================================
