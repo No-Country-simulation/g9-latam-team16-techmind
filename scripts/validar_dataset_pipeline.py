@@ -61,7 +61,11 @@ DATASET_PATH = (
     PROJECT_ROOT
     / "datasets"
     / "raw"
+<<<<<<< HEAD
     / "master_dataset_v1.csv"
+=======
+    / "documents_prueba_data_generada_data.csv"
+>>>>>>> 6b0afd4 (refactor(ds): migración de DocumentRecord a dataclass y estabilización del pipeline de preprocesamiento)
 )
 
 
