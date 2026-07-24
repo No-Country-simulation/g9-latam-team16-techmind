@@ -5,7 +5,7 @@
 Desarrollado por el equipo **G9 – LATAM Team 16** para el **Hackathon Oracle Next Education (ONE)**.
 
 
-> Estado del proyecto (Julio 2026)
+> Estado del proyecto (Julio 2026) probando edicion
 
 ✅ Sprint DS-06 finalizado
 
