@@ -5,11 +5,22 @@
 Desarrollado por el equipo **G9 – LATAM Team 16** para el **Hackathon Oracle Next Education (ONE)**.
 
 
+> Estado del proyecto (Julio 2026)
+
+✅ Sprint DS-06 finalizado
+
+✅ Arquitectura estable
+
+✅ 138 pruebas automatizadas exitosas
+
+🚀 Preparado para iniciar DS-07
+
+
 # Estado del Proyecto
 
-Versión del MVP: 0.1
+Versión MVP: 0.2
 
-Estado General
+## Estado General
 
 🟢 Arquitectura estable
 
@@ -17,24 +28,29 @@ Estado General
 
 🟢 Pipeline de preprocesamiento validado
 
-🟢 109/109 pruebas aprobadas
+🟢 Ingeniería de características completada
+
+🟢 Arquitectura de entrenamiento implementada
+
+🟢 138/138 pruebas aprobadas
 
 🟡 Backend en desarrollo
 
 🟡 Frontend en desarrollo
 
-🔵 Próxima etapa: entrenamiento del modelo e integración
+🔵 Próxima etapa: Persistencia del modelo e inferencia
+
 ---
 
-| Componente      | Estado | Observaciones                             |
-| --------------- | :----:  | -----------------------------------------|
-| Arquitectura    |   ✅   | Definida y aprobada                       |
-| Backend         |   🚧   | Desarrollo en progreso                    |
-| Data Science    |   🚧   | Dataset y preprocesamiento completados    |
-| Frontend        |   🚧   | Desarrollo en progreso                    |
-| Integración     |   ⏳   | Pendiente                                 |
-| Infraestructura |   ⏳   | Pendiente                                 |
-| Despliegue      |   ⏳   | Pendiente                                 |
+| Componente | Estado | Observaciones |
+|------------|:------:|---------------|
+| Arquitectura | ✅ | Definida y validada |
+| Backend | 🚧 | Desarrollo en progreso |
+| Data Science | ✅ | Dataset, Feature Engineering y Training completados |
+| Frontend | 🚧 | Desarrollo en progreso |
+| Integración | ⏳ | Pendiente |
+| Infraestructura | ⏳ | Pendiente |
+| Despliegue | ⏳ | Pendiente |
 
 
 # Descripción
@@ -93,13 +109,21 @@ El componente Backend es responsable de:
 
 ## Ciencia de Datos
 
-El componente de Ciencia de Datos es responsable de:
+El componente de Ciencia de Datos actualmente implementa un pipeline completo que cubre:
 
 - Construcción del dataset.
 - Preprocesamiento de datos.
 - Entrenamiento del modelo.
 - Evaluación.
 - Predicción de categorías.
+- Construcción del Dataset Maestro.
+- Validación.
+- Limpieza.
+- Preprocesamiento.
+- Ingeniería de Características.
+- Entrenamiento del modelo.
+- Evaluación del modelo.
+
 
 📄 Documentación específica:
 
@@ -114,16 +138,18 @@ El componente de Ciencia de Datos es responsable de:
 - Dataset Maestro
 - Readers
 - Loaders
-- Validación del dataset
-- Pipeline de preprocesamiento
-- Refactorización del dominio
-- Suite de pruebas automatizadas (109/109)
+- Validación del Dataset
+- Pipeline de Preprocesamiento
+- Ingeniería de Características
+- Entrenamiento del Modelo
+- Evaluación del Modelo
+- Arquitectura desacoplada de Machine Learning
+- Suite automatizada de pruebas (138/138)
 
 ### En desarrollo
 
-- Entrenamiento del modelo
-- Evaluación
-- Persistencia
+- Persistencia del modelo
+- Motor de inferencia
 - Integración con Backend
 
 
@@ -244,8 +270,10 @@ python -m pytest --cov=src --cov-report=term-missing
 
 | Métrica | Valor |
 |----------|------:|
-| Tests automatizados | 109 |
-| Cobertura del componente Data Science | 98% |
+| Tests automatizados | 138 |
+| Cobertura del componente Data Science | En crecimiento  |
+
+> La suite de pruebas valida la arquitectura completa del componente Data Science, incluyendo adquisición de datos, preprocesamiento, ingeniería de características y entrenamiento del modelo.
 
 > La cobertura corresponde al módulo de adquisición de datos del componente de Ciencia de Datos.
 
@@ -280,22 +308,18 @@ La documentación del proyecto está organizada para facilitar la navegación y 
 
 ## Ciencia de Datos
 
-| Sprint | Objetivo                                            |
-| ------ | --------------------------------------------------- |
-| DS-01  | ✅ Arquitectura del Componente de Ciencia de Datos     |
-| DS-02  | ✅ Investigación y selección de fuentes de información |
-| DS-03  | ✅ Construcción e integración del Dataset Maestro      |
-| DS-04  | ✅ Limpieza, validación y preprocesamiento del Dataset |
-| DS-05  | ⏳ Análisis Exploratorio de Datos (EDA)                |
-| DS-06  | ⏳ Ingeniería de Características                       |
-| DS-07  | ⏳ Entrenamiento del Modelo                            |
-| DS-08  | ⏳ Evaluación y Optimización                           |
-| DS-09  | ⏳ Persistencia y Versionado del Modelo                |
-| DS-10  | ⏳ Motor de Inferencia                                 |
-| DS-11  | ⏳ Integración con Backend                             |
-| DS-12  | ⏳ Pruebas y Validación                                |
-| DS-13  | ⏳ Hardening y Optimización                            |
-| DS-14  | ⏳ Cierre del Componente de Ciencia de Datos           |
+| Sprint | Estado |
+|---------|--------|
+| DS-01 | ✅ Arquitectura |
+| DS-02 | ✅ Investigación del Dataset |
+| DS-03 | ✅ Construcción del Dataset Maestro |
+| DS-04 | ✅ Limpieza y Preprocesamiento |
+| DS-05 | ✅ Ingeniería de Características |
+| DS-06 | ✅ Entrenamiento del Modelo |
+| DS-07 | ⏳ Persistencia del Modelo |
+| DS-08 | ⏳ Motor de Inferencia |
+| DS-09 | ⏳ Integración Backend |
+| DS-10 | ⏳ Optimización |
 
 
 
@@ -313,6 +337,11 @@ La documentación del proyecto está organizada para facilitar la navegación y 
 - Arquitectura basada en DocumentRecord.
 - Suite de pruebas automatizadas.
 - Readers y Loaders para múltiples formatos (si ya están implementados).
+- Arquitectura desacoplada para entrenamiento.
+- Pipeline de entrenamiento.
+- Evaluación del modelo.
+- Strategy Pattern para algoritmos de Machine Learning.
+- Dependency Injection en el módulo de entrenamiento.
 
 
 # Contribución
@@ -325,6 +354,24 @@ Las contribuciones al proyecto deberán respetar:
 - El flujo de trabajo basado en Git y Pull Requests.
 
 Antes de proponer cambios arquitectónicos, estos deberán ser discutidos y aprobados por el equipo.
+
+---
+
+# Estado del Desarrollo
+
+Actualmente el proyecto cuenta con:
+
+- Arquitectura modular basada en Clean Architecture.
+- Pipeline completo de adquisición y preparación de datos.
+- Pipeline de Ingeniería de Características.
+- Arquitectura desacoplada para entrenamiento.
+- Evaluación del modelo.
+- 138 pruebas unitarias exitosas.
+- Cero regresiones entre sprints.
+
+El proyecto se encuentra preparado para iniciar el desarrollo del módulo de persistencia e inferencia del modelo.
+
+---
 
 # Licencia
 

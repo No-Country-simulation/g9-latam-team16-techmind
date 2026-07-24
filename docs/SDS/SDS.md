@@ -4,7 +4,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Versión** | **1.1** |
+| **Versión** | **1.2** |
 | **Estado** | Vigente |
 | **Fecha** | Julio 2026 |
 | **Proyecto** | Hackathon ONE – Oracle Next Education |
@@ -18,7 +18,8 @@
 |---------|-------|-----------|-------------|
 | 0.1 | Julio 2026 | Equipo TechMind | Primera versión del documento. |
 | 1.0 | Julio 2026 | Equipo TechMind | Arquitectura base aprobada. |
-| **1.1** | **Julio 2026** | **Equipo TechMind** | **Actualización de la arquitectura tras la finalización de los Sprints DS-01, DS-02, DS-03 y DS-04 del componente de Ciencia de Datos.** |
+| 1.1 | Julio 2026 | Equipo TechMind | Actualización de la arquitectura tras la finalización de los Sprints DS-01, DS-02, DS-03 y DS-04 del componente de Ciencia de Datos. |
+|1.2 | Julio 2026 | Equipo TechMind | Actualización de la arquitectura tras la finalización de los Sprints DS-05 y DS-06 del componente de Ciencia de Datos.
 
 ---
 
@@ -139,7 +140,9 @@ El presente SDS corresponde a la versión vigente de la arquitectura del proyect
 
 Su contenido evoluciona de forma incremental conforme se completan los Sprints del proyecto, incorporando las decisiones arquitectónicas y los componentes implementados.
 
-Hasta la presente versión se encuentran documentados los avances correspondientes a los Sprints DS-01, DS-02, DS-03 y DS-04 del componente de Ciencia de Datos.
+Hasta la presente versión se encuentran documentados los avances correspondientes a los Sprints DS-01, DS-02, DS-03, DS-04, DS-05 y DS-06 del componente de Ciencia de Datos.
+
+En esta actualización se incorpora la arquitectura completa de Ingeniería de Características y el módulo de Entrenamiento del Modelo, incluyendo el Pipeline de Entrenamiento, la evaluación del modelo y los componentes desacoplados que soportan futuros algoritmos de clasificación.
 
 ---
 
@@ -233,7 +236,9 @@ TechMind es una plataforma diseñada para organizar contenido técnico mediante 
 
 La solución está compuesta por un componente Backend, un componente de Ciencia de Datos y una infraestructura de apoyo basada en Oracle Cloud Infrastructure (OCI), los cuales trabajan de forma integrada para procesar documentos técnicos y generar información estructurada.
 
-Actualmente, el componente de Ciencia de Datos dispone de una arquitectura modular para la adquisición, construcción y preprocesamiento del dataset, constituyendo la base para las siguientes etapas de Ingeniería de Características, entrenamiento y evaluación del modelo de Machine Learning.
+Actualmente el componente de Ciencia de Datos dispone de un pipeline completo que abarca la adquisición de datos, construcción del Dataset Maestro, validación, preprocesamiento, ingeniería de características, entrenamiento y evaluación del modelo de Machine Learning.
+
+Esta arquitectura constituye la base para la siguiente etapa del proyecto, orientada a la persistencia del modelo y la construcción del motor de inferencia.
 
 ---
 
@@ -524,17 +529,20 @@ Este flujo mantiene desacoplados ambos componentes y permite que la evolución i
 
 ## 6.6 Estado Actual de la Arquitectura
 
-Al finalizar el Sprint DS-04, la arquitectura del componente de Ciencia de Datos incorpora los siguientes módulos implementados:
+Al finalizar el Sprint DS-06, la arquitectura del componente de Ciencia de Datos incorpora los siguientes módulos implementados:
 
 - Adquisición de datos.
 - Construcción del Dataset Maestro.
 - Lectores de documentos.
 - Cargadores de fuentes de información.
 - Validación de documentos.
-- Pipeline de preprocesamiento textual.
-- Modelo de dominio para documentos procesados.
+- Pipeline de preprocesamiento.
+- Ingeniería de Características.
+- Arquitectura de Entrenamiento del Modelo.
+- Evaluación del Modelo.
+- Objetos de dominio del entrenamiento.
 
-Las etapas correspondientes a Ingeniería de Características, Entrenamiento del Modelo, Evaluación e Inferencia continúan planificadas para los siguientes Sprints.
+Las siguientes etapas del proyecto corresponden a la persistencia del modelo entrenado, el motor de inferencia y la integración completa con Backend.
 
 ---
 
@@ -724,7 +732,7 @@ Esta decisión simplifica la arquitectura, reduce el acoplamiento y facilita el 
 | Nombre | Ciencia de Datos |
 | Tipo | Componente |
 | Responsable | Data Science Developer |
-| Estado | Implementación Parcial (DS-04) |
+| Estado | Implementación Parcial (DS-06) |
 | Interfaz Pública | `predict(title, text)` |
 | Integración | Biblioteca Python integrada con Backend |
 
@@ -793,18 +801,19 @@ Inferencia (predict)
 
 Al finalizar el Sprint DS-04 se encuentran implementados:
 
-| Módulo | Estado |
-|---------|---------|
-| Readers | ✅ |
-| Loaders | ✅ |
-| Dataset Maestro | ✅ |
-| Validación | ✅ |
-| Pipeline de Preprocesamiento | ✅ |
-| Modelo de Dominio | ✅ |
-| Ingeniería de Características | Pendiente |
-| Entrenamiento | Pendiente |
-| Evaluación | Pendiente |
-| Inferencia completa | Pendiente |
+| Módulo                        | Estado |
+| ----------------------------- | ------ |
+| Readers                       | ✅      |
+| Loaders                       | ✅      |
+| Dataset Maestro               | ✅      |
+| Validación                    | ✅      |
+| Preprocesamiento              | ✅      |
+| Ingeniería de Características | ✅      |
+| Entrenamiento                 | ✅      |
+| Evaluación                    | ✅      |
+| Persistencia                  | ⏳      |
+| Inferencia                    | ⏳      |
+
 
 ---
 
@@ -826,15 +835,16 @@ Esta etapa fue desarrollada durante los Sprints DS-02, DS-03 y DS-04.
 
 ## 8.6 Pipeline de Machine Learning
 
-Una vez preparado el dataset, el flujo continuará con:
+Actualmente el componente implementa un pipeline desacoplado compuesto por las siguientes etapas:
 
 - Ingeniería de Características.
-- Vectorización.
-- Entrenamiento.
-- Evaluación.
-- Persistencia del modelo.
+- Construcción de la variable objetivo.
+- División del Dataset.
+- Entrenamiento del modelo.
+- Evaluación mediante métricas estándar.
+- Generación del resultado del entrenamiento.
 
-Estas actividades serán desarrolladas en los siguientes Sprints.
+El diseño del pipeline permite incorporar nuevos algoritmos de Machine Learning mediante el patrón Strategy y el principio Open/Closed, sin modificar el flujo principal del entrenamiento.
 
 ---
 
@@ -891,16 +901,17 @@ El componente genera o utiliza los siguientes artefactos:
 
 La evolución del componente se planifica de manera incremental.
 
-| Sprint | Resultado |
-|---------|-----------|
-| DS-01 | Arquitectura |
-| DS-02 | Investigación del Dataset |
-| DS-03 | Construcción del Dataset Maestro |
-| DS-04 | Preprocesamiento |
-| DS-05 | Ingeniería de Características |
-| DS-06 | Entrenamiento del Modelo |
-| DS-07 | Evaluación |
-| DS-08 | Inferencia y Optimización |
+| Sprint | Resultado                       |
+| ------ | ------------------------------- |
+| DS-01  | ✅ Arquitectura                  |
+| DS-02  | ✅ Investigación                 |
+| DS-03  | ✅ Dataset                       |
+| DS-04  | ✅ Preprocesamiento              |
+| DS-05  | ✅ Ingeniería de Características |
+| DS-06  | ✅ Entrenamiento                 |
+| DS-07  | ⏳ Persistencia                  |
+| DS-08  | ⏳ Inferencia                    |
+
 
 ---
 
@@ -1187,7 +1198,7 @@ Al finalizar el Sprint DS-04:
 | Contrato `predict()` | ✅ Aprobado |
 | Separación Backend ↔ DS | ✅ Implementada |
 | Pipeline interno DS | ✅ Implementado parcialmente |
-| Entrenamiento del modelo | ⏳ Pendiente |
+| Entrenamiento del modelo | ✅ Implementada |
 | Inferencia completa | ⏳ Pendiente |
 
 La integración funcional continuará evolucionando conforme se desarrollen las siguientes etapas del componente de Ciencia de Datos, manteniendo estable la interfaz pública definida en este capítulo.
@@ -1258,8 +1269,11 @@ Al finalizar el Sprint DS-04, el proyecto presenta el siguiente estado:
 
 - Arquitectura implementada.
 - Dataset Maestro construido.
-- Pipeline de preprocesamiento implementado.
-- Modelo de dominio implementado.
+- Pipeline de preprocesamiento.
+- Ingeniería de Características.
+- Arquitectura de Entrenamiento.
+- Evaluación del Modelo.
+- Suite automatizada de **138 pruebas unitarias exitosas**.
 
 ### Infraestructura
 
@@ -1326,6 +1340,8 @@ La documentación oficial del proyecto incluye:
 - DS-02 — Investigación del Dataset.
 - DS-03 — Construcción del Dataset Maestro.
 - DS-04 — Preprocesamiento del Dataset.
+- DS-05 — Ingeniería de Características
+- DS-06 — Entrenamiento del Modelo
 
 ---
 
@@ -1348,6 +1364,7 @@ La documentación oficial del proyecto incluye:
 | 0.1 | Primera versión del SDS. |
 | 1.0 | Arquitectura base aprobada. |
 | 1.1 | Actualización tras los Sprints DS-01 a DS-04. |
+| 1.2 | Actualización tras DS-05 y DS-06 |
 
 ---
 
@@ -1355,7 +1372,7 @@ La documentación oficial del proyecto incluye:
 
 El presente Software Design Specification constituye el documento oficial de arquitectura del proyecto TechMind.
 
-Describe la arquitectura vigente, los componentes principales, las interfaces de integración y la evolución técnica del sistema al finalizar el Sprint DS-04.
+describe la arquitectura vigente del proyecto al finalizar el Sprint DS-06.
 
 Las modificaciones posteriores deberán mantener la coherencia arquitectónica descrita en este documento y registrarse en el historial de versiones correspondiente.
 
@@ -1366,6 +1383,6 @@ Las modificaciones posteriores deberán mantener la coherencia arquitectónica d
 | Campo | Valor |
 |--------|-------|
 | Estado | Vigente |
-| Versión | 1.1 |
+| Versión | 1.2 |
 | Última actualización | Julio 2026 |
-| Próxima revisión | Al finalizar el Sprint DS-05 |
+| Próxima revisión | Al finalizar el Sprint DS-07 |
