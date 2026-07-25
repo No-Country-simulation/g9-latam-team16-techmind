@@ -1,0 +1,46 @@
+.feature-card {
+  width: 100%;
+  max-width: 270px;
+  height: 100%;
+
+  padding: 1rem;
+
+  color: white !important;
+
+  background: rgba(144, 129, 226, 0.151) !important;
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px !important;
+
+  transition: all 0.3s ease !important;
+
+  display: flex;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+
+  border-color: #7c3aed;
+
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35);
+}
+
+.feature-card-content {
+  height: 100%;
+}
+
+.feature-card-avatar {
+  width: 55px !important;
+  height: 55px !important;
+
+  background-color: #5b3df5 !important;
+}
+
+.feature-card-title {
+  font-weight: 700 !important;
+}
+
+.feature-card-description {
+  opacity: 0.8;
+}

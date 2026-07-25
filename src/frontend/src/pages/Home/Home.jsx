@@ -1,12 +1,10 @@
 import "./Home.css";
-
 import { useNavigate } from "react-router-dom";
-
-import { Box, Typography, Button, Stack, Chip } from "@mui/material";
-
+import { Box, Typography, Button, Stack } from "@mui/material";
+import FeatureCard from "../home/FeatureCard";
 import PsychologyIcon from "@mui/icons-material/Psychology";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import BoltIcon from "@mui/icons-material/Bolt";
 
 function Home() {
   const navigate = useNavigate();
@@ -26,6 +24,7 @@ function Home() {
         </Typography>
 
         <Button
+          className="home-cta"
           variant="contained"
           size="large"
           onClick={() => navigate("/register")}
@@ -33,18 +32,25 @@ function Home() {
           Comenzar
         </Button>
 
-        <Stack
-          direction="row"
-          spacing={2}
-          justifyContent="center"
-          className="home-features"
-        >
-          <Chip icon={<PsychologyIcon />} label="IA" />
+        <Box className="home-features">
+          <FeatureCard
+            icon={<PsychologyIcon />}
+            title="IA Inteligente"
+            description="Clasifica y entiende tu contenido técnico automáticamente."
+          />
 
-          <Chip icon={<MenuBookIcon />} label="Biblioteca" />
+          <FeatureCard
+            icon={<MenuBookIcon />}
+            title="Biblioteca"
+            description="Organiza y consulta toda la información en un solo lugar."
+          />
 
-          <Chip icon={<AutoAwesomeIcon />} label="Organización" />
-        </Stack>
+          <FeatureCard
+            icon={<BoltIcon />}
+            title="Organización"
+            description="Encuentra rápidamente el contenido que necesitas."
+          />
+        </Box>
       </Box>
     </Box>
   );
