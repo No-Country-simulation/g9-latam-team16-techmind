@@ -1,0 +1,48 @@
+.home {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(124, 58, 237, 0.45),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(37, 99, 235, 0.4),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #0f172a, #1e293b);
+
+  color: white;
+}
+
+.home-content {
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+}
+
+.home-icon {
+  font-size: 5rem !important;
+  margin-bottom: 1rem;
+}
+
+.home-title {
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+  color: aliceblue;
+}
+
+.home-description {
+  margin-bottom: 2rem !important;
+  opacity: 0.9;
+}
+
+.home-features {
+  margin-top: 2.5rem;
+}
