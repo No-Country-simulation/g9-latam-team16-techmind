@@ -84,7 +84,7 @@ def test_should_generate_identifier() -> None:
 
     metadata = create_metadata()
 
-    assert metadata.identifier == "techmind_classifier:1.0.0"
+    assert metadata.identifier == "techmind_classifier-1.0.0"
 
 
 def test_should_identify_joblib_serialization() -> None:

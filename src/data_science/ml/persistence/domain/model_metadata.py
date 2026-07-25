@@ -63,12 +63,17 @@ class ModelMetadata:
         Obtiene un identificador único compuesto por el nombre y
         la versión del modelo.
 
+        El identificador utiliza un guion como separador para que
+        pueda emplearse de forma segura como nombre de directorio
+        en cualquier sistema operativo.
+
         Returns
         -------
         str
-            Identificador del modelo.
+            Identificador único del modelo.
         """
-        return f"{self.model_name}:{self.version}"
+
+        return f"{self.model_name}-{self.version}"
 
     @property
     def is_serialized_with_joblib(self) -> bool:
