@@ -10,7 +10,7 @@ Pruebas unitarias para el contrato ArtifactRepository.
 -----------------------------------------------------------------------
 """
 
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
 
 import pytest
 
