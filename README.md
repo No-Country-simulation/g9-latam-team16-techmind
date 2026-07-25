@@ -1,4 +1,4 @@
-# 🚀 TechMind – Organización Inteligente del Conocimiento Técnico
+# 🚀 AyniKortex – Organización Inteligente del Conocimiento Técnico
 
 > TechMind es una plataforma inteligente diseñada para organizar, clasificar y facilitar el acceso al conocimiento técnico mediante técnicas de Machine Learning. El proyecto integra un componente Backend y un componente de Ciencia de Datos para construir un sistema escalable, modular y preparado para evolucionar hacia capacidades avanzadas de búsqueda y recomendación de información técnica.
 
