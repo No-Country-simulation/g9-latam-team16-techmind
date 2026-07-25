@@ -5,7 +5,7 @@
 > **Componente:** Data Science  
 > **Autor:** Equipo Data Science – G9 LATAM Team 16  
 > **Última actualización:** Julio 2026  
-> **Estado:** En desarrollo
+> **Estado:** Implementado
 
 
 ## Información General
@@ -16,8 +16,8 @@
 | Componente | Data Science |
 | Sprint | DS-07 |
 | Nombre | Persistencia del Modelo |
-| Estado | 🟡 En desarrollo |
-| Versión | 1.0 |
+| Estado | ✅ Completado |
+| Versión | 2.0 |
 | Fecha | Julio 2026 |
 | Equipo | Data Science |
 | Dependencia | DS-06 – Entrenamiento del Modelo |
@@ -1805,259 +1805,446 @@ timeline
 
 ---
 
-# 32. Estado del Sprint
+# 32. Implementación del Sprint
 
-## 32.1 Resumen Ejecutivo
+## 32.1 Introducción
 
-El Sprint DS-07 tuvo como propósito diseñar la arquitectura de persistencia del componente Data Science, estableciendo los mecanismos necesarios para almacenar, recuperar y versionar los artefactos generados durante el entrenamiento del modelo de Machine Learning.
+Durante el Sprint DS-07 se materializó la arquitectura propuesta para el módulo de persistencia del componente Data Science. Se implementaron los componentes responsables de almacenar, recuperar y administrar los artefactos generados durante el entrenamiento de modelos de Machine Learning, manteniendo una arquitectura desacoplada y alineada con los principios de Clean Architecture y SOLID.
 
-Como resultado del sprint, se definió una arquitectura desacoplada, extensible y alineada con los principios de Clean Architecture y SOLID, permitiendo que los modelos entrenados puedan reutilizarse posteriormente durante el proceso de inferencia.
+La implementación obtenida permite reutilizar modelos previamente entrenados sin necesidad de repetir el proceso de entrenamiento, constituyendo la base sobre la que se desarrollará el Motor de Inferencia (DS-08).
 
----
-
-## 32.2 Objetivos Alcanzados
-
-Durante el desarrollo del sprint se alcanzaron los siguientes objetivos:
-
-- Definición de la arquitectura del módulo de persistencia.
-- Diseño del modelo del dominio.
-- Definición de contratos e interfaces.
-- Diseño de la estructura de servicios.
-- Definición de la estrategia de almacenamiento.
-- Diseño del mecanismo de versionado.
-- Definición del sistema de metadatos.
-- Diseño de la validación de integridad.
-- Organización física del módulo.
-- Definición de la estrategia de pruebas.
-- Identificación de riesgos y estrategias de mitigación.
-- Establecimiento de criterios de aceptación.
+Como resultado del sprint, el componente incorpora un mecanismo de persistencia basado en sistema de archivos, capaz de almacenar el modelo entrenado, el vectorizador, el codificador de etiquetas y los metadatos asociados al entrenamiento, preservando la trazabilidad y facilitando la evolución del sistema.
 
 ---
 
-## 32.3 Entregables Generados
+## 32.2 Arquitectura Implementada
 
-Como resultado del Sprint DS-07 se generan los siguientes entregables:
+La siguiente figura resume la arquitectura implementada al finalizar el Sprint DS-07.
 
-| Entregable | Estado |
-|------------|--------|
-| Arquitectura del módulo | ✅ Completado |
-| Diagramas arquitectónicos | ✅ Completado |
-| Diseño de clases | ✅ Completado |
-| Modelo del dominio | ✅ Completado |
-| Contratos e interfaces | ✅ Completado |
-| Organización de paquetes | ✅ Completado |
-| Estructura física | ✅ Completado |
-| Estrategia de pruebas | ✅ Completado |
-| Gestión de riesgos | ✅ Completado |
-| Criterios de aceptación | ✅ Completado |
-| Documento técnico DS-07 | ✅ Completado |
+```mermaid
+flowchart TB
+
+subgraph Entrenamiento
+
+TrainingPipeline["TrainingPipeline"]
+
+ArtifactBundle["ArtifactBundle"]
+
+end
+
+subgraph Persistencia
+
+Repository["FilesystemArtifactRepository"]
+
+Metadata["MetadataManager"]
+
+Version["VersionManager"]
+
+Integrity["IntegrityValidator"]
+
+Hash["HashUtils"]
+
+Exceptions["Persistence Exceptions"]
+
+end
+
+subgraph ModelStore["Model Store"]
+
+Folder["classifier-1.0.0"]
+
+Model["model.joblib"]
+
+Vectorizer["vectorizer.joblib"]
+
+Encoder["label_encoder.joblib"]
+
+MetadataFile["metadata.json"]
+
+end
+
+TrainingPipeline --> ArtifactBundle
+
+ArtifactBundle --> Repository
+
+Repository --> Metadata
+
+Repository --> Version
+
+Repository --> Integrity
+
+Integrity --> Hash
+
+Repository --> Exceptions
+
+Repository --> Folder
+
+Folder --> Model
+
+Folder --> Vectorizer
+
+Folder --> Encoder
+
+Folder --> MetadataFile
+```
+
+La arquitectura implementada organiza la persistencia alrededor del repositorio `FilesystemArtifactRepository`, responsable de coordinar el almacenamiento y recuperación de los artefactos del modelo.
+
+Cada entrenamiento genera un conjunto de archivos persistidos dentro del directorio **Model Store**, permitiendo administrar múltiples versiones del modelo de forma organizada y desacoplada de la lógica de entrenamiento.
+
+Esta implementación mantiene la independencia entre el dominio y la infraestructura, favoreciendo futuras extensiones hacia otros mecanismos de almacenamiento sin afectar al resto del componente Data Science.
 
 ---
 
-## 32.4 Estado de Implementación
+## 32.3 Componentes Implementados
 
-Al finalizar el sprint, el diseño del módulo se encuentra completamente definido y preparado para iniciar su implementación.
+Durante el Sprint DS-07 se implementó un conjunto de componentes especializados que conforman el módulo de persistencia del componente Data Science.
 
-Las responsabilidades de cada componente han sido documentadas, así como las relaciones entre ellos, los contratos públicos y la estructura del proyecto.
+Cada componente fue desarrollado siguiendo los principios de **Single Responsibility**, **Dependency Inversion** y **Clean Architecture**, manteniendo una clara separación entre el dominio, los contratos, la infraestructura y las utilidades del módulo.
 
-La implementación del código fuente se desarrollará posteriormente siguiendo la arquitectura aprobada en este documento.
+El siguiente mapa resume los componentes implementados y su organización dentro del módulo de persistencia.
+
+```mermaid
+mindmap
+  root((DS-07))
+
+    Dominio
+      ModelMetadata
+      ArtifactBundle
+
+    Contratos
+      ArtifactRepository
+
+    Repositorios
+      FilesystemArtifactRepository
+
+    Metadatos
+      MetadataManager
+
+    Versionado
+      VersionManager
+
+    Validación
+      IntegrityValidator
+
+    Utilidades
+      HashUtils
+
+    Excepciones
+      PersistenceException
+      StorageException
+      MetadataException
+      ArtifactNotFoundException
+      InvalidVersionException
+      CorruptedArtifactException
+```
+
+La organización presentada refleja la estructura final del módulo de persistencia y evidencia la separación de responsabilidades adoptada durante el desarrollo.
+
+Cada componente encapsula una función específica dentro del ciclo de vida de los artefactos del modelo, facilitando la mantenibilidad, las pruebas unitarias y la incorporación de futuras funcionalidades sin afectar al resto del sistema.
 
 ---
 
-## 32.5 Impacto sobre el Proyecto
+## 32.4 Relación entre los Componentes
 
-La finalización del Sprint DS-07 aporta los siguientes beneficios al proyecto AyniKortex:
+El módulo de persistencia se diseñó para que cada componente interactúe mediante contratos bien definidos, evitando dependencias innecesarias entre la lógica de negocio y la infraestructura.
 
-- Garantiza la reutilización de modelos entrenados.
-- Reduce el tiempo requerido para futuras inferencias.
-- Facilita el mantenimiento del componente Data Science.
-- Permite incorporar nuevas estrategias de almacenamiento sin afectar la arquitectura.
-- Proporciona una base estable para la integración con el Motor de Inferencia.
-
----
-
-## 32.6 Preparación para el Siguiente Sprint
-
-Con la finalización de este sprint, el proyecto dispone de todos los elementos necesarios para iniciar el desarrollo del Sprint DS-08.
-
-El siguiente sprint reutilizará directamente los contratos, servicios y artefactos definidos durante DS-07 para construir el Motor de Inferencia.
-
----
-
-## 32.7 Resumen
-
-El Sprint DS-07 cumple satisfactoriamente los objetivos establecidos, proporcionando una arquitectura robusta para la persistencia de modelos y dejando preparado el componente Data Science para la siguiente fase del proyecto.
-
----
-
-## Diagrama de cierre
+El siguiente diagrama resume la colaboración entre los principales componentes implementados.
 
 ```mermaid
 flowchart LR
 
-    Arquitectura["Arquitectura"]
+Training["TrainingPipeline"]
 
-    Diseño["Diseño"]
+Bundle["ArtifactBundle"]
 
-    Persistencia["Persistencia"]
+Repository["FilesystemArtifactRepository"]
 
-    Documentacion["Documentación"]
+Metadata["MetadataManager"]
 
-    DS08["Preparado para DS-08"]
+Version["VersionManager"]
 
-    Arquitectura --> Diseño
-    Diseño --> Persistencia
-    Persistencia --> Documentacion
-    Documentacion --> DS08
+Validator["IntegrityValidator"]
+
+Store["Model Store"]
+
+Training --> Bundle
+
+Bundle --> Repository
+
+Repository --> Metadata
+
+Repository --> Version
+
+Repository --> Validator
+
+Repository --> Store
 ```
 
----
-
-# 33. Próximo Sprint
-
-## 33.1 Introducción
-
-Con la finalización del Sprint DS-07 se concluye el diseño de la arquitectura de persistencia del componente Data Science. Los mecanismos necesarios para almacenar, recuperar y gestionar los artefactos del modelo han sido definidos y documentados, proporcionando una base sólida para la siguiente etapa del proyecto.
-
-El Sprint DS-08 estará orientado al desarrollo del **Motor de Inferencia**, responsable de cargar los modelos persistidos y ejecutar el proceso de clasificación de documentación técnica.
+Este flujo representa el recorrido que siguen los artefactos generados durante el entrenamiento hasta quedar almacenados de forma persistente dentro del **Model Store**, junto con la información necesaria para su posterior recuperación durante el proceso de inferencia.
 
 ---
 
-## 33.2 Objetivo del Sprint DS-08
+## 32.5 Ciclo de Vida del Modelo
 
-El objetivo principal del Sprint DS-08 es implementar el Motor de Inferencia que utilizará los artefactos generados durante el entrenamiento para realizar predicciones sobre nuevos documentos.
+El módulo de persistencia administra el ciclo de vida de los artefactos generados durante el entrenamiento del modelo de Machine Learning.
 
-El motor deberá ser capaz de:
+Una vez finalizado el entrenamiento, los artefactos son agrupados, validados y almacenados de forma persistente. Posteriormente podrán recuperarse para ser utilizados por el Motor de Inferencia desarrollado en el Sprint DS-08.
 
-- Cargar automáticamente el modelo persistido.
-- Recuperar el vectorizador utilizado durante el entrenamiento.
-- Cargar los codificadores de etiquetas.
-- Preparar los datos de entrada para el proceso de inferencia.
-- Ejecutar predicciones de clasificación.
-- Construir la respuesta que será consumida posteriormente por la API REST.
+El siguiente diagrama representa los diferentes estados por los que atraviesa un modelo durante este proceso.
+
+```mermaid
+stateDiagram-v2
+
+[*] --> Entrenado
+
+Entrenado --> Empaquetado : Crear ArtifactBundle
+
+Empaquetado --> Persistiendo : save()
+
+Persistiendo --> Persistido : Archivos almacenados
+
+Persistido --> Validado : Verificación de integridad
+
+Validado --> Disponible : Modelo listo para inferencia
+
+Disponible --> Cargado : load()
+
+Cargado --> Disponible : Liberar recursos
+```
+
+La persistencia constituye la transición entre el entrenamiento y la inferencia. Una vez que el modelo alcanza el estado **Disponible**, puede ser recuperado tantas veces como sea necesario sin requerir un nuevo proceso de entrenamiento.
+
+Este enfoque reduce el tiempo de respuesta del sistema, evita el consumo innecesario de recursos computacionales y garantiza la reutilización consistente de los artefactos del modelo.
 
 ---
 
-## 33.3 Dependencias Heredadas
+## 32.6 Resumen de Componentes Implementados
 
-El Sprint DS-08 reutilizará directamente los siguientes componentes desarrollados durante DS-07:
+El Sprint DS-07 concluyó con la implementación de los componentes planificados para el módulo de persistencia. Cada uno de ellos fue desarrollado, validado mediante pruebas unitarias y verificado utilizando las herramientas de calidad definidas para el proyecto.
 
-| Componente | Uso en DS-08 |
-|------------|--------------|
-| ArtifactPersistenceService | Recuperación de artefactos del modelo. |
-| ArtifactLoader | Carga de modelos persistidos. |
-| MetadataManager | Lectura de metadatos del modelo. |
-| VersionManager | Selección de la versión adecuada. |
-| IntegrityValidator | Validación de artefactos antes de la carga. |
-| ArtifactBundle | Reconstrucción del conjunto de artefactos. |
+La siguiente tabla resume el estado de los componentes implementados.
+
+| Componente | Estado | Validación |
+|------------|:------:|:----------:|
+| ModelMetadata | ✅ Implementado | ✅ |
+| ArtifactBundle | ✅ Implementado | ✅ |
+| ArtifactRepository | ✅ Implementado | ✅ |
+| FilesystemArtifactRepository | ✅ Implementado | ✅ |
+| MetadataManager | ✅ Implementado | ✅ |
+| VersionManager | ✅ Implementado | ✅ |
+| IntegrityValidator | ✅ Implementado | ✅ |
+| HashUtils | ✅ Implementado | ✅ |
+| Jerarquía de Excepciones | ✅ Implementado | ✅ |
+
+Todos los componentes fueron desarrollados respetando la arquitectura definida para el componente Data Science y preparados para su reutilización durante el Sprint DS-08.
 
 ---
 
-## 33.4 Arquitectura Prevista
+## 32.7 Resultados de Calidad
 
-El Motor de Inferencia se integrará con los componentes existentes mediante la siguiente arquitectura.
+Como parte del proceso de desarrollo se ejecutaron las actividades de aseguramiento de calidad establecidas para el proyecto.
+
+Las verificaciones realizadas garantizan que el código cumple con los estándares de desarrollo definidos por el equipo y que el módulo puede integrarse con el resto del componente Data Science.
+
+| Verificación | Resultado |
+|---------------|:---------:|
+| Pruebas Unitarias (Pytest) | ✅ 69 pruebas exitosas |
+| Formato de Código (Black) | ✅ |
+| Análisis Estático (Ruff) | ✅ |
+| Verificación de Tipos (MyPy) | ✅ |
+| Clean Architecture | ✅ |
+| Principios SOLID | ✅ |
+
+Estas validaciones proporcionan un alto nivel de confianza sobre la estabilidad del módulo de persistencia y reducen el riesgo de fallos durante la integración con el Motor de Inferencia.
+
+---
+
+## 32.8 Evidencias de la Implementación
+
+El desarrollo del Sprint DS-07 produjo los siguientes resultados:
+
+- Implementación completa del módulo de persistencia.
+- Gestión de versiones de modelos mediante `VersionManager`.
+- Persistencia de artefactos utilizando `FilesystemArtifactRepository`.
+- Serialización y recuperación de metadatos mediante `MetadataManager`.
+- Validación de integridad de artefactos persistidos.
+- Organización del almacenamiento mediante **Model Store**.
+- Implementación de una jerarquía de excepciones específica para el módulo.
+- Cobertura de pruebas sobre los componentes implementados.
+- Cumplimiento de los estándares de calidad del proyecto.
+
+Estos resultados constituyen la base técnica necesaria para el desarrollo del Sprint DS-08, en el cual los artefactos persistidos serán utilizados por el Motor de Inferencia.
+
+---
+
+## 32.9 Distribución del Trabajo del Sprint
+
+El Sprint DS-07 se centró en la construcción de la infraestructura necesaria para soportar la persistencia de modelos dentro del componente Data Science.
+
+La mayor parte del esfuerzo se concentró en el desarrollo del repositorio de persistencia y en la implementación de los mecanismos auxiliares que garantizan la trazabilidad, integridad y reutilización de los artefactos del modelo.
+
+```mermaid
+pie title Distribución del Trabajo del Sprint DS-07
+
+    "Repositorio de Persistencia" : 30
+    "Modelo de Dominio" : 15
+    "Gestión de Metadatos" : 10
+    "Versionado" : 10
+    "Validación e Integridad" : 10
+    "Manejo de Excepciones" : 10
+    "Pruebas Unitarias" : 10
+    "Control de Calidad (Black, Ruff, MyPy)" : 5
+```
+
+La distribución presentada refleja el esfuerzo realizado durante el sprint y evidencia que el desarrollo se enfocó principalmente en la construcción del mecanismo de persistencia y en la implementación de los componentes necesarios para garantizar su calidad y mantenibilidad.
+
+---
+
+## 32.10 Conclusiones de la Implementación
+
+El Sprint DS-07 cumplió satisfactoriamente los objetivos definidos para la construcción del módulo de persistencia del componente Data Science de AyniKortex.
+
+Durante este sprint se implementó una infraestructura capaz de almacenar, recuperar y administrar los artefactos generados durante el entrenamiento de modelos de Machine Learning, incorporando mecanismos de versionado, gestión de metadatos, validación de integridad y manejo de excepciones.
+
+La solución fue desarrollada respetando los principios de **Clean Architecture** y **SOLID**, garantizando una separación clara de responsabilidades entre el dominio, los contratos y la infraestructura de persistencia.
+
+Asimismo, el módulo fue validado mediante pruebas unitarias y herramientas de aseguramiento de calidad, confirmando su correcto funcionamiento y su preparación para integrarse con las siguientes etapas del proyecto.
+
+Con la finalización de este sprint, el componente Data Science dispone de una base sólida para el desarrollo del **Sprint DS-08 – Motor de Inferencia**, donde los modelos persistidos serán utilizados para realizar predicciones sobre nueva documentación técnica.
+
+En conjunto, los resultados obtenidos representan un avance significativo en la consolidación de la arquitectura del proyecto y fortalecen la capacidad del sistema para evolucionar hacia un flujo completo de entrenamiento, persistencia e inferencia de modelos de Machine Learning.
+
+---
+
+# 33. Estado del Sprint
+
+## Estado General
+
+El Sprint DS-07 ha sido completado satisfactoriamente, alcanzando los objetivos establecidos para la implementación del módulo de persistencia del componente Data Science de AyniKortex.
+
+Todos los entregables definidos durante la planificación fueron desarrollados, validados y documentados, permitiendo cerrar el sprint con una solución funcional y preparada para su integración con las siguientes etapas del proyecto.
+
+### Resumen Ejecutivo
+
+| Aspecto | Estado |
+|---------|:------:|
+| Objetivos del Sprint | ✅ Cumplidos |
+| Implementación | ✅ Finalizada |
+| Pruebas Unitarias | ✅ Completadas |
+| Validación de Calidad | ✅ Superada |
+| Documentación | ✅ Actualizada |
+| Preparación para DS-08 | ✅ Lista |
+
+---
+
+## Entregables Completados
+
+Durante el Sprint DS-07 se completaron los siguientes entregables:
+
+- Implementación del módulo de persistencia.
+- Gestión de metadatos y versionado de modelos.
+- Validación de integridad de artefactos.
+- Implementación de la jerarquía de excepciones.
+- Desarrollo de pruebas unitarias.
+- Actualización de la documentación técnica del sprint.
+
+---
+
+## Evaluación del Sprint
+
+El Sprint DS-07 concluye con todos los objetivos alcanzados y sin funcionalidades pendientes dentro del alcance definido.
+
+La infraestructura desarrollada proporciona una base sólida para el siguiente sprint, reduciendo riesgos durante la integración del Motor de Inferencia y facilitando la reutilización de los modelos entrenados.
+
+---
+
+# 34. Próximo Sprint
+
+## DS-08 – Motor de Inferencia
+
+Con la finalización del módulo de persistencia, el siguiente paso en la evolución del componente Data Science corresponde al desarrollo del **Motor de Inferencia**, responsable de utilizar los modelos previamente entrenados para generar predicciones sobre nueva documentación técnica.
+
+El Sprint DS-08 aprovechará la infraestructura implementada durante DS-07 para recuperar automáticamente los artefactos persistidos y ejecutar el proceso de clasificación sin necesidad de realizar un nuevo entrenamiento.
+
+---
+
+## Objetivo
+
+Desarrollar el Motor de Inferencia que permita cargar modelos persistidos y realizar predicciones sobre documentos técnicos mediante una interfaz desacoplada e integrada con el Backend del proyecto.
+
+---
+
+## Alcance
+
+El Sprint DS-08 contempla el desarrollo de los siguientes componentes:
+
+- Carga de modelos persistidos desde el **Model Store**.
+- Recuperación del vectorizador y del codificador de etiquetas.
+- Construcción del Pipeline de Inferencia.
+- Procesamiento de nuevos documentos.
+- Generación de predicciones.
+- Obtención de probabilidades de clasificación.
+- Integración con el componente Backend.
+- Desarrollo de pruebas unitarias del Motor de Inferencia.
+
+---
+
+## Integración con DS-07
+
+El Motor de Inferencia utilizará directamente la infraestructura desarrollada durante el Sprint DS-07.
 
 ```mermaid
 flowchart LR
 
-    Cliente["Solicitud de Clasificación"]
+Persistencia["DS-07<br/>Persistencia"]
 
-    API["API REST"]
+ModelStore["Model Store"]
 
-    Inference["Motor de Inferencia"]
+Inference["DS-08<br/>Motor de Inferencia"]
 
-    Loader["ArtifactLoader"]
+Backend["Backend"]
 
-    Modelo["Modelo Entrenado"]
+Usuario["Usuario"]
 
-    Resultado["Clasificación"]
+Persistencia --> ModelStore
 
-    Cliente --> API
-    API --> Inference
-    Inference --> Loader
-    Loader --> Modelo
-    Modelo --> Resultado
-    Resultado --> API
+ModelStore --> Inference
+
+Inference --> Backend
+
+Backend --> Usuario
 ```
 
----
-
-## 33.5 Entregables Esperados
-
-Durante el Sprint DS-08 se espera desarrollar los siguientes componentes:
-
-- InferenceService.
-- PredictionPipeline.
-- PredictionResult.
-- InputValidator.
-- PredictionException.
-- ModelLoaderAdapter.
-- Pruebas unitarias del Motor de Inferencia.
-- Pruebas de integración con los artefactos persistidos.
+La reutilización de los artefactos persistidos permitirá reducir significativamente los tiempos de respuesta del sistema y evitar la ejecución innecesaria del proceso de entrenamiento para cada solicitud de clasificación.
 
 ---
 
-## 33.6 Integración con la API REST
+## Resultados Esperados
 
-Una vez implementado el Motor de Inferencia, este será consumido por la API REST del componente Data Science.
+Al finalizar el Sprint DS-08 se espera contar con un Motor de Inferencia capaz de:
 
-La API será responsable de:
+- Recuperar automáticamente los modelos persistidos.
+- Procesar nuevos documentos técnicos.
+- Generar predicciones de clasificación.
+- Retornar resultados al Backend mediante la interfaz definida para el componente Data Science.
+- Preparar la integración completa dentro del flujo funcional de AyniKortex.
 
-- Recibir las solicitudes del Backend.
-- Validar los datos de entrada.
-- Invocar el Motor de Inferencia.
-- Construir la respuesta en formato JSON.
-- Gestionar errores y excepciones.
-
-Esta separación mantiene la independencia entre la lógica de inferencia y la capa de exposición del servicio.
+La implementación del Motor de Inferencia representará la transición desde un sistema capaz de entrenar y almacenar modelos hacia una solución funcional orientada al consumo de predicciones por parte de otras capas de la arquitectura.
 
 ---
 
-## 33.7 Preparación para Backend
+# 35. Cierre del Sprint
 
-La finalización del Sprint DS-08 permitirá que el Backend consuma el servicio de clasificación mediante los contratos previamente definidos.
+El Sprint DS-07 marca la culminación de una etapa fundamental en la evolución del componente Data Science de **AyniKortex**.
 
-La integración se apoyará en los documentos:
+Durante este sprint se completó la implementación del módulo de persistencia, proporcionando la infraestructura necesaria para almacenar, recuperar y administrar los artefactos generados durante el entrenamiento de modelos de Machine Learning. La solución desarrollada incorpora mecanismos de versionado, gestión de metadatos, validación de integridad y manejo de excepciones, garantizando una arquitectura robusta, mantenible y preparada para futuras extensiones.
 
-- Backend-Data-Contract.
-- Backend-Data-Model.
+La implementación fue acompañada por un proceso de validación técnica que incluyó pruebas unitarias, análisis estático de código y verificación del cumplimiento de los principios de **Clean Architecture** y **SOLID**, asegurando la calidad y confiabilidad del módulo desarrollado.
 
-Con ello se garantizará la compatibilidad entre ambos componentes y se facilitará la integración dentro de la arquitectura general del proyecto.
+La documentación generada durante este sprint refleja tanto el diseño como la implementación de la solución, proporcionando una referencia técnica que facilitará el mantenimiento, la evolución del proyecto y la incorporación de nuevos integrantes al equipo de desarrollo.
 
----
+Con la finalización de DS-07, el componente Data Science cuenta con todos los elementos necesarios para iniciar el desarrollo del **Sprint DS-08 – Motor de Inferencia**, donde los modelos persistidos serán utilizados para realizar predicciones sobre nueva documentación técnica e integrarse con el Backend de la plataforma.
 
-## 33.8 Continuidad del Proyecto
+Este sprint representa un avance significativo dentro del proyecto AyniKortex, consolidando una arquitectura preparada para soportar el ciclo completo de entrenamiento, persistencia e inferencia de modelos de Machine Learning.
 
-La secuencia planificada para los siguientes componentes será la siguiente:
-
-```mermaid
-flowchart LR
-
-    DS07["DS-07<br/>Persistencia"]
-
-    DS08["DS-08<br/>Motor de Inferencia"]
-
-    API["API REST"]
-
-    Backend["Backend"]
-
-    Frontend["Frontend"]
-
-    DS07 --> DS08
-    DS08 --> API
-    API --> Backend
-    Backend --> Frontend
-```
-
-Esta hoja de ruta asegura una evolución progresiva del componente Data Science, permitiendo validar cada etapa antes de avanzar hacia la siguiente.
-
----
-
-## 33.9 Resumen Ejecutivo
-
-El Sprint DS-07 establece las bases necesarias para la reutilización de modelos entrenados, mientras que el Sprint DS-08 incorporará las capacidades de inferencia que permitirán transformar dichos modelos en un servicio funcional.
-
-La combinación de ambos sprints constituye el núcleo del componente Data Science y representa un paso fundamental para la integración con la API REST y el Backend del proyecto AyniKortex.
-
----
 

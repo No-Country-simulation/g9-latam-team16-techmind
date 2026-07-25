@@ -1,296 +1,244 @@
-# Guía de Contribución
+# 🤝 Guía de Contribución
 
-Bienvenido a **TechMind – Organización Inteligente del Conocimiento Técnico**.
+> **Proyecto:** AyniKortex  
+> **Estado:** En desarrollo
 
-Este documento establece las normas, procesos y buenas prácticas que deben seguir todos los colaboradores del proyecto para garantizar un desarrollo consistente, mantenible y alineado con la arquitectura definida.
+¡Gracias por tu interés en contribuir a **AyniKortex**!
 
-La guía aplica a todos los componentes del proyecto, incluyendo **Backend**, **Data Science**, **Frontend** (cuando esté disponible), **DevOps** y **Documentación**.
+Este proyecto nace con el propósito de transformar documentación técnica en conocimiento inteligente mediante Machine Learning, combinando buenas prácticas de ingeniería, colaboración y aprendizaje continuo.
 
----
-
-# Objetivo
-
-El objetivo de esta guía es establecer un proceso de desarrollo uniforme que facilite la colaboración entre los diferentes equipos, reduzca retrabajos y garantice la calidad del software durante todo el ciclo de vida del proyecto.
-
-Todas las contribuciones deberán respetar:
-
-- La arquitectura aprobada del proyecto.
-- Los estándares de ingeniería.
-- Las decisiones arquitectónicas (ADR).
-- La documentación oficial.
-- Las convenciones de desarrollo definidas por el equipo.
+Toda contribución, ya sea código, documentación, pruebas o propuestas de mejora, ayuda a fortalecer el proyecto y a construir una plataforma más útil para toda la comunidad.
 
 ---
 
-# Organización del Proyecto
+# 🎯 Objetivo
 
-TechMind está organizado en componentes independientes, cada uno con responsabilidades claramente definidas.
+Esta guía describe el proceso de colaboración, los estándares de desarrollo y las buenas prácticas que seguimos para mantener un proyecto consistente, mantenible y preparado para evolucionar.
+
+Nuestro objetivo es que cualquier colaborador pueda integrarse rápidamente al proyecto y contribuir siguiendo un conjunto común de principios y convenciones.
+
+---
+
+# 🌟 Nuestra Filosofía
+
+En AyniKortex creemos que construir software va mucho más allá de escribir código.
+
+Valoramos por igual:
+
+- 🤝 La colaboración entre equipos.
+- 📚 La documentación clara y actualizada.
+- 💻 El código limpio y mantenible.
+- 🧪 La calidad mediante pruebas.
+- 🚀 La mejora continua.
+- 💡 El intercambio de conocimiento.
+
+Cada contribución, sin importar su tamaño, representa una oportunidad para fortalecer el proyecto y aprender en conjunto.
+
+---
+
+# 🏗 Organización del Proyecto
+
+AyniKortex está organizado en componentes especializados que colaboran para ofrecer una solución integral para la gestión inteligente de documentación técnica.
 
 | Componente | Responsabilidad |
 |------------|-----------------|
-| Backend | Implementación de la lógica de negocio, APIs, persistencia e integración con Data Science. |
-| Data Science | Construcción del dataset, preprocesamiento, entrenamiento, evaluación e inferencia del modelo de Machine Learning. |
-| Frontend | Desarrollo de la interfaz de usuario e integración con Backend. |
-| DevOps | Automatización, integración continua, despliegue y monitoreo de la infraestructura. |
-| Documentación | Mantenimiento de la documentación técnica y funcional del proyecto. |
+| 🎨 Frontend | Desarrollo de la interfaz de usuario y experiencia de navegación. |
+| ⚙️ Backend | Implementación de la lógica de negocio, APIs REST y persistencia de datos. |
+| 🤖 Data Science | Desarrollo del modelo de Machine Learning y servicios de inferencia. |
+| 📚 Documentación | Mantenimiento de la documentación técnica y funcional del proyecto. |
 
-Cada componente evoluciona mediante Sprints específicos, pero todos siguen los mismos estándares de desarrollo y comparten una única arquitectura del sistema.
-
----
-
-# Antes de Comenzar
-
-Antes de implementar una nueva funcionalidad, todos los colaboradores deberán revisar la documentación oficial del proyecto.
-
-Se recomienda consultar, como mínimo, los siguientes documentos:
-
-- `README.md`
-- `CHANGELOG.md`
-- Software Design Specification (SDS)
-- Architecture Decision Records (ADR)
-- System Architecture
-- Repository Structure
-- Engineering Standards
-- Technical Roadmap
-
-Comprender la arquitectura y las decisiones técnicas antes de escribir código facilita la integración de cambios, reduce retrabajos y mantiene la consistencia del proyecto.
+Cada componente puede evolucionar de manera independiente, manteniendo una arquitectura modular y una comunicación claramente definida entre los distintos equipos.
 
 ---
 
-# Flujo de Trabajo
+# 🚀 Antes de comenzar
 
-Actualmente, el proyecto se encuentra en una etapa temprana de desarrollo (MVP), por lo que el flujo de trabajo se mantiene simple para facilitar la colaboración entre los integrantes del equipo.
+Antes de realizar cualquier contribución, te recomendamos familiarizarte con la documentación oficial del proyecto.
 
-En esta etapa, la rama principal del proyecto es:
+Los documentos principales son:
 
-```text
-main
+| Documento | Propósito |
+|------------|-----------|
+| 📘 README.md | Conocer el proyecto y su propósito. |
+| 🏛️ ARCHITECTURE.md | Comprender la arquitectura general del sistema. |
+| 🗺️ ROADMAP.md | Conocer la evolución planificada del proyecto. |
+| 📖 DOCUMENTATION_STYLE_GUIDE.md | Estándares para la documentación. |
+
+Comprender estos documentos facilitará la integración de cambios y permitirá mantener la coherencia del proyecto.
+
+---
+
+# 🌿 Flujo de Contribución
+
+Toda contribución sigue un proceso sencillo orientado a mantener la calidad y la estabilidad del proyecto.
+
+```mermaid
+flowchart LR
+
+    Idea["💡 Idea"]
+
+    Issue["📝 Planificación"]
+
+    Desarrollo["💻 Desarrollo"]
+
+    Pruebas["🧪 Pruebas"]
+
+    Documentacion["📚 Documentación"]
+
+    Revision["👀 Revisión"]
+
+    Integracion["✅ Integración"]
+
+    Idea --> Issue
+
+    Issue --> Desarrollo
+
+    Desarrollo --> Pruebas
+
+    Pruebas --> Documentacion
+
+    Documentacion --> Revision
+
+    Revision --> Integracion
 ```
 
-Los cambios desarrollados por los integrantes del equipo son revisados e integrados en el repositorio principal antes de su publicación.
-
-Conforme el proyecto evolucione y aumente el número de colaboradores activos, podrá adoptarse una estrategia de ramas más robusta (por ejemplo, `develop` y `feature/*`), sin afectar la organización del repositorio.
+Cada etapa tiene como objetivo asegurar que las nuevas funcionalidades, mejoras o correcciones sean incorporadas de forma ordenada y manteniendo los estándares definidos por el proyecto.
 
 ---
 
-# Sincronización del Repositorio
+# 💻 Estándares de Desarrollo
 
-Antes de comenzar a trabajar, es recomendable obtener la versión más reciente del repositorio:
+En AyniKortex buscamos construir un software mantenible, escalable y fácil de comprender.
 
-```bash
-git pull origin main
-```
+Antes de incorporar cualquier cambio al proyecto, verifica que tu contribución respete los principios de diseño, la arquitectura definida y los estándares de calidad acordados por el equipo.
 
-Una vez finalizada la funcionalidad:
+## 🏗️ Principios de Desarrollo
 
-```bash
-git add .
+Durante el desarrollo se recomienda priorizar los siguientes principios:
 
-git commit -m "feat: descripción de la funcionalidad"
-
-git push origin main
-```
-
-Nota: Durante el desarrollo del MVP, la estrategia de control de versiones podrá evolucionar conforme se incorporen nuevos colaboradores y aumente la complejidad del proyecto
-
----
-
-# Estándares de Desarrollo
-
-Todo el código incorporado al proyecto deberá cumplir con los estándares de calidad definidos por el equipo.
-
-El objetivo no es únicamente desarrollar funcionalidades, sino construir un software mantenible, escalable y fácil de comprender para cualquier integrante del proyecto.
+| Principio | Descripción |
+|-----------|-------------|
+| Responsabilidad Única | Cada módulo debe tener un único propósito claramente definido. |
+| Bajo Acoplamiento | Reducir las dependencias entre componentes. |
+| Alta Cohesión | Agrupar funcionalidades relacionadas dentro del mismo módulo. |
+| Simplicidad (KISS) | Preferir soluciones simples antes que implementaciones innecesariamente complejas. |
+| No Repetición (DRY) | Evitar duplicar lógica o información. |
+| Legibilidad | Escribir código claro, descriptivo y fácil de mantener. |
+| Documentación Actualizada | Mantener la documentación sincronizada con la evolución del proyecto. |
 
 ---
 
-## Principios de Diseño
+## 📝 Convenciones de Código
 
-Durante el desarrollo deberán priorizarse los siguientes principios:
+Antes de realizar un commit, verifica que:
 
-- Responsabilidad Única (Single Responsibility Principle).
-- Bajo acoplamiento entre componentes.
-- Alta cohesión dentro de cada módulo.
-- Modularidad.
-- Reutilización de código.
-- Simplicidad en las soluciones (KISS).
-- Evitar duplicación de código (DRY).
-- Legibilidad antes que complejidad.
-
-Estos principios deberán aplicarse tanto en Backend como en Data Science y en los futuros componentes del proyecto.
+- Se utilizan nombres descriptivos para clases, funciones y variables.
+- Cada archivo tiene una responsabilidad claramente definida.
+- No existen bloques de código duplicados.
+- Se eliminaron archivos temporales o código de prueba.
+- La estructura del proyecto permanece consistente con la arquitectura definida.
+- El código incluye comentarios únicamente cuando aportan contexto relevante.
 
 ---
 
-## Convenciones de Código
+# 📝 Convención de Commits
 
-Antes de incorporar código al proyecto, verificar que:
+Para mantener un historial claro y fácil de consultar, utilizamos una convención basada en prefijos.
 
-- Los nombres de clases, funciones y variables sean descriptivos.
-- Cada módulo tenga una única responsabilidad claramente definida.
-- No existan fragmentos de código duplicados.
-- Se eliminen comentarios o código temporal antes de integrar los cambios.
-- La estructura del proyecto se mantenga consistente con la arquitectura aprobada.
-
----
-
-## Documentación del Código
-
-La documentación debe complementar el código, no reemplazarlo.
-
-Se recomienda:
-
-- Utilizar nombres claros para clases y funciones.
-- Documentar únicamente cuando aporte contexto o facilite el mantenimiento.
-- Mantener sincronizada la documentación técnica con la implementación.
-- Actualizar los documentos oficiales cuando una modificación afecte la arquitectura o el funcionamiento del sistema.
-
----
-
-# Convención de Commits
-
-Los mensajes de commit deberán describir claramente el propósito del cambio.
-
-Se recomienda utilizar la siguiente convención:
-
-| Prefijo | Descripción |
-|----------|-------------|
+| Prefijo | Uso |
+|----------|-----|
 | `feat` | Nueva funcionalidad |
 | `fix` | Corrección de errores |
 | `docs` | Cambios en la documentación |
-| `refactor` | Mejora de la estructura del código sin modificar su comportamiento |
+| `refactor` | Mejora del código sin modificar su comportamiento |
 | `test` | Incorporación o actualización de pruebas |
+| `style` | Cambios de formato o estilo sin afectar la lógica |
 | `chore` | Tareas de mantenimiento o configuración |
 
-Ejemplos:
+## Ejemplos
 
 ```text
-feat: implementar pipeline de preprocesamiento
+feat: agregar servicio de clasificación
 
-fix: corregir validación del dataset
+fix: corregir validación de documentos
 
-docs: actualizar README del componente
+docs: actualizar arquitectura del sistema
 
-refactor: simplificar DataLoaderFactory
+refactor: simplificar controlador de documentos
 
-test: agregar pruebas para Tokenizer
+test: agregar pruebas del pipeline
 
 chore: actualizar dependencias
 ```
 
 ---
 
-# Pruebas y Aseguramiento de la Calidad
+# 🧪 Calidad y Pruebas
 
-La calidad del software es responsabilidad de todos los integrantes del proyecto.
+La calidad del software es responsabilidad de todo el equipo.
 
-Antes de integrar cualquier cambio al repositorio, se deberá verificar que la funcionalidad implementada cumple con los estándares definidos por el equipo y no afecta el comportamiento del sistema.
+Siempre que sea posible, las nuevas funcionalidades deberán ser validadas antes de integrarse al proyecto.
 
----
-
-## Lista de Verificación
-
-Antes de integrar cambios, comprobar que:
-
-- La funcionalidad implementada cumple con los requisitos definidos.
-- No se introducen errores en funcionalidades existentes.
-- El código mantiene la estructura y arquitectura aprobadas.
-- La documentación relacionada ha sido actualizada, cuando corresponda.
-- No existen archivos temporales, dependencias innecesarias o código sin utilizar.
-
----
-
-## Pruebas
-
-Siempre que sea posible, los cambios deberán ser validados mediante pruebas.
-
-Dependiendo del componente, estas podrán incluir:
-
-### Backend
+## Backend
 
 - Pruebas unitarias.
 - Pruebas de integración.
 - Validación de APIs.
 
-### Data Science
+## Data Science
 
-- Validación del Dataset Maestro.
-- Validación del pipeline de preprocesamiento.
-- Validación de Readers y Loaders.
-- Validación de scripts de procesamiento.
-- Ejecución de la suite de pruebas automatizadas.
+- Validación del dataset.
+- Validación del pipeline de procesamiento.
+- Validación del modelo entrenado.
+- Validación de los servicios de inferencia.
 
----
+## Frontend
 
-## Calidad de la Documentación
-
-La documentación forma parte del producto y debe mantenerse sincronizada con la implementación.
-
-Cuando un cambio afecte la arquitectura, el funcionamiento del sistema o la organización del proyecto, deberán actualizarse los documentos correspondientes.
-
-Entre ellos:
-
-- README.md
-- CHANGELOG.md
-- Software Design Specification (SDS)
-- Architecture Decision Records (ADR)
-- Technical Roadmap
-- Engineering Standards
+- Validación de componentes.
+- Validación de integración con Backend.
+- Verificación de la experiencia de usuario.
 
 ---
 
-# Integración de Cambios
+# 📚 Documentación
 
-Durante la etapa actual del proyecto (MVP), la integración de cambios se realiza directamente sobre la rama principal del repositorio.
+La documentación forma parte del producto y debe evolucionar junto con el código.
 
-Antes de incorporar una nueva funcionalidad, se recomienda verificar que:
+Cuando una contribución modifique el funcionamiento del sistema, también deberá revisarse la documentación correspondiente.
 
-- El código ha sido probado.
-- La funcionalidad cumple con el alcance definido.
-- No existen conflictos con el trabajo realizado previamente.
-- La documentación permanece actualizada.
+Los principales documentos del proyecto son:
 
-El objetivo es mantener un historial de cambios claro, estable y fácil de mantener.
-
----
-
-# Buenas Prácticas
-
-Durante el desarrollo del proyecto se recomienda seguir las siguientes prácticas:
-
-- Implementar una única funcionalidad a la vez.
-- Mantener los cambios pequeños y fáciles de revisar.
-- Priorizar la claridad del código sobre soluciones complejas.
-- Evitar duplicación de código.
-- Mantener una estructura modular.
-- Respetar la arquitectura aprobada.
-- Documentar los cambios relevantes.
-- Mantener sincronizada la documentación con la implementación.
-- Compartir las decisiones técnicas con el equipo antes de realizar cambios arquitectónicos.
+| Documento | Propósito |
+|------------|-----------|
+| 📘 README.md | Presentación general del proyecto. |
+| 🏛️ ARCHITECTURE.md | Arquitectura del sistema. |
+| 🗺️ ROADMAP.md | Plan de evolución del proyecto. |
+| 📖 DOCUMENTATION_STYLE_GUIDE.md | Estándares de documentación. |
+| 🤝 CONTRIBUTING.md | Guía para colaboradores. |
+| 🔒 SECURITY.md | Gestión de vulnerabilidades. |
+| 🆘 SUPPORT.md | Canales de soporte. |
 
 ---
 
-# Documentación Oficial
+# ✅ Lista de Verificación
 
-La documentación técnica del proyecto se encuentra organizada en el directorio `docs/`.
+Antes de compartir tu contribución, verifica que:
 
-Antes de realizar modificaciones importantes, se recomienda consultar la documentación oficial del proyecto para garantizar que los cambios sean consistentes con la arquitectura y los estándares establecidos.
-
-Los principales documentos son:
-
-- README
-- CHANGELOG
-- Software Design Specification (SDS)
-- Architecture Decision Records (ADR)
-- System Architecture
-- Technical Roadmap
-- Engineering Standards
+- [ ] El código compila correctamente.
+- [ ] La funcionalidad cumple con el objetivo propuesto.
+- [ ] Se ejecutaron las pruebas correspondientes.
+- [ ] No existen archivos temporales o innecesarios.
+- [ ] La documentación fue actualizada cuando fue necesario.
+- [ ] Se respetó la arquitectura del proyecto.
+- [ ] El mensaje de commit sigue la convención establecida.
+- [ ] La contribución mantiene la calidad y legibilidad del código.
 
 ---
 
-# Consideraciones Finales
+# 💙 Gracias por contribuir
 
-TechMind es un proyecto desarrollado de forma colaborativa y orientado a la construcción de una plataforma mantenible, escalable y de alta calidad.
+Cada línea de código, cada mejora en la documentación, cada prueba y cada sugerencia ayudan a construir un proyecto más sólido.
 
-El cumplimiento de esta guía contribuye a mantener la consistencia del código, facilitar la colaboración entre los integrantes del equipo y reducir el esfuerzo de mantenimiento a medida que el proyecto evoluciona.
+AyniKortex es posible gracias al trabajo colaborativo de personas que comparten el interés por aprender, innovar y construir soluciones de calidad.
 
----
-
+¡Gracias por formar parte de esta comunidad! 🚀
