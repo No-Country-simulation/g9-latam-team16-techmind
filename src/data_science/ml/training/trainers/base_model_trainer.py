@@ -80,9 +80,7 @@ class BaseModelTrainer(ABC):
                 Si el modelo aún no ha sido entrenado.
         """
         if not self._trained or self._model is None:
-            raise TrainingException(
-                "El modelo aún no ha sido entrenado."
-            )
+            raise TrainingException("El modelo aún no ha sido entrenado.")
 
         return self._model
 

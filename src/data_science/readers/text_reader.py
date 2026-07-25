@@ -23,10 +23,10 @@ from pathlib import Path
 
 from .base_reader import BaseReader
 
-
 # ==========================================================
 # Text Reader
 # ==========================================================
+
 
 class TextReader(BaseReader):
     """

@@ -26,10 +26,10 @@ import pandas as pd
 from ..data.domain import DocumentRecord
 from .base_loader import BaseLoader
 
-
 # ==========================================================
 # Hugging Face Loader
 # ==========================================================
+
 
 class HuggingFaceLoader(BaseLoader):
     """
@@ -44,9 +44,7 @@ class HuggingFaceLoader(BaseLoader):
 
     DEFAULT_AUTHOR = "unknown"
 
-    SUPPORTED_EXTENSIONS = (
-        ".csv",
-    )
+    SUPPORTED_EXTENSIONS = (".csv",)
 
     def __init__(
         self,
@@ -71,13 +69,9 @@ class HuggingFaceLoader(BaseLoader):
 
             dataset = self._read(file)
 
-            rows = dataset.to_dict(
-                orient="records"
-            )
+            rows = dataset.to_dict(orient="records")
 
-            records.extend(
-                self._build_records(rows)
-            )
+            records.extend(self._build_records(rows))
 
         return self._build_dataframe(records)
 
@@ -91,51 +85,30 @@ class HuggingFaceLoader(BaseLoader):
     ) -> DocumentRecord:
 
         return {
-
-            "document_id": str(
-                source.get(
-                    "document_id",
-                    ""
-                )
-            ),
-
-            "title": source.get(
-                "title",
-                ""
-            ),
-
-            "text": source.get(
-                "text",
-                ""
-            ),
-
+            "document_id": str(source.get("document_id", "")),
+            "title": source.get("title", ""),
+            "text": source.get("text", ""),
             "source": self.SOURCE,
-
             "category": source.get(
                 "category",
                 self.DEFAULT_CATEGORY,
             ),
-
             "language": source.get(
                 "language",
                 self.DEFAULT_LANGUAGE,
             ),
-
             "author": source.get(
                 "author",
                 self.DEFAULT_AUTHOR,
             ),
-
             "tags": source.get(
                 "tags",
                 [],
             ),
-
             "url": source.get(
                 "url",
                 "",
             ),
-
             "metadata": source.get(
                 "metadata",
                 {},

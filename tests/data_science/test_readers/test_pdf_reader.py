@@ -24,10 +24,10 @@ import pytest
 
 from data_science.readers.pdf_reader import PdfReader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_read_valid_pdf() -> None:
     """
@@ -36,7 +36,6 @@ def test_read_valid_pdf() -> None:
     """
 
     file = Path("tests/data_science/fixtures/sample.pdf")
- 
 
     reader = PdfReader()
 

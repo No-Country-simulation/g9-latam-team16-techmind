@@ -25,10 +25,10 @@ import pytest
 
 from data_science.readers.csv_reader import CsvReader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_read_valid_csv(tmp_path: Path) -> None:
     """

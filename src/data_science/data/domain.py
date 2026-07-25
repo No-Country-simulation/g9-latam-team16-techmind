@@ -33,6 +33,7 @@ from typing import Literal
 # Modelos del Dataset
 # ==========================================================
 
+
 @dataclass(slots=True)
 class DocumentRecord:
     """
@@ -53,6 +54,7 @@ class DocumentRecord:
     created_date: str | None = None
     url: str | None = None
 
+
 @dataclass(slots=True)
 class ValidationIssue:
     """
@@ -65,9 +67,11 @@ class ValidationIssue:
     column: str | None = None
     row: int | None = None
 
+
 # ==========================================================
 # Modelos de Validación
 # ==========================================================
+
 
 @dataclass(slots=True)
 class ValidationResult:
@@ -83,33 +87,23 @@ class ValidationResult:
         """
         Returns True if no validation errors exist.
         """
-        return not any(
-            issue.level == "ERROR"
-            for issue in self.issues
-        )
+        return not any(issue.level == "ERROR" for issue in self.issues)
 
     @property
     def errors(self) -> list[ValidationIssue]:
         """
         Returns only validation errors.
         """
-        return [
-            issue
-            for issue in self.issues
-            if issue.level == "ERROR"
-        ]
+        return [issue for issue in self.issues if issue.level == "ERROR"]
 
     @property
     def warnings(self) -> list[ValidationIssue]:
         """
         Returns only validation warnings.
         """
-        return [
-            issue
-            for issue in self.issues
-            if issue.level == "WARNING"
-        ]
-    
+        return [issue for issue in self.issues if issue.level == "WARNING"]
+
+
 @dataclass(slots=True)
 class ProcessedDocument:
     """
@@ -124,4 +118,3 @@ class ProcessedDocument:
     processed_text: str = ""
     tokens: list[str] = field(default_factory=list)
     lemmas: list[str] = field(default_factory=list)
-

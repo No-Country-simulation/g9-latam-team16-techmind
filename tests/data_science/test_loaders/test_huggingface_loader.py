@@ -28,8 +28,7 @@ def test_load_returns_dataframe(tmp_path: Path) -> None:
     csv_file = tmp_path / "dataset.csv"
 
     csv_file.write_text(
-        "document_id,title,text\n"
-        "1,Python,Programming language\n",
+        "document_id,title,text\n" "1,Python,Programming language\n",
         encoding="utf-8",
     )
 
@@ -44,8 +43,7 @@ def test_load_returns_one_record(tmp_path: Path) -> None:
     csv_file = tmp_path / "dataset.csv"
 
     csv_file.write_text(
-        "document_id,title,text\n"
-        "1,Python,Programming language\n",
+        "document_id,title,text\n" "1,Python,Programming language\n",
         encoding="utf-8",
     )
 
@@ -60,8 +58,7 @@ def test_source_is_huggingface(tmp_path: Path) -> None:
     csv_file = tmp_path / "dataset.csv"
 
     csv_file.write_text(
-        "document_id,title,text\n"
-        "1,Python,Programming language\n",
+        "document_id,title,text\n" "1,Python,Programming language\n",
         encoding="utf-8",
     )
 
@@ -76,8 +73,7 @@ def test_document_id_matches_csv(tmp_path: Path) -> None:
     csv_file = tmp_path / "dataset.csv"
 
     csv_file.write_text(
-        "document_id,title,text\n"
-        "25,Python,Programming language\n",
+        "document_id,title,text\n" "25,Python,Programming language\n",
         encoding="utf-8",
     )
 
@@ -92,8 +88,7 @@ def test_default_author_is_unknown(tmp_path: Path) -> None:
     csv_file = tmp_path / "dataset.csv"
 
     csv_file.write_text(
-        "document_id,title,text\n"
-        "1,Python,Programming language\n",
+        "document_id,title,text\n" "1,Python,Programming language\n",
         encoding="utf-8",
     )
 
@@ -108,8 +103,7 @@ def test_default_category_is_dataset(tmp_path: Path) -> None:
     csv_file = tmp_path / "dataset.csv"
 
     csv_file.write_text(
-        "document_id,title,text\n"
-        "1,Python,Programming language\n",
+        "document_id,title,text\n" "1,Python,Programming language\n",
         encoding="utf-8",
     )
 

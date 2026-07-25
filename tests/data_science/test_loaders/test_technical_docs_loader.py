@@ -27,10 +27,10 @@ from data_science.loaders.technical_docs_loader import (
     TechnicalDocsLoader,
 )
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_load_returns_dataframe() -> None:
     """
@@ -38,9 +38,7 @@ def test_load_returns_dataframe() -> None:
     devuelva un DataFrame.
     """
 
-    loader = TechnicalDocsLoader(
-        "tests/data_science/fixtures"
-    )
+    loader = TechnicalDocsLoader("tests/data_science/fixtures")
 
     result = loader.load()
 
@@ -52,9 +50,7 @@ def test_load_reads_pdf() -> None:
     Verifica que el PDF sea leído.
     """
 
-    loader = TechnicalDocsLoader(
-        "tests/data_science/fixtures"
-    )
+    loader = TechnicalDocsLoader("tests/data_science/fixtures")
 
     result = loader.load()
 
@@ -66,9 +62,7 @@ def test_source_is_technical_docs() -> None:
     Verifica el origen del documento.
     """
 
-    loader = TechnicalDocsLoader(
-        "tests/data_science/fixtures"
-    )
+    loader = TechnicalDocsLoader("tests/data_science/fixtures")
 
     result = loader.load()
 
@@ -80,9 +74,7 @@ def test_document_id_matches_filename() -> None:
     Verifica document_id.
     """
 
-    loader = TechnicalDocsLoader(
-        "tests/data_science/fixtures"
-    )
+    loader = TechnicalDocsLoader("tests/data_science/fixtures")
 
     result = loader.load()
 
@@ -95,9 +87,7 @@ def test_load_non_existing_directory() -> None:
     genere FileNotFoundError.
     """
 
-    loader = TechnicalDocsLoader(
-        "carpeta_inexistente"
-    )
+    loader = TechnicalDocsLoader("carpeta_inexistente")
 
     with pytest.raises(FileNotFoundError):
         loader.load()

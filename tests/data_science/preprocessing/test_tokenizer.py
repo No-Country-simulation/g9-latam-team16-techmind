@@ -27,10 +27,10 @@ from data_science.preprocessing.tokenizer import (
     Tokenizer,
 )
 
-
 # ==========================================================
 # Test Helpers
 # ==========================================================
+
 
 def _create_document(
     text: str,
@@ -54,6 +54,7 @@ def _create_document(
 # Unit Tests
 # ==========================================================
 
+
 def test_process_returns_processed_document():
     """
     Should return a ProcessedDocument instance.
@@ -61,9 +62,7 @@ def test_process_returns_processed_document():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        "FastAPI is awesome."
-    )
+    document = _create_document("FastAPI is awesome.")
 
     result = tokenizer.process(document)
 
@@ -77,9 +76,7 @@ def test_tokenize_simple_text():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        "FastAPI is awesome."
-    )
+    document = _create_document("FastAPI is awesome.")
 
     result = tokenizer.process(document)
 
@@ -98,9 +95,7 @@ def test_empty_text():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        ""
-    )
+    document = _create_document("")
 
     result = tokenizer.process(document)
 
@@ -114,15 +109,11 @@ def test_single_word():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        "Docker"
-    )
+    document = _create_document("Docker")
 
     result = tokenizer.process(document)
 
-    assert result.tokens == [
-        "Docker"
-    ]
+    assert result.tokens == ["Docker"]
 
 
 def test_numbers():
@@ -132,9 +123,7 @@ def test_numbers():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        "Version 2.0"
-    )
+    document = _create_document("Version 2.0")
 
     result = tokenizer.process(document)
 
@@ -151,9 +140,7 @@ def test_preserve_punctuation():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        "Hello, world!"
-    )
+    document = _create_document("Hello, world!")
 
     result = tokenizer.process(document)
 
@@ -172,9 +159,7 @@ def test_technical_vocabulary():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        "FastAPI JWT Docker PostgreSQL"
-    )
+    document = _create_document("FastAPI JWT Docker PostgreSQL")
 
     result = tokenizer.process(document)
 
@@ -193,9 +178,7 @@ def test_mixed_sentence():
 
     tokenizer = Tokenizer()
 
-    document = _create_document(
-        "FastAPI uses JWT with Docker."
-    )
+    document = _create_document("FastAPI uses JWT with Docker.")
 
     result = tokenizer.process(document)
 

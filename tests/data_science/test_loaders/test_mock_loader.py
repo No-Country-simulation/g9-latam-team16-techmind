@@ -22,10 +22,10 @@ import pandas as pd
 
 from data_science.loaders.mock_loader import MockLoader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_load_returns_dataframe() -> None:
     """

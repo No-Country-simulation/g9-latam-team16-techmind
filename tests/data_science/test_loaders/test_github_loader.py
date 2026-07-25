@@ -25,10 +25,10 @@ import pytest
 
 from data_science.loaders.github_loader import GitHubLoader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_load_returns_dataframe(tmp_path: Path) -> None:
     """

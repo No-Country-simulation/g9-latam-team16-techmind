@@ -62,8 +62,5 @@ class LogisticRegressionTrainer(BaseModelTrainer):
 
         except Exception as error:
             raise TrainingException(
-                "Ocurrió un error durante el entrenamiento "
-                "del modelo."
+                "Ocurrió un error durante el entrenamiento " "del modelo."
             ) from error
-
-        

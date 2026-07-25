@@ -32,10 +32,10 @@ from data_science.preprocessing.base_preprocessor import (
     BasePreprocessor,
 )
 
-
 # ==========================================================
 # Preprocessing Components
 # ==========================================================
+
 
 class Lemmatizer(BasePreprocessor):
     """
@@ -81,7 +81,4 @@ class Lemmatizer(BasePreprocessor):
             text,
         )
 
-        return [
-            self._LEMMATIZER.lemmatize(word)
-            for word in words
-        ]
+        return [self._LEMMATIZER.lemmatize(word) for word in words]

@@ -26,10 +26,10 @@ from .json_reader import JsonReader
 from .pdf_reader import PdfReader
 from .text_reader import TextReader
 
-
 # ==========================================================
 # Reader Factory
 # ==========================================================
+
 
 class ReaderFactory:
     """
@@ -74,8 +74,6 @@ class ReaderFactory:
         reader_class = cls._READERS.get(extension)
 
         if reader_class is None:
-            raise ValueError(
-                f"No existe un reader para '{extension}'."
-            )
+            raise ValueError(f"No existe un reader para '{extension}'.")
 
         return reader_class()

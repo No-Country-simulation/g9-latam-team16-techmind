@@ -97,6 +97,7 @@ COLUMN_TYPE_MAPPING: Final[dict[str, type]] = {
 # Public Functions
 # ==========================================================
 
+
 def get_required_columns() -> tuple[str, ...]:
     """
     Returns the required columns of the Canonical Schema.

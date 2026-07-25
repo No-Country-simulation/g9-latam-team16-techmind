@@ -27,10 +27,10 @@ from data_science.preprocessing.preprocessing_pipeline import (
     PreprocessingPipeline,
 )
 
-
 # ==========================================================
 # Test Helpers
 # ==========================================================
+
 
 def _create_document(
     text: str,
@@ -54,6 +54,7 @@ def _create_document(
 # Integration Tests
 # ==========================================================
 
+
 def test_pipeline_returns_processed_document():
     """
     Should return a ProcessedDocument instance.
@@ -61,9 +62,7 @@ def test_pipeline_returns_processed_document():
 
     pipeline = PreprocessingPipeline()
 
-    document = _create_document(
-        "FastAPI is AWESOME."
-    )
+    document = _create_document("FastAPI is AWESOME.")
 
     result = pipeline.process(document)
 
@@ -77,9 +76,7 @@ def test_pipeline_generates_processed_text():
 
     pipeline = PreprocessingPipeline()
 
-    document = _create_document(
-        "FastAPI is AWESOME."
-    )
+    document = _create_document("FastAPI is AWESOME.")
 
     result = pipeline.process(document)
 
@@ -93,9 +90,7 @@ def test_pipeline_generates_tokens():
 
     pipeline = PreprocessingPipeline()
 
-    document = _create_document(
-        "FastAPI uses JWT."
-    )
+    document = _create_document("FastAPI uses JWT.")
 
     result = pipeline.process(document)
 
@@ -109,9 +104,7 @@ def test_pipeline_generates_lemmas():
 
     pipeline = PreprocessingPipeline()
 
-    document = _create_document(
-        "cars use Docker"
-    )
+    document = _create_document("cars use Docker")
 
     result = pipeline.process(document)
 
@@ -125,9 +118,7 @@ def test_pipeline_handles_empty_text():
 
     pipeline = PreprocessingPipeline()
 
-    document = _create_document(
-        ""
-    )
+    document = _create_document("")
 
     result = pipeline.process(document)
 
@@ -143,9 +134,7 @@ def test_pipeline_preserves_document():
 
     pipeline = PreprocessingPipeline()
 
-    document = _create_document(
-        "FastAPI Docker"
-    )
+    document = _create_document("FastAPI Docker")
 
     result = pipeline.process(document)
 
@@ -177,9 +166,7 @@ def test_pipeline_complete_execution():
 
     pipeline = PreprocessingPipeline()
 
-    document = _create_document(
-        "FastAPI uses JWT with Docker containers."
-    )
+    document = _create_document("FastAPI uses JWT with Docker containers.")
 
     result = pipeline.process(document)
 

@@ -27,10 +27,10 @@ from data_science.preprocessing.text_normalizer import (
     TextNormalizer,
 )
 
-
 # ==========================================================
 # Helper Functions
 # ==========================================================
+
 
 def _create_document(
     text: str,
@@ -52,6 +52,7 @@ def _create_document(
 # ==========================================================
 # Test Cases
 # ==========================================================
+
 
 def test_process_returns_processed_document() -> None:
     """

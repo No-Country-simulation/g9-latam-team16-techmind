@@ -33,6 +33,7 @@ from .schema import (
 # Public Functions
 # ==========================================================
 
+
 def validate_dataframe(df: pd.DataFrame) -> ValidationResult:
     """
     Validates a DataFrame against the TechMind Canonical Schema.
@@ -71,6 +72,7 @@ def validate_dataframe(df: pd.DataFrame) -> ValidationResult:
 # ==========================================================
 # Private Functions
 # ==========================================================
+
 
 def _validate_schema(
     df: pd.DataFrame,

@@ -23,6 +23,7 @@ from data_science.ml.training.trainers.logistic_regression_trainer import (
     LogisticRegressionTrainer,
 )
 
+
 def test_should_initialize_trainer():
     """
     Verifica que el entrenador se inicialice correctamente.

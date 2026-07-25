@@ -26,10 +26,10 @@ from pypdf import PdfReader as PyPdfReader
 
 from .base_reader import BaseReader
 
-
 # ==========================================================
 # PDF Reader
 # ==========================================================
+
 
 class PdfReader(BaseReader):
     """

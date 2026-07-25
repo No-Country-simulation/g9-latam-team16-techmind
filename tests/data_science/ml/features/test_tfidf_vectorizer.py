@@ -4,6 +4,7 @@ from data_science.ml.features.tfidf_vectorizer import (
     TfidfVectorizerAdapter,
 )
 
+
 def test_fit_transform_returns_sparse_matrix():
     # Arrange
     documents = [

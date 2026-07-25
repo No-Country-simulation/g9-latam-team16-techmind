@@ -59,9 +59,7 @@ def test_build_executes_complete_pipeline():
     )
 
     pipeline = FeaturePipeline(
-        feature_builder=FeatureBuilder(
-            TfidfVectorizerAdapter()
-        ),
+        feature_builder=FeatureBuilder(TfidfVectorizerAdapter()),
         target_builder=TargetBuilder(),
         dataset_splitter=DatasetSplitter(),
     )

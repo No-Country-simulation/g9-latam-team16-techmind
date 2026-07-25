@@ -28,10 +28,10 @@ from data_science.readers.pdf_reader import PdfReader
 from data_science.readers.reader_factory import ReaderFactory
 from data_science.readers.text_reader import TextReader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_create_text_reader() -> None:
     """

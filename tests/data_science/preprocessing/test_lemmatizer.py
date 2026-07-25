@@ -27,10 +27,10 @@ from data_science.preprocessing.lemmatizer import (
     Lemmatizer,
 )
 
-
 # ==========================================================
 # Test Helpers
 # ==========================================================
+
 
 def _create_document(
     text: str,
@@ -54,13 +54,12 @@ def _create_document(
 # Unit Tests
 # ==========================================================
 
+
 def test_process_returns_processed_document():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        "running"
-    )
+    document = _create_document("running")
 
     result = lemmatizer.process(document)
 
@@ -71,24 +70,18 @@ def test_lemmatize_single_word():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        "running"
-    )
+    document = _create_document("running")
 
     result = lemmatizer.process(document)
 
-    assert result.lemmas == [
-        "running"
-    ]
+    assert result.lemmas == ["running"]
 
 
 def test_lemmatize_plural_words():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        "cars containers"
-    )
+    document = _create_document("cars containers")
 
     result = lemmatizer.process(document)
 
@@ -102,9 +95,7 @@ def test_empty_text():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        ""
-    )
+    document = _create_document("")
 
     result = lemmatizer.process(document)
 
@@ -115,24 +106,18 @@ def test_single_token():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        "Docker"
-    )
+    document = _create_document("Docker")
 
     result = lemmatizer.process(document)
 
-    assert result.lemmas == [
-        "Docker"
-    ]
+    assert result.lemmas == ["Docker"]
 
 
 def test_numbers():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        "Version 2.0"
-    )
+    document = _create_document("Version 2.0")
 
     result = lemmatizer.process(document)
 
@@ -146,9 +131,7 @@ def test_technical_vocabulary():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        "FastAPI Docker JWT PostgreSQL"
-    )
+    document = _create_document("FastAPI Docker JWT PostgreSQL")
 
     result = lemmatizer.process(document)
 
@@ -164,9 +147,7 @@ def test_mixed_sentence():
 
     lemmatizer = Lemmatizer()
 
-    document = _create_document(
-        "cars use Docker"
-    )
+    document = _create_document("cars use Docker")
 
     result = lemmatizer.process(document)
 

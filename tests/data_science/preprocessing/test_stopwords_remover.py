@@ -27,10 +27,10 @@ from data_science.preprocessing.stopwords_remover import (
     StopWordsRemover,
 )
 
-
 # ==========================================================
 # Test Helpers
 # ==========================================================
+
 
 def _create_document(
     text: str,
@@ -54,6 +54,7 @@ def _create_document(
 # Unit Tests
 # ==========================================================
 
+
 def test_process_returns_processed_document():
     """
     Should return a ProcessedDocument instance.
@@ -61,9 +62,7 @@ def test_process_returns_processed_document():
 
     remover = StopWordsRemover()
 
-    document = _create_document(
-        "this is a simple test"
-    )
+    document = _create_document("this is a simple test")
 
     result = remover.process(document)
 

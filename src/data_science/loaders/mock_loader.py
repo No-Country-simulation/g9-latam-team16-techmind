@@ -36,19 +36,16 @@ class MockLoader(BaseLoader):
     def load(self) -> pd.DataFrame:
 
         sources = [
-
             {
                 "title": "Python Lists",
                 "text": "Lists are mutable sequences.",
                 "category": "python",
             },
-
             {
                 "title": "Vector Store",
                 "text": "Vector databases store embeddings.",
                 "category": "rag",
             },
-
         ]
 
         records = self._build_records(sources)
@@ -61,24 +58,14 @@ class MockLoader(BaseLoader):
     ) -> DocumentRecord:
 
         return {
-
             "document_id": source["title"],
-
             "title": source["title"],
-
             "text": source["text"],
-
             "source": self.SOURCE,
-
             "category": source["category"],
-
             "language": "en",
-
             "author": "TechMind",
-
             "tags": [],
-
             "url": "",
-
             "metadata": {},
         }

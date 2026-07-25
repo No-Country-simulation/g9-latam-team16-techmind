@@ -25,10 +25,10 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any
 
-
 # ==========================================================
 # Base Reader
 # ==========================================================
+
 
 class BaseReader(ABC):
     """
@@ -57,4 +57,3 @@ class BaseReader(ABC):
             Contenido interpretado según el tipo de archivo.
         """
         raise NotImplementedError
-    

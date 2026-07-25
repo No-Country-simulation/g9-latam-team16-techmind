@@ -27,10 +27,10 @@ from data_science.preprocessing.text_cleaner import (
     TextCleaner,
 )
 
-
 # ==========================================================
 # Helper Functions
 # ==========================================================
+
 
 def _create_document(
     text: str,
@@ -48,9 +48,11 @@ def _create_document(
         language="es",
     )
 
+
 # ==========================================================
 # Test Cases
 # ==========================================================
+
 
 def test_process_returns_processed_document() -> None:
     """
@@ -176,9 +178,7 @@ def test_process_handles_combined_whitespace() -> None:
     """
 
     # Arrange
-    document = _create_document(
-        " Hola\t\n mundo     de\t\tTechMind "
-    )
+    document = _create_document(" Hola\t\n mundo     de\t\tTechMind ")
     cleaner = TextCleaner()
 
     # Act
