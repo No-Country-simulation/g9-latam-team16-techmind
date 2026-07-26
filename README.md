@@ -78,27 +78,33 @@ flowchart LR
 
     Usuario["👤 Usuario"]
 
-    AplicacionFrontend["🎨 Frontend<br/>React"]
+    Frontend["🎨 Frontend"]
 
-    ApiBackend["⚙️ Backend<br/>Spring Boot"]
+    Backend["⚙️ Backend"]
 
-    ComponenteDataScience["🤖 Data Science<br/>FastAPI"]
+    DataScience["🤖 Componente Data Science"]
 
-    ModeloClasificacion["🧠 Modelo de Machine Learning"]
+    Inferencia["🧠 Motor de Inferencia"]
 
-    BaseConocimiento[("🗄️ MySQL")]
+    Modelo["📦 Modelo Persistido"]
 
-    Usuario --> AplicacionFrontend
-    AplicacionFrontend --> ApiBackend
-    ApiBackend --> ComponenteDataScience
-    ComponenteDataScience --> ModeloClasificacion
-    ApiBackend --> BaseConocimiento
+    BaseDatos[("🗄️ MySQL")]
+
+    Usuario --> Frontend
+    Frontend --> Backend
+    Backend --> DataScience
+    DataScience --> Inferencia
+    Inferencia --> Modelo
+    Backend --> BaseDatos
 ```
 
+La arquitectura de AyniKortex sigue un enfoque modular basado en componentes, donde cada uno tiene responsabilidades claramente definidas.
 
-La arquitectura sigue un enfoque basado en componentes, donde el Backend actúa como punto central de comunicación entre la interfaz de usuario, la base de datos y el componente de Ciencia de Datos.
+El Backend, desarrollado con Spring Boot, actúa como el punto central de comunicación entre el Frontend, la base de datos y el componente de Ciencia de Datos.
 
-Cada componente puede evolucionar de forma independiente, manteniendo una separación clara de responsabilidades y facilitando la escalabilidad y el mantenimiento del sistema.
+El componente de Data Science expone el modelo de Machine Learning mediante una API desarrollada con FastAPI, permitiendo que el Backend solicite clasificaciones automáticas y reciba los resultados en formato JSON para integrarlos con la lógica de negocio del sistema.
+
+Esta separación de responsabilidades facilita el mantenimiento, la escalabilidad y la evolución independiente de cada componente.
 
 ---
 
@@ -120,7 +126,7 @@ AyniKortex se encuentra actualmente en desarrollo activo. La arquitectura princi
 | Área | Estado |
 |------|:------:|
 | 🏗️ Arquitectura | ✅ Definida |
-| 🤖 Data Science | 🚧 En desarrollo |
+| 🤖 Data Science |  🚧 En desarrollo (DS-08 completado)|
 | ⚙️ Backend | 🚧 En desarrollo |
 | 🎨 Frontend | 🚧 En desarrollo |
 | 🔗 Integración | ⏳ Pendiente |
@@ -134,13 +140,13 @@ AyniKortex se encuentra actualmente en desarrollo activo. La arquitectura princi
 
 AyniKortex integra diferentes tecnologías especializadas para construir una plataforma modular, escalable y orientada a la gestión inteligente del conocimiento técnico.
 
-| Componente | Tecnología | Propósito |
-|------------|------------|-----------|
-| 🎨 Frontend | React | Desarrollo de la interfaz de usuario. |
-| ⚙️ Backend | Spring Boot | API REST, lógica de negocio y orquestación del sistema. |
-| 🤖 Data Science | Python, FastAPI, Scikit-learn | Clasificación automática e inferencia mediante Machine Learning. |
-| 🗄️ Base de Datos | MySQL | Persistencia de la información del sistema. |
-| 🔧 Control de Versiones | Git & GitHub | Gestión colaborativa del código fuente. |
+| Componente | Tecnologías | Propósito |
+|------------|-------------|-----------|
+| 🎨 Frontend | React | Desarrollo de la interfaz de usuario y experiencia del usuario. |
+| ⚙️ Backend | Java, Spring Boot | API REST principal, lógica de negocio, persistencia y comunicación con Data Science. |
+| 🤖 Data Science | Python, FastAPI, Scikit-learn, Pandas | Procesamiento de datos, entrenamiento, inferencia y exposición del modelo mediante API. |
+| 🗄️ Base de Datos | MySQL | Persistencia y gestión de la información del sistema. |
+| 🔧 Control de Versiones | Git & GitHub | Gestión colaborativa del código fuente y control de versiones. |
 
 ---
 
@@ -149,38 +155,50 @@ AyniKortex integra diferentes tecnologías especializadas para construir una pla
 ```text
 AyniKortex/
 
-├── frontend/              # Aplicación React
-├── backend/               # API Spring Boot
-├── data_science/          # Modelo de Machine Learning y FastAPI
-├── docs/                  # Documentación del proyecto
+├── datasets/              # Conjuntos de datos utilizados para entrenamiento y pruebas
+├── docs/                  # Documentación técnica y funcional del proyecto
+├── models/                # Modelos entrenados y artefactos relacionados
+├── scripts/               # Scripts de apoyo para automatización y utilidades
+├── src/
+│   ├── backend/           # API principal desarrollada con Spring Boot
+│   ├── data_science/      # Componente de Machine Learning y API FastAPI
+│   ├── frontend/          # Aplicación web desarrollada en React
+│   └── shared/            # Recursos compartidos entre componentes
+├── tests/                 # Pruebas automatizadas del proyecto
 ├── .github/               # Configuración de GitHub
-├── README.md
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
-├── SECURITY.md
-└── SUPPORT.md
+├── README.md              # Presentación general del proyecto
+├── CONTRIBUTING.md        # Guía para colaboradores
+├── CODE_OF_CONDUCT.md     # Código de conducta de la comunidad
+├── LICENSE.md             # Licencia del proyecto
+└── requirements.txt       # Dependencias del proyecto
 ```
 
-> **Nota:** La estructura podrá evolucionar conforme avance el desarrollo del proyecto.
-
+> **Nota:** La estructura del repositorio podrá evolucionar conforme avance el desarrollo del proyecto y se incorporen nuevos componentes o recursos.
 ---
 
-## 🚀 Primeros pasos
+## 🚀 Primeros Pasos
 
-La documentación para la instalación y ejecución de cada componente será publicada conforme avance el desarrollo del proyecto.
+Si deseas conocer AyniKortex o colaborar en su desarrollo, te recomendamos seguir el siguiente recorrido:
 
-Mientras tanto, puedes explorar la arquitectura, la documentación técnica y las guías para colaboradores disponibles en este repositorio.
+1. Explora este **README** para comprender la visión general y la arquitectura del proyecto.
+2. Consulta la documentación disponible en el directorio **docs/** para conocer los estándares, lineamientos y decisiones de diseño.
+3. Revisa el README específico de cada componente para comprender su arquitectura, responsabilidades y estado de desarrollo.
+4. Sigue la guía de **CONTRIBUTING.md** para conocer el flujo de trabajo y las buenas prácticas del equipo.
+
+> **Nota:** Las instrucciones de instalación y ejecución de cada componente se documentan de manera independiente conforme avanzan los diferentes equipos del proyecto.
 
 ---
 
 ## 📚 Documentación
 
-La documentación del proyecto está organizada para facilitar la incorporación de nuevos colaboradores y mantener una única fuente de información para cada tema.
+La documentación de AyniKortex está organizada para facilitar la incorporación de nuevos colaboradores y mantener una única fuente de información para cada aspecto del proyecto.
 
 | Documento | Descripción |
 |------------|-------------|
-| 📘 README.md | Presentación general del proyecto. |
+| 📘 README.md | Presentación general del proyecto y visión de la solución. |
 | 🏛️ ARCHITECTURE.md | Arquitectura general del sistema. |
+| 📂 docs/ | Documentación técnica, funcional y de diseño del proyecto. |
+| 🤖 src/data_science/README.md | Documentación del componente de Ciencia de Datos. |
 | 🤝 CONTRIBUTING.md | Guía para contribuir al proyecto. |
 | 📜 CODE_OF_CONDUCT.md | Normas de convivencia de la comunidad. |
 | 🔒 SECURITY.md | Política para el reporte de vulnerabilidades. |
@@ -192,29 +210,42 @@ La documentación del proyecto está organizada para facilitar la incorporación
 
 ## 🗺️ Roadmap
 
-La evolución del proyecto se organiza en diferentes etapas que abarcan el diseño, desarrollo e integración de todos los componentes del sistema.
+La evolución de AyniKortex se organiza en etapas que abarcan el diseño, desarrollo, integración y despliegue de todos los componentes del sistema.
 
-- ✅ Arquitectura del proyecto
-- 🚧 Desarrollo del componente Data Science
-- 🚧 Desarrollo del Backend
-- 🚧 Desarrollo del Frontend
-- ⏳ Integración de componentes
-- ⏳ Despliegue
-- ⏳ Optimización y mejoras continuas
+### Arquitectura y Planificación
+- ✅ Definición de la arquitectura del proyecto.
+- ✅ Diseño de la arquitectura del componente Data Science.
+- ✅ Definición de estándares de ingeniería y documentación.
+
+### Desarrollo de Componentes
+- 🚧 Frontend.
+- 🚧 Backend.
+- 🚧 Data Science (DS-08 completado).
+
+### Próximos Hitos
+- ⏳ DS-09 – API REST e integración con Backend.
+- ⏳ DS-10 – Optimización, validación y cierre del componente Data Science.
+- ⏳ Integración completa de los componentes del sistema.
+- ⏳ Despliegue de la plataforma.
+- ⏳ Mejoras continuas y evolución del producto.
 
 ---
 
 ## 👥 Equipo
 
-AyniKortex es desarrollado de manera colaborativa por un equipo multidisciplinario conformado por especialistas en:
+AyniKortex es desarrollado de manera colaborativa por un equipo multidisciplinario conformado por especialistas en diferentes áreas de ingeniería de software e inteligencia artificial.
 
-- 🎨 Frontend
-- ⚙️ Backend
-- 🤖 Data Science
-- 📚 Documentación
-- 🏗️ Arquitectura
+Cada equipo aporta su experiencia para construir una plataforma modular, escalable y orientada a la gestión inteligente del conocimiento técnico.
 
-El proyecto promueve el trabajo colaborativo, la mejora continua y el intercambio de conocimiento como principios fundamentales de desarrollo.
+| Área | Responsabilidad |
+|------|-----------------|
+| 🎨 Frontend | Desarrollo de la interfaz de usuario y experiencia del usuario. |
+| ⚙️ Backend | Lógica de negocio, API REST, persistencia e integración de componentes. |
+| 🤖 Data Science | Procesamiento de datos, entrenamiento, inferencia y clasificación automática mediante Machine Learning. |
+| 📚 Documentación | Elaboración y mantenimiento de la documentación técnica y funcional del proyecto. |
+| 🏗️ Arquitectura | Definición de estándares, diseño de la solución y evolución de la arquitectura. |
+
+El proyecto promueve la colaboración, el intercambio de conocimiento y la mejora continua como principios fundamentales para el desarrollo de soluciones de calidad.
 
 ---
 
@@ -222,27 +253,9 @@ El proyecto promueve el trabajo colaborativo, la mejora continua y el intercambi
 
 ¡Las contribuciones son bienvenidas!
 
-Si deseas colaborar con el proyecto, consulta la guía disponible en:
+Si deseas colaborar con el proyecto, consulta la guía disponible en **CONTRIBUTING.md**.
 
-> 📄 **CONTRIBUTING.md**
-
-Allí encontrarás las convenciones, estándares y flujo de trabajo utilizados por el equipo.
-
----
-
-# Estado del Desarrollo
-
-Actualmente el proyecto cuenta con:
-
-- Arquitectura modular basada en Clean Architecture.
-- Pipeline completo de adquisición y preparación de datos.
-- Pipeline de Ingeniería de Características.
-- Arquitectura desacoplada para entrenamiento.
-- Evaluación del modelo.
-- 138 pruebas unitarias exitosas.
-- Cero regresiones entre sprints.
-
-El proyecto se encuentra preparado para iniciar el desarrollo del módulo de persistencia e inferencia del modelo.
+Allí encontrarás las convenciones, estándares, flujo de trabajo y buenas prácticas utilizadas por el equipo para garantizar un desarrollo colaborativo y consistente.
 
 ---
 
