@@ -37,17 +37,20 @@ timeline
 
     MVP : Arquitectura Base
         : Frontend React
-        : Backend Spring Boot
+        : Backend
         : Modelo de Machine Learning
+        : Integración del MVP
 
-    v1.1 : Integración completa
+    v1.1 : Benchmark del modelo
          : Mejoras funcionales
+         : Optimización
 
     v2.0 : Escalabilidad
          : Automatización
          : Nuevas capacidades
 
     Futuro : Plataforma inteligente
+            : IA avanzada
             : Evolución continua
 ```
 
@@ -72,20 +75,20 @@ El MVP de AyniKortex se construye de manera incremental mediante la colaboració
 
 ## Data Science
 
-El componente de Ciencia de Datos es actualmente el más avanzado del proyecto y constituye la base del motor de clasificación inteligente.
+El componente de Ciencia de Datos ha completado el alcance principal definido para el MVP, entregando un modelo entrenado, evaluado, persistido e integrado mediante la interfaz pública predict(title, text). En la etapa actual, el equipo participa en actividades de soporte a la integración con Backend y Frontend, así como en la validación experimental del modelo y las pruebas integrales del sistema.
 
-| Sprint | Objetivo | Estado |
-|---------|----------|:------:|
-| DS-01 | Arquitectura del componente | ✅ |
-| DS-02 | Investigación y selección del dataset | ✅ |
-| DS-03 | Construcción del Dataset Maestro | ✅ |
-| DS-04 | Preprocesamiento del dataset | ✅ |
-| DS-05 | Ingeniería de características | ✅ |
-| DS-06 | Entrenamiento del modelo | ✅ |
-| DS-07 | Persistencia del modelo | ✅ |
-| DS-08 | Servicio de inferencia | ⏳ |
-| DS-09 | Integración con Backend | ⏳ |
-| DS-10 | Optimización del modelo | ⏳ |
+| Sprint | Objetivo                                                    | Estado |
+| ------ | ----------------------------------------------------------- | :----: |
+| DS-01  | Arquitectura del componente                                 |    ✅   |
+| DS-02  | Investigación y adquisición del dataset                     |    ✅   |
+| DS-03  | Construcción del Dataset Maestro                            |    ✅   |
+| DS-04  | Preprocesamiento del dataset                                |    ✅   |
+| DS-05  | Análisis Exploratorio de Datos (EDA)                        |    ✅   |
+| DS-06  | Entrenamiento y evaluación del modelo                       |    ✅   |
+| DS-07  | Integración del modelo con Backend (`predict(title, text)`) |    ✅   |
+| DS-08  | Persistencia y serialización del modelo                     |    ✅   |
+| DS-09  | Benchmark experimental del modelo                           |   🚧   |
+| DS-10  | Validación integral del MVP                                 |    ⏳   |
 
 ## Frontend
 
@@ -125,9 +128,15 @@ Los hitos de integración contemplan:
 
 Construcción de una plataforma funcional capaz de clasificar documentación técnica mediante Machine Learning.
 
-## 🚀 Fase 2 — Consolidación
+## 🚀 Fase 2 — Integración y Estabilización
 
 Fortalecer la integración entre componentes, mejorar la experiencia de usuario y estabilizar el sistema.
+- Integración Backend ↔ Data Science
+- Integración Frontend ↔ Backend
+- Validación funcional del MVP
+- Benchmark del modelo
+- Optimización y Hardening
+- Pruebas End-to-End
 
 ## 📊 Fase 3 — Escalabilidad
 
