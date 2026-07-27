@@ -27,7 +27,9 @@ public class Contenido {
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 
+
     public Contenido(){}
+
 
     public Contenido(DatosContentDto datosContentDto){
 
