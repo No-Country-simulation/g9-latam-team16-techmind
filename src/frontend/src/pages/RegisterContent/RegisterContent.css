@@ -1,0 +1,34 @@
+.register-page {
+  min-height: calc(100vh - 64px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 3rem 1.5rem;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(124, 58, 237, 0.45),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(37, 99, 235, 0.4),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #0f172a, #1e293b);
+
+  color: white;
+}
+
+.register-title {
+  font-weight: 700 !important;
+}
+
+.register-subtitle {
+  margin-top: 1rem !important;
+  margin-bottom: 2rem !important;
+  opacity: 0.8;
+}

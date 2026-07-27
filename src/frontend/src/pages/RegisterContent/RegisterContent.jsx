@@ -1,10 +1,22 @@
+import "./RegisterContent.css";
+
+import { Box, Typography } from "@mui/material";
+
+import ContentTypeSelector from "../../components/register/ContentTypeSelector";
+
 function RegisterContent() {
   return (
-    <main>
-      <h1>Registrar contenido</h1>
+    <Box className="register-page">
+      <Typography variant="h3" className="register-title">
+        Registrar contenido
+      </Typography>
 
-      <p>Aquí el usuario podrá subir contenido para ser analizado por IA.</p>
-    </main>
+      <Typography variant="body1" className="register-subtitle">
+        ¿Qué deseas registrar?
+      </Typography>
+
+      <ContentTypeSelector />
+    </Box>
   );
 }
 

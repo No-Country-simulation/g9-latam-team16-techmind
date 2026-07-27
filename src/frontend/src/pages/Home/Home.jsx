@@ -1,6 +1,6 @@
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography, Button, Stack } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import FeatureCard from "../home/FeatureCard";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -12,7 +12,12 @@ function Home() {
   return (
     <Box className="home">
       <Box className="home-content">
-        <PsychologyIcon className="home-icon" />
+        <Box
+          component="img"
+          src="/aynikortex-logo.png"
+          alt="AyniKortex"
+          className="home-icon"
+        />
 
         <Typography variant="h2" className="home-title">
           AyniKortex

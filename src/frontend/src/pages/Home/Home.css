@@ -28,9 +28,9 @@
 }
 
 .home-icon {
-  font-size: 5.25rem !important;
-  margin-bottom: 1rem;
-  color: #e5e7eb;
+  width: 10.25rem;
+  height: auto;
+  object-fit: contain;
 }
 
 .home-title {

@@ -1,0 +1,51 @@
+.content-selector {
+  display: flex;
+
+  gap: 2rem;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 3rem;
+}
+
+.content-card {
+  width: 260px;
+
+  padding: 2rem;
+
+  cursor: pointer;
+
+  text-align: center;
+
+  color: white !important;
+
+  background: rgba(255, 255, 255, 0.05) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 18px !important;
+
+  transition: 0.3s !important;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #7c3aed;
+}
+
+.content-card.selected {
+  border: 2px solid #7c3aed;
+
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.35);
+}
+
+.content-icon {
+  font-size: 3rem !important;
+
+  margin-bottom: 1rem;
+
+  color: #8b5cf6;
+}
