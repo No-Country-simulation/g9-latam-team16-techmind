@@ -9,14 +9,16 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 public class RestClientConfig {
+    private final DataScienceProperties dataScienceProperties;
 
-    @Value("${datascience.base-url:http://localhost:8000}")
-    private String dataScienceBaseUrl;
+    public RestClientConfig(DataScienceProperties dataScienceProperties) {
+        this.dataScienceProperties = dataScienceProperties;
+    }
 
     @Bean
     public RestClient dataScienceRestClient(RestClient.Builder builder) {
         return builder
-                .baseUrl(dataScienceBaseUrl)
+                .baseUrl(dataScienceProperties.getBaseUrl())
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }

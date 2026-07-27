@@ -1,37 +1,21 @@
 package com.aynikortex.backend.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@ConfigurationProperties(prefix = "datascience.api")
+import java.time.Duration;
+
+// representa configuración externa de la aplicación
+@Getter
+@Setter
+@ConfigurationProperties(prefix = "datascience")
 public class DataScienceProperties {
+
     private String baseUrl = "http://localhost:8000";
-    private int connectTimeoutMs = 5000;
-    private int readTimeoutMs = 10000;
 
-    // Getters y Setters
-    public String getBaseUrl() {
-        return baseUrl;
-    }
+    private Duration connectTimeout = Duration.ofSeconds(5);
 
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
+    private Duration readTimeout = Duration.ofSeconds(10);
 
-    public int getConnectTimeoutMs() {
-        return connectTimeoutMs;
-    }
-
-    public void setConnectTimeoutMs(int connectTimeoutMs) {
-        this.connectTimeoutMs = connectTimeoutMs;
-    }
-
-    public int getReadTimeoutMs() {
-        return readTimeoutMs;
-    }
-
-    public void setReadTimeoutMs(int readTimeoutMs) {
-        this.readTimeoutMs = readTimeoutMs;
-    }
 }
