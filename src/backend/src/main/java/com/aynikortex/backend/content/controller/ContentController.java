@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/contents")
+@RequestMapping("/api/v1/contents")
 public class ContentController {
 
     @PostMapping
