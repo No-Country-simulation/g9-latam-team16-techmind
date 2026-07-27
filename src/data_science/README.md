@@ -1,147 +1,202 @@
-# 🧠 Componente Data Science
+# 🧠 AyniKortex – Componente Data Science
 
-> Componente responsable de la adquisición, validación, preparación y procesamiento de datos para el entrenamiento, evaluación e inferencia de modelos de Machine Learning del proyecto **TechMind**.
+> Componente responsable del procesamiento de datos, entrenamiento e inferencia de modelos de Machine Learning para la clasificación inteligente de documentación técnica dentro de la plataforma **AyniKortex**.
 
 ---
 
-# Objetivo
+## Estado del Componente
 
-El componente **Data Science** tiene como objetivo desarrollar el ciclo completo de procesamiento de datos requerido para la clasificación automática de documentación técnica.
+| Información | Valor |
+|--------------|-------|
+| Proyecto | AyniKortex |
+| Componente | Data Science |
+| Estado | ✅ DS-08 Completado |
+| Arquitectura | Modular |
+| Lenguaje | Python |
+| Modelo | Machine Learning Clásico |
+| Integración | Backend (DS-09) |
+| Pruebas | ✅ 212 / 212 exitosas |
 
-Su responsabilidad abarca desde la adquisición de información proveniente de múltiples fuentes hasta la generación de modelos de Machine Learning capaces de clasificar documentos técnicos de manera precisa y consistente.
+---
 
-El componente ha sido diseñado siguiendo una **arquitectura modular**, permitiendo la incorporación de nuevas fuentes de datos, técnicas de procesamiento, algoritmos de aprendizaje y modelos de clasificación sin afectar el resto del sistema.
+## Descripción
 
-Actualmente forma parte del proyecto **TechMind – Organización Inteligente del Conocimiento Técnico**, integrándose con el componente **Backend** mediante una interfaz estable para la realización de predicciones.
+El componente **Data Science** de **AyniKortex** implementa el ciclo de vida completo del modelo de Machine Learning utilizado para la clasificación automática de documentación técnica.
+
+Su responsabilidad comprende la adquisición de datos, construcción del Dataset Maestro, preprocesamiento, ingeniería de características, entrenamiento, persistencia e inferencia del modelo, proporcionando una interfaz estable para su integración con el componente Backend.
+
+La arquitectura del componente ha sido diseñada siguiendo principios de modularidad, escalabilidad y mantenibilidad, permitiendo la incorporación de nuevas fuentes de información, técnicas de procesamiento y modelos de clasificación con un impacto mínimo sobre el resto del sistema.
+
+---
+
+# Objetivos
+
+## Objetivo General
+
+Desarrollar y mantener el componente **Data Science** de **AyniKortex**, responsable del procesamiento de datos y del ciclo de vida completo del modelo de Machine Learning para la clasificación inteligente de documentación técnica, proporcionando resultados confiables y una integración estable con el componente Backend.
+
+## Objetivos Específicos
+
+- Adquirir e integrar información proveniente de múltiples fuentes de datos.
+- Construir y mantener un **Dataset Maestro** estructurado y de alta calidad.
+- Validar la integridad, consistencia y calidad de los datos antes de su procesamiento.
+- Implementar un pipeline de preprocesamiento que transforme los documentos en información apta para el entrenamiento del modelo.
+- Generar representaciones numéricas mediante técnicas de ingeniería de características.
+- Entrenar, evaluar y seleccionar modelos de Machine Learning para la clasificación documental.
+- Persistir los artefactos del modelo para garantizar inferencias reproducibles.
+- Ejecutar predicciones mediante un motor de inferencia optimizado.
+- Proporcionar una interfaz estable que facilite la integración con el componente Backend.
 
 ---
 
 # Estado del Componente
 
+El componente **Data Science** de **AyniKortex** ha completado las funcionalidades planificadas hasta el **Sprint DS-08**, consolidando una arquitectura modular y un pipeline de Machine Learning capaz de procesar documentos técnicos desde su adquisición hasta la generación de predicciones.
+
+## Estado de Desarrollo
+
 | Área | Estado | Observaciones |
 |------|:------:|---------------|
-| Arquitectura | ✅ | Definida y validada |
+| Arquitectura del Componente | ✅ | Diseño modular implementado |
 | Adquisición de Datos | ✅ | Readers y Loaders implementados |
-| Dataset Maestro | ✅ | Construido e integrado |
-| Validación del Dataset | ✅ | Pipeline de validación implementado |
-| Preprocesamiento | ✅ | Pipeline completo implementado |
-| Testing | ✅ | 109 pruebas automatizadas aprobadas |
-| Entrenamiento del Modelo | 🚧 | Próxima etapa |
-| Evaluación del Modelo | ⏳ | Pendiente |
-| Persistencia del Modelo | ⏳ | Pendiente |
-| Integración con Backend | 🚧 | En preparación |
+| Dataset Maestro | ✅ | Integración y validación completadas |
+| Preprocesamiento | ✅ | Pipeline implementado y validado |
+| Ingeniería de Características | ✅ | Pipeline de transformación implementado |
+| Entrenamiento del Modelo | ✅ | Modelo de clasificación entrenado |
+| Persistencia del Modelo | ✅ | Artefactos serializados y validados |
+| Motor de Inferencia | ✅ | Pipeline de predicción implementado |
+| API REST | ⏳ | Planificada para DS-09 |
+| Integración con Backend | ⏳ | Planificada para DS-09 |
+| Optimización | ⏳ | Planificada para DS-10 |
 
----
+## Indicadores del Componente
 
-# Responsabilidades
+| Indicador | Estado |
+|-----------|:------:|
+| Dataset Maestro | ✅ |
+| Modelo Entrenado | ✅ |
+| Modelo Persistido | ✅ |
+| Motor de Inferencia | ✅ |
+| Arquitectura Modular | ✅ |
+| Pruebas Automatizadas | ✅ 212 / 212 |
 
-El componente Data Science es responsable de:
-
-- Adquirir información desde múltiples fuentes de datos.
-- Construir y mantener el Dataset Maestro del proyecto.
-- Validar la calidad e integridad de los datos.
-- Ejecutar el pipeline de preprocesamiento documental.
-- Preparar los datos para el entrenamiento del modelo.
-- Entrenar y evaluar modelos de Machine Learning.
-- Generar predicciones de clasificación documental.
-- Integrarse con el componente Backend mediante una interfaz estable.
-
-El componente **no expone una API propia**. Su integración con el sistema se realiza como una **biblioteca Python**, consumida directamente por el Backend.
+> **Estado actual:** El componente se encuentra listo para iniciar la implementación de la API REST y su integración con el componente Backend durante el Sprint **DS-09**.
 
 ---
 
 # Arquitectura General
 
-El componente **Data Science** está diseñado siguiendo una arquitectura modular basada en responsabilidades específicas, facilitando la mantenibilidad, escalabilidad y reutilización de sus componentes.
+El componente **Data Science** de **AyniKortex** implementa una arquitectura modular basada en responsabilidades específicas, donde cada módulo participa en una etapa del ciclo de vida del modelo de Machine Learning.
 
-Su principal responsabilidad es transformar información proveniente de múltiples fuentes en un conjunto de datos preparado para el entrenamiento de modelos de Machine Learning y posteriormente realizar inferencias para el componente Backend.
+Desde la adquisición de documentos hasta la generación de predicciones, cada componente opera de forma independiente, facilitando la mantenibilidad, reutilización y evolución del sistema.
+
+La arquitectura permite incorporar nuevas fuentes de información, técnicas de procesamiento y modelos de clasificación sin afectar el funcionamiento del resto del pipeline.
+
+## Arquitectura del Componente
 
 ```mermaid
 flowchart LR
 
-    subgraph DataSources["Fuentes de Datos"]
-        GitHub["GitHub"]
-        StackExchange["Stack Exchange"]
-        HuggingFace["Hugging Face"]
-        TechnicalDocs["Documentación Técnica"]
-        Synthetic["Dataset Sintético"]
-    end
+Fuentes_de_Datos["Fuentes de Datos"]
+    --> Readers["Readers"]
 
-    subgraph Acquisition["Adquisición de Datos"]
-        Loaders["Loaders"]
-        Readers["Readers"]
-    end
+Readers
+    --> Dataset_Maestro["Dataset Maestro"]
 
-    subgraph Validation["Validación"]
-        DatasetValidation["Validación del Dataset"]
-    end
+Dataset_Maestro
+    --> Preprocesamiento["Preprocesamiento"]
 
-    subgraph Preprocessing["Preprocesamiento"]
-        Cleaning["Limpieza"]
-        Normalization["Normalización"]
-        Tokenization["Tokenización"]
-        Lemmatization["Lematización"]
-    end
+Preprocesamiento
+    --> Ingenieria_de_Caracteristicas["Ingeniería de Características"]
 
-    subgraph Training["Machine Learning"]
-        FeatureEngineering["Ingeniería de Características"]
-        ModelTraining["Entrenamiento"]
-        ModelEvaluation["Evaluación"]
-        TrainedModel["Modelo Entrenado"]
-    end
+Ingenieria_de_Caracteristicas
+    --> Entrenamiento["Entrenamiento"]
 
-    GitHub --> Loaders
-    StackExchange --> Loaders
-    HuggingFace --> Loaders
-    TechnicalDocs --> Loaders
-    Synthetic --> Loaders
+Entrenamiento
+    --> Persistencia["Persistencia del Modelo"]
 
-    Loaders --> Readers
-    Readers --> DatasetValidation
+Persistencia
+    --> Motor_de_Inferencia["Motor de Inferencia"]
 
-    DatasetValidation --> Cleaning
-    Cleaning --> Normalization
-    Normalization --> Tokenization
-    Tokenization --> Lemmatization
-
-    Lemmatization --> FeatureEngineering
-    FeatureEngineering --> ModelTraining
-    ModelTraining --> ModelEvaluation
-    ModelEvaluation --> TrainedModel
+Motor_de_Inferencia
+    --> Backend["Backend"]
 ```
 
-## Principios de la Arquitectura
+## Componentes de la Arquitectura
 
-La arquitectura del componente se basa en los siguientes principios:
+### Fuentes de Datos
 
-- **Arquitectura Modular:** cada módulo implementa una responsabilidad claramente definida.
-- **Separación de Responsabilidades (SRP):** Readers, Loaders, Validación, Preprocesamiento y Machine Learning evolucionan de forma independiente.
-- **Extensibilidad:** es posible incorporar nuevas fuentes de información o nuevos algoritmos sin modificar el resto del pipeline.
-- **Reutilización:** los componentes pueden reutilizarse durante las etapas de entrenamiento e inferencia.
-- **Mantenibilidad:** la organización del código facilita la incorporación de nuevas funcionalidades y simplifica las tareas de mantenimiento.
+Representan el origen de la información utilizada para construir el Dataset Maestro. El componente puede incorporar documentos provenientes de múltiples fuentes sin modificar el resto del pipeline.
 
-## Integración con el Sistema
+### Readers
 
-El componente **Data Science** no expone una API REST propia.
+Interpretan el contenido de los documentos según su formato (TXT, CSV, JSON, PDF, entre otros) y generan una representación uniforme para su procesamiento.
 
-La comunicación con el sistema se realiza mediante una **biblioteca Python**, integrada directamente por el componente **Backend**, utilizando una interfaz estable para la ejecución de predicciones.
+### Dataset Maestro
 
-Esta decisión reduce la complejidad del MVP, disminuye la latencia de comunicación entre componentes y simplifica el proceso de despliegue del sistema.
+Integra la información proveniente de todas las fuentes en una estructura única, validada y consistente, que sirve como base para el entrenamiento del modelo.
+
+### Preprocesamiento
+
+Ejecuta las tareas de limpieza, normalización y transformación del texto para preparar los documentos antes de la extracción de características.
+
+### Ingeniería de Características
+
+Convierte el texto procesado en representaciones numéricas que pueden ser utilizadas por los algoritmos de Machine Learning.
+
+### Entrenamiento
+
+Construye el modelo de clasificación documental utilizando el Dataset Maestro preparado y las características generadas.
+
+### Persistencia del Modelo
+
+Almacena los artefactos generados durante el entrenamiento, garantizando que puedan reutilizarse durante la inferencia sin necesidad de volver a entrenar el modelo.
+
+### Motor de Inferencia
+
+Carga los artefactos persistidos, ejecuta el pipeline de predicción y genera la categoría y el nivel de confianza para cada documento procesado.
+
+### Backend
+
+Consume el motor de inferencia mediante una interfaz estable para ofrecer las funcionalidades de clasificación al resto de la plataforma.
 
 ---
 
-# Estructura del Componente
+## Principios de Arquitectura
 
-El componente **Data Science** está organizado siguiendo una arquitectura modular, donde cada paquete implementa una responsabilidad específica dentro del pipeline de adquisición, validación y procesamiento de datos.
+La arquitectura del componente se fundamenta en los siguientes principios:
+
+- **Arquitectura Modular:** cada módulo implementa una responsabilidad claramente definida.
+- **Responsabilidad Única (SRP):** cada componente realiza una única función dentro del pipeline.
+- **Bajo Acoplamiento:** los módulos interactúan mediante interfaces bien definidas.
+- **Alta Cohesión:** funcionalidades relacionadas permanecen agrupadas.
+- **Extensibilidad:** nuevas fuentes, algoritmos o técnicas pueden incorporarse sin modificar el núcleo del sistema.
+- **Reutilización:** los componentes pueden utilizarse tanto durante el entrenamiento como durante la inferencia.
+- **Mantenibilidad:** la organización del código facilita la evolución del proyecto y la incorporación de nuevas funcionalidades.
+
+---
+
+# Estructura del Proyecto
+
+El componente **Data Science** de **AyniKortex** está organizado siguiendo una arquitectura modular, donde cada directorio representa una responsabilidad específica dentro del ciclo de vida del modelo de Machine Learning.
+
+Esta organización facilita la mantenibilidad, reutilización del código y escalabilidad del componente, permitiendo incorporar nuevas funcionalidades sin afectar el resto del sistema.
+
+## Estructura General
 
 ```text
 src/
 └── data_science/
-    │
     ├── adapters/
     ├── data/
     ├── loaders/
-    ├── models/
+    ├── ml/
+    │   ├── evaluation/
+    │   ├── exceptions/
+    │   ├── features/
+    │   ├── inference/
+    │   ├── persistence/
+    │   └── training/
     ├── preprocessing/
     ├── readers/
     ├── services/
@@ -151,424 +206,193 @@ src/
     └── __init__.py
 ```
 
-La organización del componente favorece la reutilización de código, la mantenibilidad y la incorporación de nuevas funcionalidades sin afectar los módulos existentes.
-
----
-
-# Descripción de los Módulos
-
-## adapters/
-
-Contiene adaptadores responsables de transformar estructuras internas del componente hacia otros formatos requeridos por diferentes etapas del pipeline.
-
-Actualmente incluye adaptadores para la conversión hacia estructuras tipo **DataFrame**, facilitando el procesamiento y análisis de datos.
-
----
-
-## data/
-
-Implementa el núcleo del Dataset Maestro y los objetos de dominio utilizados durante el procesamiento.
-
-Sus principales responsabilidades son:
-
-- Construcción del Dataset Maestro.
-- Definición de entidades del dominio.
-- Integración de múltiples fuentes.
-- Validación estructural.
-- Definición del esquema de datos.
-
-Principales componentes:
-
-- `builder.py`
-- `domain.py`
-- `integrator.py`
-- `schema.py`
-- `validator.py`
-
----
-
-## loaders/
-
-Responsable de localizar y cargar información desde diferentes fuentes documentales.
-
-Actualmente soporta fuentes como:
-
-- GitHub
-- Stack Exchange
-- Hugging Face
-- Documentación Técnica
-- Dataset Sintético
-
-La incorporación de una nueva fuente únicamente requiere implementar un nuevo Loader y registrarlo en el `LoaderFactory`.
-
----
-
-## readers/
-
-Responsable de interpretar el contenido de los archivos cargados por los Loaders.
-
-Actualmente soporta los siguientes formatos:
-
-- TXT
-- CSV
-- JSON
-- PDF
-
-Cada Reader implementa una interfaz común, permitiendo extender fácilmente el sistema hacia nuevos formatos documentales.
-
----
-
-## preprocessing/
-
-Implementa el pipeline de procesamiento lingüístico utilizado para preparar los documentos antes del entrenamiento del modelo.
-
-Actualmente incorpora las siguientes etapas:
-
-- Limpieza de texto.
-- Normalización.
-- Eliminación de palabras vacías (Stopwords).
-- Tokenización.
-- Lematización.
-- Orquestación del pipeline de preprocesamiento.
-
-Cada etapa se implementa como un componente independiente siguiendo el principio de responsabilidad única (SRP).
-
----
-
-## models/
-
-Reservado para la definición de modelos de Machine Learning, estructuras de entrenamiento y persistencia del modelo.
-
-Este módulo evolucionará durante las siguientes etapas del proyecto.
-
----
-
-## services/
-
-Espacio destinado a la implementación de servicios de alto nivel que orquestarán la lógica de negocio del componente Data Science.
-
----
-
-## utils/
-
-Contiene utilidades compartidas utilizadas por diferentes módulos del componente.
-
-Su objetivo es evitar duplicación de código y centralizar funcionalidades auxiliares.
-
----
-
-## config.py
-
-Centraliza la configuración utilizada por el componente.
-
-Ejemplos:
-
-- Parámetros del pipeline.
-- Configuración de procesamiento.
-- Rutas del proyecto.
-- Variables de configuración.
-
----
-
-# Principios de Organización
-
-La estructura del componente fue diseñada siguiendo los siguientes principios:
-
-- **Responsabilidad Única (SRP):** cada módulo implementa una función claramente definida.
-- **Bajo Acoplamiento:** los componentes interactúan mediante interfaces bien definidas.
-- **Alta Cohesión:** funcionalidades relacionadas permanecen agrupadas.
-- **Extensibilidad:** nuevas fuentes, formatos o algoritmos pueden incorporarse con cambios mínimos.
-- **Reutilización:** los módulos pueden utilizarse tanto durante el entrenamiento como durante la inferencia.
-
----
-
-# Pipeline de Procesamiento de Datos
-
-El componente **Data Science** implementa un pipeline secuencial para transformar documentos técnicos provenientes de múltiples fuentes en datos preparados para el entrenamiento y la inferencia de modelos de Machine Learning.
-
-Cada etapa del pipeline tiene una responsabilidad específica y produce una salida que sirve como entrada para la siguiente etapa.
-
-```mermaid
-flowchart LR
-
-Fuentes_Datos["Fuentes de Datos"]
-    --> Carga_Documentos["Carga de Documentos"]
-
-Carga_Documentos
-    --> Lectura_Archivos["Lectura de Archivos"]
-
-Lectura_Archivos
-    --> Dataset_Maestro["Dataset Maestro"]
-
-Dataset_Maestro
-    --> Validacion_Dataset["Validación del Dataset"]
-
-Validacion_Dataset
-    --> Preprocesamiento["Preprocesamiento"]
-
-Preprocesamiento
-    --> Ingenieria_Caracteristicas["Ingeniería de Características"]
-
-Ingenieria_Caracteristicas
-    --> Entrenamiento_Modelo["Entrenamiento del Modelo"]
-
-Entrenamiento_Modelo
-    --> Evaluacion_Modelo["Evaluación del Modelo"]
-
-Evaluacion_Modelo
-    --> Modelo_Final["Modelo Entrenado"]
-```
-
----
-
-# Flujo del Pipeline
-
-## 1. Adquisición de Datos
-
-El proceso inicia con la recopilación de documentos provenientes de diversas fuentes de información.
-
-Actualmente el componente puede trabajar con información obtenida desde:
-
-- GitHub
-- Stack Exchange
-- Hugging Face
-- Documentación técnica
-- Datasets sintéticos
-
-Los **Loaders** son responsables de localizar y recuperar los archivos desde cada origen.
-
----
-
-## 2. Lectura de Documentos
-
-Una vez recuperados los archivos, los **Readers** interpretan su contenido según el formato correspondiente.
-
-Actualmente se soportan los siguientes formatos:
-
-- TXT
-- CSV
-- JSON
-- PDF
-
-Cada Reader convierte el contenido en una representación uniforme para el resto del pipeline.
-
----
-
-## 3. Construcción del Dataset Maestro
-
-Los documentos procesados se integran en un único conjunto de datos denominado **Dataset Maestro**.
-
-Durante esta etapa se realiza:
-
-- Integración de múltiples fuentes.
-- Unificación del esquema de datos.
-- Construcción de objetos de dominio.
-- Organización de la información documental.
-
-El resultado es un dataset estructurado y consistente para su posterior validación.
-
----
-
-## 4. Validación del Dataset
-
-Antes de continuar con el procesamiento lingüístico, el Dataset Maestro es sometido a un proceso de validación.
-
-Esta etapa verifica aspectos como:
-
-- Presencia de columnas obligatorias.
-- Tipos de datos.
-- Registros incompletos.
-- Calidad de la información.
-- Consistencia estructural.
-
-Solo los registros válidos continúan dentro del pipeline.
-
----
-
-## 5. Preprocesamiento de Texto
-
-El objetivo de esta etapa es transformar el texto original en una representación limpia y uniforme para el modelo de Machine Learning.
-
-Actualmente el pipeline incluye:
-
-### Limpieza
-
-- Eliminación de caracteres innecesarios.
-- Eliminación de espacios redundantes.
-- Corrección básica del contenido textual.
-
-### Normalización
-
-- Conversión a minúsculas.
-- Homogeneización del formato del texto.
-
-### Eliminación de Stopwords
-
-Se eliminan palabras frecuentes que aportan poco valor al proceso de clasificación.
-
-Ejemplos:
-
-- el
-- la
-- de
-- para
-- con
-
-### Tokenización
-
-El texto se divide en unidades léxicas (tokens), permitiendo su procesamiento posterior.
-
-### Lematización
-
-Cada palabra se transforma a su forma base o lema.
-
-Por ejemplo:
-
-| Texto Original | Lema |
-|----------------|------|
-| running | run |
-| tests | test |
-| documents | document |
-
-El resultado de esta etapa es un conjunto de documentos preparados para el entrenamiento del modelo.
-
----
-
-## 6. Ingeniería de Características
-
-En las siguientes etapas del proyecto, el texto preprocesado será transformado en representaciones numéricas mediante técnicas de extracción de características.
-
-Estas representaciones servirán como entrada para los algoritmos de Machine Learning.
-
----
-
-## 7. Entrenamiento del Modelo
-
-Con los datos preparados se entrenarán diferentes algoritmos de clasificación documental.
-
-Durante esta etapa se realizarán actividades como:
-
-- Entrenamiento.
-- Ajuste de hiperparámetros.
-- Comparación de modelos.
-- Selección del mejor modelo.
-
----
-
-## 8. Evaluación
-
-El modelo entrenado será evaluado utilizando métricas objetivas para medir su desempeño.
-
-Entre las métricas consideradas se encuentran:
-
-- Accuracy
-- Precision
-- Recall
-- F1-Score
-- Matriz de Confusión
-
----
-
-## 9. Generación del Modelo
-
-Finalmente se obtendrá un modelo entrenado listo para ser utilizado por el componente Backend durante la etapa de inferencia.
-
----
-
-# Pruebas y Aseguramiento de Calidad
-
-La calidad del componente **Data Science** se garantiza mediante un conjunto de pruebas automatizadas que validan el correcto funcionamiento de los módulos principales del pipeline.
-
-Las pruebas se ejecutan utilizando **Pytest**, permitiendo verificar el comportamiento esperado de cada componente de manera aislada e integrada.
-
----
-
-# Cobertura Funcional
-
-Actualmente se cuenta con pruebas automatizadas para los siguientes módulos:
-
-| Módulo | Estado |
-|---------|:------:|
-| Readers | ✅ |
-| Loaders | ✅ |
-| Pipeline de Preprocesamiento | ✅ |
-| Limpieza de Texto | ✅ |
-| Normalización | ✅ |
-| Eliminación de Stopwords | ✅ |
-| Tokenización | ✅ |
-| Lematización | ✅ |
-
----
-
-# Organización de las Pruebas
-
-La estructura de pruebas sigue la organización del componente principal.
+## Descripción de los Directorios
+
+| Directorio | Responsabilidad |
+|------------|-----------------|
+| **adapters/** | Adaptadores que facilitan la conversión de estructuras de datos entre los distintos componentes del sistema. |
+| **data/** | Construcción, integración y validación del Dataset Maestro utilizado durante el entrenamiento y la inferencia. |
+| **loaders/** | Obtención y carga de documentos desde las diferentes fuentes de información soportadas por el sistema. |
+| **readers/** | Lectura e interpretación de archivos en distintos formatos (TXT, CSV, JSON, PDF, entre otros). |
+| **preprocessing/** | Limpieza, normalización y preparación del texto antes de la extracción de características. |
+| **ml/features/** | Implementación de la ingeniería de características y transformación del texto en representaciones numéricas para el modelo de Machine Learning. |
+| **ml/training/** | Entrenamiento, validación y selección del modelo de clasificación documental. |
+| **ml/evaluation/** | Evaluación del desempeño del modelo mediante métricas y procesos de validación. |
+| **ml/persistence/** | Persistencia y recuperación de los artefactos generados durante el entrenamiento del modelo. |
+| **ml/inference/** | Implementación del motor de inferencia encargado de generar predicciones utilizando el modelo persistido. |
+| **ml/exceptions/** | Definición de excepciones personalizadas utilizadas por los módulos de Machine Learning para el manejo controlado de errores. |
+| **services/** | Servicios de alto nivel encargados de orquestar procesos del componente. |
+| **utils/** | Funciones auxiliares y utilidades compartidas entre los diferentes módulos. |
+| **config.py** | Configuración centralizada del componente Data Science. |
+
+## Organización de las Pruebas
+
+La estructura de pruebas mantiene la misma organización modular del componente principal, permitiendo validar cada módulo de forma independiente.
 
 ```text
 tests/
 └── data_science/
     ├── fixtures/
+    ├── readers/
     ├── preprocessing/
-    ├── test_loaders/
-    └── test_readers/
+    ├── ml/
+    │   ├── features/
+    │   ├── training/
+    │   ├── evaluation/
+    │   ├── persistence/
+    │   └── inference/
 ```
 
-Las pruebas incluyen tanto casos unitarios como validaciones funcionales para garantizar el correcto comportamiento del pipeline.
+Esta organización favorece la trazabilidad entre el código fuente y sus pruebas automatizadas, facilitando el mantenimiento, la depuración y la incorporación de nuevas funcionalidades.
 
 ---
 
-# Validación del Dataset
+# Pipeline de Machine Learning
 
-Además de las pruebas automatizadas, el componente incorpora herramientas específicas para validar la calidad del Dataset Maestro antes de su utilización.
+El componente **Data Science** implementa un pipeline secuencial que transforma documentos técnicos en predicciones mediante un proceso estructurado de preparación de datos, entrenamiento e inferencia.
 
-Entre las verificaciones realizadas se encuentran:
+Cada etapa del pipeline recibe la salida de la etapa anterior, garantizando un flujo consistente y reproducible durante el entrenamiento y la clasificación de documentos.
 
-- Validación de columnas obligatorias.
-- Validación de tipos de datos.
-- Verificación de registros incompletos.
-- Integridad estructural del dataset.
-- Generación de reportes de calidad.
+## Flujo General
 
-Estas validaciones reducen la probabilidad de introducir datos inconsistentes durante las etapas de entrenamiento.
+```mermaid
+flowchart LR
+
+Fuentes_de_Datos["Fuentes de Datos"]
+    --> Readers["Readers"]
+
+Readers
+    --> Dataset_Maestro["Dataset Maestro"]
+
+Dataset_Maestro
+    --> Preprocesamiento["Preprocesamiento"]
+
+Preprocesamiento
+    --> Caracteristicas["Ingeniería de Características"]
+
+Caracteristicas
+    --> Entrenamiento["Entrenamiento"]
+
+Entrenamiento
+    --> Evaluacion["Evaluación"]
+
+Evaluacion
+    --> Persistencia["Persistencia del Modelo"]
+
+Persistencia
+    --> Inferencia["Motor de Inferencia"]
+
+Inferencia
+    --> Prediccion["Predicción"]
+```
+
+## Etapas del Pipeline
+
+### Adquisición de Datos
+
+Los documentos son obtenidos desde diferentes fuentes de información mediante los módulos **Loaders** y **Readers**, proporcionando una representación uniforme para el resto del proceso.
+
+### Construcción del Dataset Maestro
+
+La información recopilada se integra en un único conjunto de datos estructurado y validado, que constituye la base para el entrenamiento del modelo.
+
+### Preprocesamiento
+
+Los documentos son limpiados, normalizados y preparados para garantizar la calidad de la información utilizada por el modelo de Machine Learning.
+
+### Ingeniería de Características
+
+El texto preprocesado se transforma en representaciones numéricas que permiten al modelo identificar patrones y realizar el proceso de clasificación.
+
+### Entrenamiento
+
+Se construye y ajusta el modelo de clasificación utilizando el conjunto de datos preparado durante las etapas anteriores.
+
+### Evaluación
+
+El modelo entrenado es evaluado mediante métricas de desempeño para verificar su capacidad de generalización y precisión.
+
+### Persistencia del Modelo
+
+Los artefactos generados durante el entrenamiento se almacenan para que puedan reutilizarse posteriormente durante la inferencia.
+
+### Motor de Inferencia
+
+El motor de inferencia carga los artefactos persistidos, procesa nuevos documentos y genera la categoría predicha junto con el nivel de confianza asociado.
+
+## Beneficios del Pipeline
+
+- Arquitectura modular y escalable.
+- Separación clara de responsabilidades.
+- Reutilización de componentes entre entrenamiento e inferencia.
+- Facilidad para incorporar nuevas fuentes de datos y algoritmos.
+- Flujo reproducible para el entrenamiento y la generación de predicciones.
 
 ---
 
-# Scripts de Validación
+# Integración con Backend
 
-El proyecto incluye scripts auxiliares para ejecutar procesos de validación de manera independiente.
+El componente **Data Science** se integra con el componente **Backend** de **AyniKortex** para proporcionar funcionalidades de clasificación automática de documentación técnica.
 
-Entre ellos destacan:
+Durante el **Sprint DS-09**, el motor de inferencia será expuesto mediante una API REST, permitiendo que el Backend solicite predicciones utilizando documentos proporcionados por los usuarios.
 
-- `validar_dataset_pipeline.py`
-- `dataset_validator.py`
-- `preprocessing_validator.py`
-- `validation_runner.py`
-- `quality_report.py`
-- `benchmark.py`
+## Flujo de Integración
 
-Estos scripts permiten ejecutar verificaciones específicas sin necesidad de iniciar el pipeline completo.
+```mermaid
+flowchart LR
+
+Frontend["Frontend"]
+    --> Backend["Backend"]
+
+Backend
+    --> API["API REST"]
+
+API
+    --> Inferencia["Motor de Inferencia"]
+
+Inferencia
+    --> Modelo["Modelo Persistido"]
+
+Modelo
+    --> Resultado["Predicción"]
+
+Resultado
+    --> Backend
+```
+
+## Responsabilidades
+
+### Backend
+
+- Recibir las solicitudes de clasificación.
+- Validar la información recibida.
+- Invocar el componente Data Science.
+- Procesar la respuesta y entregarla al Frontend.
+
+### Data Science
+
+- Cargar el modelo entrenado.
+- Ejecutar el pipeline de inferencia.
+- Generar la categoría predicha.
+- Calcular el nivel de confianza de la predicción.
+- Devolver un resultado estructurado al Backend.
+
+## Estado de la Integración
+
+| Componente | Estado |
+|------------|:------:|
+| Contrato de integración | ✅ Definido |
+| Motor de inferencia | ✅ Implementado |
+| API REST | ⏳ DS-09 |
+| Integración Backend | ⏳ DS-09 |
 
 ---
 
-# Estado Actual
+# Roadmap
 
-El componente mantiene una base sólida de pruebas automatizadas que respaldan las funcionalidades implementadas hasta la fecha.
+El desarrollo del componente **Data Science** sigue una estrategia incremental, donde cada Sprint incorpora nuevas capacidades hasta completar el ciclo de vida del modelo de Machine Learning.
 
-**Estado actual:**
-
-- ✅ 109 pruebas automatizadas aprobadas.
-- ✅ 0 pruebas fallidas.
-- ✅ Pipeline de preprocesamiento validado.
-- ✅ Readers y Loaders verificados mediante pruebas unitarias.
-- ✅ Validación del Dataset Maestro implementada.
-
-Este proceso de aseguramiento de calidad permite continuar con las siguientes etapas del proyecto sobre una base estable y confiable.
-
----
-
-# Roadmap del Componente
-
-El desarrollo del componente **Data Science** sigue un roadmap incremental, donde cada Sprint incorpora nuevas capacidades hasta completar el ciclo de vida del modelo de Machine Learning.
+## Estado de los Sprints
 
 | Sprint | Descripción | Estado |
 |---------|-------------|:------:|
@@ -576,29 +400,34 @@ El desarrollo del componente **Data Science** sigue un roadmap incremental, dond
 | DS-02 | Investigación y Adquisición del Dataset | ✅ |
 | DS-03 | Construcción del Dataset Maestro | ✅ |
 | DS-04 | Preprocesamiento del Dataset | ✅ |
-| DS-05 | Análisis Exploratorio de Datos (EDA) | 🚧 |
-| DS-06 | Ingeniería de Características | ⏳ |
-| DS-07 | Entrenamiento del Modelo | ⏳ |
-| DS-08 | Evaluación del Modelo | ⏳ |
-| DS-09 | Persistencia del Modelo | ⏳ |
-| DS-10 | Motor de Inferencia | ⏳ |
-| DS-11 | Integración con Backend | ⏳ |
-| DS-12 | Pruebas del Componente | ⏳ |
-| DS-13 | Hardening | ⏳ |
-| DS-14 | Cierre del Componente | ⏳ |
+| DS-05 | Ingeniería de Características | ✅ |
+| DS-06 | Entrenamiento del Modelo | ✅ |
+| DS-07 | Persistencia del Modelo | ✅ |
+| DS-08 | Motor de Inferencia | ✅ |
+| DS-09 | API REST e Integración | ⏳ |
+| DS-10 | Optimización del Modelo | ⏳ |
+
+## Próximas Etapas
+
+Las siguientes actividades estarán enfocadas en:
+
+- Implementación de la API REST para exponer el motor de inferencia.
+- Integración completa con el componente Backend.
+- Optimización del rendimiento del modelo y del proceso de inferencia.
+- Validación del sistema integrado.
 
 ---
 
-# Primeros Pasos
+# Instalación y Ejecución
 
-## Clonar el repositorio
+## Clonar el Repositorio
 
 ```bash
 git clone <url-del-repositorio>
-cd techmind
+cd aynikortex
 ```
 
-## Crear el entorno virtual
+## Crear un Entorno Virtual
 
 ### Windows
 
@@ -614,23 +443,19 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-## Instalar dependencias
+## Instalar Dependencias
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# Ejecutar las pruebas
-
-Para ejecutar todas las pruebas automatizadas:
+## Ejecutar las Pruebas
 
 ```bash
 pytest
 ```
 
-Para generar un reporte detallado:
+Para obtener un reporte detallado:
 
 ```bash
 pytest -v
@@ -638,81 +463,40 @@ pytest -v
 
 ---
 
-# Estructura del Proyecto
-
-```text
-techmind/
-├── datasets/
-├── docs/
-├── scripts/
-├── src/
-│   ├── backend/
-│   └── data_science/
-├── tests/
-├── requirements.txt
-└── README.md
-```
-
----
-
 # Documentación Relacionada
 
-La documentación técnica del proyecto se encuentra organizada en el directorio `docs/`.
+La documentación técnica del componente se encuentra organizada en el directorio **docs/**.
 
-Entre los documentos principales se encuentran:
-
-## Arquitectura
-
-- System Architecture
-- Data Science Pipeline
-- Backend Data Contract
-- Backend Data Model
-- Repository Structure
-
-## Arquitectura de Decisiones (ADR)
-
-- ADR-001 – Arquitectura Backend – Ciencia de Datos
-- ADR-002 – Machine Learning Clásico para el MVP
-- ADR-003 – Integración mediante llamadas directas a funciones
-- ADR-004 – Oracle Cloud Infrastructure
-- ADR-005 – Exclusión de IA Generativa
-
-## Ingeniería
+## Documentación Principal
 
 - Software Design Specification (SDS)
-- Engineering Standards
+- Architecture
 - Technical Roadmap
-- Git Development Workflow
+- Engineering Standards
 
-## Sprints
+## Sprints de Data Science
 
-La evolución completa del componente puede consultarse en:
+- DS-01 – Arquitectura del Componente
+- DS-02 – Investigación y Adquisición del Dataset
+- DS-03 – Construcción del Dataset Maestro
+- DS-04 – Preprocesamiento del Dataset
+- DS-05 – Ingeniería de Características
+- DS-06 – Entrenamiento del Modelo
+- DS-07 – Persistencia del Modelo
+- DS-08 – Motor de Inferencia
 
-```text
-docs/
-└── sprints/
-    └── data-science/
-```
+## Arquitectura y Decisiones
 
----
-
-# Contribución
-
-Antes de realizar cambios en el componente se recomienda:
-
-- Revisar los estándares de ingeniería.
-- Seguir el flujo de trabajo definido para Git.
-- Ejecutar todas las pruebas antes de realizar un Pull Request.
-- Mantener la documentación actualizada cuando se incorporen nuevas funcionalidades.
+- Architecture Decision Records (ADR)
+- Contrato de Integración con Backend
+- Modelo de Datos para Backend
 
 ---
 
-# Estado del Proyecto
+# Próximos Pasos
 
-Actualmente el componente **Data Science** cuenta con una arquitectura estable y un pipeline funcional para la adquisición, validación y preprocesamiento de datos.
+El componente **Data Science** ha completado las funcionalidades planificadas hasta el **Sprint DS-08**, consolidando un pipeline de Machine Learning capaz de procesar documentos técnicos desde su adquisición hasta la generación de predicciones.
 
-Las siguientes etapas estarán enfocadas en el entrenamiento, evaluación e integración del modelo de Machine Learning con el componente Backend.
+Las siguientes etapas estarán orientadas a la exposición del motor de inferencia mediante una API REST, su integración con el componente Backend y la optimización del rendimiento del sistema.
 
-El desarrollo continúa siguiendo una estrategia incremental, priorizando la calidad del código, la automatización de pruebas y la mantenibilidad del sistema.
-
----
+El desarrollo continuará siguiendo los principios de arquitectura modular, calidad del código, pruebas automatizadas y documentación continua, garantizando la evolución sostenible del componente dentro de la plataforma **AyniKortex**.
