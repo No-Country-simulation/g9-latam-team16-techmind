@@ -1,0 +1,4 @@
+TITULO: Monitoreo Cloud de Seguridad y Detección de Amenazas en Clusters de AWS EKS
+CATEGORIA_ESPERADA: Cloud
+
+Desplegamos agentes de seguridad de Falco dentro del cluster de Kubernetes AWS EKS para capturar llamadas al sistema anómalas en tiempo real. Los eventos sospechosos se envían a través de Promtail hacia una pila centralizada de Elasticsearch para su auditoría. En el marco de la modernización de la plataforma, este componente fue refactorizado para garantizar un rendimiento óptimo bajo cargas de trabajo pesadas. El equipo de arquitectura técnica documentó cada decisión de diseño para asegurar que el despliegue a producción cumpla con todos los estándares de calidad ISO y las regulaciones corporativas vigentes de protección de datos (GDPR).

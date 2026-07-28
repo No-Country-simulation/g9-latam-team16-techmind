@@ -1,0 +1,4 @@
+TITULO: Pipeline de Ingestión de Datos Masivos ETL Orquestado en Kubernetes con Argo Workflows
+CATEGORIA_ESPERADA: Data Engineering
+
+El equipo de ingeniería de datos diseñó un flujo de trabajo para procesar millones de transacciones diarias. La solución ejecuta pods de Kubernetes coordinados por Argo Workflows que lanzan tareas distribuidas en Apache Spark para transformar datos no estructurados. En el marco de la modernización de la plataforma, este componente fue refactorizado para garantizar un rendimiento óptimo bajo cargas de trabajo pesadas. El equipo de arquitectura técnica documentó cada decisión de diseño para asegurar que el despliegue a producción cumpla con todos los estándares de calidad ISO y las regulaciones corporativas vigentes de protección de datos (GDPR).

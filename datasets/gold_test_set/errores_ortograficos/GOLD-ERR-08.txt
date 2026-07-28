@@ -1,0 +1,4 @@
+TITULO: Definicion de Pipeline de integrasion continua en Gitlab CI, Dokker Containers y testeo
+CATEGORIA_ESPERADA: DevOps
+
+Siklo devops y integracion: No se pouede concevir una empreza tegnologica de alt nivel si su eqipo sige compilando los artfatos amano. El nuebo script de automatizasion CI/CD compila la imajen Dokker autonoma y la sube al repositorio de artefactoss simpre y despues de hacer comit o una soolicitud de mescla a la rama principal (mian) del proyecto, asugurando la intgridad del codigo compratido en el repsoitorio centrlizado y proviendo regrecsiones funcionales.

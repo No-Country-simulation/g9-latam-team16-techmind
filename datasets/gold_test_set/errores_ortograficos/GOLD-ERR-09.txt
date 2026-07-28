@@ -1,0 +1,4 @@
+TITULO: Algoritmo distnaciado de cluterizacion K-Means para agrupar datos transacionales sin etiquetas
+CATEGORIA_ESPERADA: AI/ML
+
+Extraccion intelignete de patrone s ocultos: Al recivir bases de dtos masibas sin etiquitar manualmete, se deve utiliazar el apresndisaje no supervizsado. El alghoritmo Kmeans agrupa eficazmente los puntos en un numro epecifico de K centroides calculando con rigo la distancia euclidiana entre las caracteristicass multidiomensionales del dataset sin supervisasion previa o intervecion humna en el porseso matematiko. Asi se destaparon segmntos de usaurios que antes nos pasavan desaparecibidos totalemte.

@@ -1,0 +1,4 @@
+TITULO: Sitema de Autenticacion distribuida con toquens JWT y protecsion contra inyecciones SQL
+CATEGORIA_ESPERADA: Security
+
+Criticaidad de la civerseguridad: Los ultimos reportes de fallas revelaron vulnerabilidades perimetrales graves. Es completmnete inportante cifrar las claves de aceso de los usuarios y protejer los endpoin de la API contra ataques de hakear e inyecciones de codigo malisioso en los formularios publicos web. Por tal rason, se impemento un filyro asimetrico basado en clyptografia RSA para sersiorarce de la autentiidad de cada peticion del provedor de servisio.
