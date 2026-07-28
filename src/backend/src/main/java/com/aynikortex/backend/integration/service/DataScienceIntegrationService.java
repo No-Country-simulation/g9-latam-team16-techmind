@@ -11,11 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @Service
-public class DataScienceService {
+public class DataScienceIntegrationService {
 
     private final DataScienceClient dataScienceClient;
 
-    public DataScienceService(DataScienceClient dataScienceClient) {
+    public DataScienceIntegrationService(DataScienceClient dataScienceClient) {
         this.dataScienceClient = dataScienceClient;
     }
 
