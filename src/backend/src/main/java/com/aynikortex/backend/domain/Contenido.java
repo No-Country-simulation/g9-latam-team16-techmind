@@ -2,12 +2,21 @@ package com.aynikortex.backend.domain;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "contents")
+@Data
+@AllArgsConstructor
 public class Contenido {
 
     @Id
@@ -15,36 +24,45 @@ public class Contenido {
     private UUID id;
     private String title;
     private String description;
-    private String contentType;
+    @Enumerated(EnumType.STRING)
+    private ContentType contentType;
     private String textContent;
     private String fileName;
     private String filePath;
     private String category;
-    private String subCategory;
+    private String subcategory;
     private Double confidence;
     private String modelVersion;
-    private String keywords;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
+    private List<Keyword> keywords; // Usamos la clase Keyword (no DTO)
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
 
     public Contenido(){}
+
 
     public Contenido(DatosContentDto datosContentDto){
 
         this.id = datosContentDto.id();
         this.title = datosContentDto.title();
         this.description = datosContentDto.description();
-        this.contentType = datosContentDto.contentType();
+        this.contentType = ContentType.valueOf(String.valueOf(datosContentDto.contentType()));
         this.textContent = datosContentDto.textContent();
         this.fileName = datosContentDto.fileName();
         this.filePath = datosContentDto.filePath();
         this.category = datosContentDto.category();
-        this.subCategory = datosContentDto.subCategory();
+        this.subcategory = datosContentDto.subCategory();
         this.confidence = datosContentDto.confidence();
         this.modelVersion = datosContentDto.modelVersion();
         this.keywords = datosContentDto.keywords();
         this.createdAt = datosContentDto.createdAt();
-        this.updateAt = datosContentDto.updateAt();
+        this.updatedAt = LocalDateTime.now();
 
     }
 
@@ -72,11 +90,11 @@ public class Contenido {
         this.description = description;
     }
 
-    public String getContentType() {
+    public ContentType getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(ContentType contentType) {
         this.contentType = contentType;
     }
 
@@ -112,13 +130,8 @@ public class Contenido {
         this.category = category;
     }
 
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
-    }
+    public String getSubCategory(){return subcategory;}
+    public void setSubCategory(String subCategory){this.subcategory = subCategory;}
 
     public Double getConfidence() {
         return confidence;
@@ -137,10 +150,10 @@ public class Contenido {
     }
 
     public String getKeywords() {
-        return keywords;
+        return keywords.toString();
     }
 
-    public void setKeywords(String keywords) {
+    public void setKeywords(List<Keyword> keywords) {
         this.keywords = keywords;
     }
 
@@ -148,16 +161,12 @@ public class Contenido {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
 
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
+    public LocalDateTime getUpdatedAt() {this.updatedAt = LocalDateTime.now();return this.updatedAt;}
 
     public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
+        this.updatedAt = updateAt;
     }
 
 }
