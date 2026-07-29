@@ -27,7 +27,6 @@ public class ContentService {
     @Transactional
     public ContentResponseDTO createContent(ContentRequestDTO requestDTO) {
         Contenido contenido = contentMapper.toEntity(requestDTO);
-
         contenido.setCreatedAt(LocalDateTime.now());
         contenido.setCategory("PENDIENTE_CLASIFICACION");
 

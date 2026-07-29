@@ -3,5 +3,9 @@ package com.aynikortex.backend.domain;
 public enum ContentType {
     TEXT,
     FILE,
-    OTHER,
+    PDF,
+    DOCX,
+    TXT,
+    MARKDOWN,
+    OTHER
 }

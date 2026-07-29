@@ -1,18 +1,12 @@
 package com.aynikortex.backend.domain;
 
-import com.aynikortex.backend.content.mapper.ContentMapper;
-import io.swagger.v3.oas.annotations.media.Content;
-import sun.font.CharToGlyphMapper;
-import sun.font.CompositeFont;
-
+import org.springframework.stereotype.Component;
 import java.util.List;
 
+@Component
 public interface KeywordMapper {
-    CompositeFont Mappers = null;
-    CharToGlyphMapper INSTANCE = Mappers.getMapper();
 
-
-    // Mapeo de Keywords
+    // Métodos de mapeo para Keywords
     List<Keyword> keywordsToKeywordDTOs(List<Keyword> keywords);
     List<Keyword> keywordDTOsToKeywords(List<Keyword> keywordDTOs);
 }
