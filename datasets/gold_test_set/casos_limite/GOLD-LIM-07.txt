@@ -1,0 +1,4 @@
+TITULO: Unicode International Text Test: 日本語 中文 Русский العربية עברית हिन्दी Español Français
+CATEGORIA_ESPERADA: Frontend
+
+El sistema procesa texto internacional multilenguaje: こんにちは 世界, Привет мир, Hello world, Hola mundo, 大家好.

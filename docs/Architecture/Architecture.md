@@ -371,3 +371,149 @@ Cada documento aborda un aspecto específico del proyecto, evitando la duplicida
 
 ---
 
+# Ciclo de Vida del Modelo en Producción
+
+## Objetivo
+
+Una vez desplegado el MVP, el modelo de Machine Learning no permanece estático. La arquitectura de AyniKortex está diseñada para permitir la evolución continua del modelo mediante la incorporación de nuevos datos, la actualización del Dataset Maestro y el entrenamiento controlado de nuevas versiones.
+
+Este proceso **no forma parte del alcance del MVP del Hackathon**, pero representa la evolución natural del producto hacia un entorno de producción.
+
+---
+
+## Ciclo de Vida del Modelo
+
+```mermaid
+flowchart LR
+
+subgraph Operacion["Operación del Sistema"]
+
+Usuario["Usuario"]
+Frontend["Frontend React"]
+Backend["Backend Spring Boot"]
+ServicioInferencia["Servicio FastAPI"]
+ModeloProduccion["Modelo en Producción"]
+Repositorio["Repositorio de Documentos"]
+
+Usuario --> Frontend
+Frontend --> Backend
+Backend --> ServicioInferencia
+ServicioInferencia --> ModeloProduccion
+ModeloProduccion --> Backend
+Backend --> Repositorio
+
+end
+
+subgraph Evolucion["Evolución Continua del Modelo"]
+
+NuevosDocumentos["Nuevos Documentos"]
+Curacion["Validación y Curación"]
+DatasetMaestro["Dataset Maestro"]
+Preprocesamiento["Preprocesamiento"]
+Entrenamiento["Entrenamiento"]
+Evaluacion["Evaluación"]
+RegistroModelos["Registro de Modelos"]
+ModeloNuevo["Nueva Versión del Modelo"]
+
+Repositorio --> NuevosDocumentos
+NuevosDocumentos --> Curacion
+Curacion --> DatasetMaestro
+DatasetMaestro --> Preprocesamiento
+Preprocesamiento --> Entrenamiento
+Entrenamiento --> Evaluacion
+Evaluacion --> RegistroModelos
+RegistroModelos --> ModeloNuevo
+
+ModeloNuevo -. Despliegue Controlado .-> ServicioInferencia
+
+end
+```
+
+---
+
+## Descripción del proceso
+
+### Operación diaria
+
+Durante la operación normal del sistema, los usuarios interactúan con la plataforma mediante el Frontend. Las solicitudes son gestionadas por Spring Boot, que consume el servicio de inferencia implementado con FastAPI.
+
+El modelo únicamente realiza predicciones utilizando el conocimiento adquirido durante el entrenamiento y devuelve la clasificación correspondiente.
+
+Los documentos procesados y sus resultados son almacenados en el repositorio del sistema para su trazabilidad.
+
+---
+
+### Incorporación de nuevos datos
+
+Los documentos almacenados representan una fuente potencial de información para mejorar futuras versiones del modelo.
+
+Sin embargo, **los nuevos documentos no reentrenan automáticamente el modelo**.
+
+Antes de ser utilizados para entrenamiento deben pasar por un proceso de:
+
+- validación
+- limpieza
+- curación
+- etiquetado
+- control de calidad
+
+Solo los documentos validados son incorporados al Dataset Maestro.
+
+---
+
+### Reentrenamiento controlado
+
+Cuando existe suficiente información nueva o se identifica la necesidad de mejorar el desempeño del modelo, el equipo de Ciencia de Datos ejecuta un nuevo proceso de entrenamiento.
+
+Este proceso reutiliza el pipeline completo definido durante el desarrollo:
+
+1. Preprocesamiento
+2. Ingeniería de características
+3. Entrenamiento
+4. Evaluación
+5. Comparación con la versión actual
+
+---
+
+### Versionado del modelo
+
+Cada proceso de entrenamiento genera una nueva versión del modelo.
+
+Las versiones anteriores permanecen registradas para facilitar:
+
+- auditoría
+- trazabilidad
+- comparación de métricas
+- rollback
+- análisis histórico
+
+Una nueva versión solo es promovida a producción cuando demuestra un mejor desempeño respecto al modelo actualmente desplegado.
+
+---
+
+### Despliegue
+
+Una vez aprobada una nueva versión, el servicio de inferencia actualiza el modelo utilizado para responder las solicitudes del sistema.
+
+Este proceso se realiza de forma controlada, sin afectar la continuidad del servicio.
+
+---
+
+## Beneficios de la arquitectura
+
+| Beneficio | Descripción |
+|-----------|-------------|
+| Separación de responsabilidades | La operación diaria y el entrenamiento del modelo son procesos independientes. |
+| Escalabilidad | Permite incorporar grandes volúmenes de información sin afectar la disponibilidad del sistema. |
+| Trazabilidad | Cada versión del modelo puede asociarse al dataset y a las métricas utilizadas durante su entrenamiento. |
+| Mantenibilidad | El modelo puede evolucionar sin modificar la lógica del Backend ni del Frontend. |
+| Versionado | Facilita la comparación entre modelos y la recuperación de versiones anteriores. |
+| Evolución hacia MLOps | La arquitectura permite incorporar en el futuro procesos automatizados de monitoreo, reentrenamiento y despliegue continuo. |
+
+---
+
+## Consideraciones
+
+Este flujo representa la evolución prevista de AyniKortex una vez finalizado el MVP.
+
+Durante el Hackathon, el alcance del proyecto contempla el entrenamiento, evaluación, integración y despliegue del modelo seleccionado. La automatización del ciclo de vida del modelo y su reentrenamiento continuo constituyen una evolución futura del producto y sientan las bases para una arquitectura orientada a MLOps.

@@ -1,0 +1,4 @@
+TITULO: SQL Injection & XSS Attack Payload Test String: ' OR '1'='1
+CATEGORIA_ESPERADA: Security
+
+' OR 1=1; DROP TABLE users; -- <script>alert('XSS Attack Execution')</script> <iframe src=\"javascript:alert(1)\"></iframe>

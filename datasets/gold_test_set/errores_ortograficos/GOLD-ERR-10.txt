@@ -1,0 +1,4 @@
+TITULO: Deploy y configuracion de Servidores de almasenamiento en la nube GCP y Azure Storage Buckets
+CATEGORIA_ESPERADA: Cloud
+
+Resilensia geografica de archivos corporativos: Con el avence delas politicas de recuperasion de dsastres (DR), no podemos depneder de un solo disco fijo fisico. Oy en día, guardamos los archivoss estaticos de resguardo (beckups completos) en diveros buquets de almacenamiento en la nubee publica con aceso exclusivamnte privado y politicas de seguridad estrictas que restrinjen el acceso a cuanlquier pesrsona que este fuea d e la red virtal privda d e la emrpesa (VPN).

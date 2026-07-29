@@ -1,0 +1,4 @@
+TITULO: Creasion modular de APIs REST transacionales en Java Sping Boot y capa Hibernate JPA
+CATEGORIA_ESPERADA: Backend
+
+Flugo funcional interno de servidor: Para soportar el crecimineto abrumador de interacciones por minuto, abondonamos la arcquitectura bieja. Aora, el contolador prinipal recive la petision HTTP enformato json y guarda el registro permenante en la vase de datos relacional sin erorres manejando las excepciones globales del servidor mediane interseptores y handlers de respuestas predeterminadas. Con sto garntizamos que la capas del beckend parescan mas rapidas a las aplicaciones clintes.

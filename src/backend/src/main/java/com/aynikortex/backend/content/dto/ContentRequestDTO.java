@@ -1,5 +1,6 @@
 package com.aynikortex.backend.content.dto;
 
+<<<<<<< HEAD
 import com.aynikortex.backend.domain.ContentType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -53,3 +54,20 @@ public class ContentRequestDTO {
         this.filePath = filePath;
     }
 }
+=======
+import com.aynikortex.backend.content.model.ContentType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record ContentRequestDTO(
+        @NotBlank(message = "El título es obligatorio y no puede estar vacío")
+        String title,
+
+        @NotNull(message = "El tipo de contenido es obligatorio")
+        ContentType contentType,
+
+        String textContent,
+        String fileName,
+        String filePath
+) {}
+>>>>>>> dd93825b68edbdc4a9e7ff7d6e6aad1d874a6213

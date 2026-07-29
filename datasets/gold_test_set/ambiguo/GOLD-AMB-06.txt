@@ -1,0 +1,4 @@
+TITULO: Escaneo de Seguridad DevSecOps Automatizado sobre Contenedores Docker en GitHub Actions
+CATEGORIA_ESPERADA: Security
+
+Para fortalecer la postura de seguridad, incorporamos análisis estático de código fuente (SAST) con SonarQube y escaneo de vulnerabilidades en imágenes Docker con Trivy directamente dentro del pipeline de integración continua en GitHub Actions, bloqueando el despliegue ante fallos críticos. En el marco de la modernización de la plataforma, este componente fue refactorizado para garantizar un rendimiento óptimo bajo cargas de trabajo pesadas. El equipo de arquitectura técnica documentó cada decisión de diseño para asegurar que el despliegue a producción cumpla con todos los estándares de calidad ISO y las regulaciones corporativas vigentes de protección de datos (GDPR).

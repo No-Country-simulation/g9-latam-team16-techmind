@@ -1,0 +1,4 @@
+TITULO: Desaroyo optimizado de aplicasiones moviles en Reac Natiove para ecosistema androide
+CATEGORIA_ESPERADA: Mobile
+
+Redisenyo y estrucura de Vistas: Para la nueba bersion del aaplicativo movil, nos decantmos por una arquitedtura basada completametne en componetes. Construimos interfaces de usuario movil con componetes reac y un rigido manejo de esttado global para celulres usando typescript y componentes natibos. Graicas al puente de comunicsaion entre java scritp y codigo maquina, el performase ha megorado incleiblemnete en dispsitivos de gama baga y media.

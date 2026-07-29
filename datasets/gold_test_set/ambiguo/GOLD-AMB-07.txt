@@ -1,0 +1,4 @@
+TITULO: Microservicio de Recomendación Personalizada en FastAPI con Inferencia scikit-learn
+CATEGORIA_ESPERADA: Backend
+
+Un microservicio backend ligero desarrollado en Python con FastAPI recibe las solicitudes de recomendación de contenido, carga el modelo matricial serializado de scikit-learn y retorna una respuesta JSON estructurada en menos de 10 milisegundos. En el marco de la modernización de la plataforma, este componente fue refactorizado para garantizar un rendimiento óptimo bajo cargas de trabajo pesadas. El equipo de arquitectura técnica documentó cada decisión de diseño para asegurar que el despliegue a producción cumpla con todos los estándares de calidad ISO y las regulaciones corporativas vigentes de protección de datos (GDPR).

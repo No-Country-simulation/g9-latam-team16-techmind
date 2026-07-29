@@ -1,5 +1,6 @@
 package com.aynikortex.backend.content.dto;
 
+<<<<<<< HEAD
 import com.aynikortex.backend.domain.ContentType;
 
 import java.time.LocalDateTime;
@@ -53,3 +54,16 @@ public class ContentResponseDTO {
         this.createdAt = createdAt;
     }
 }
+=======
+import com.aynikortex.backend.content.model.ContentType;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+public record ContentResponseDTO(
+        UUID id,
+        String title,
+        ContentType contentType,
+        String category,
+        LocalDateTime createdAt
+) {}
+>>>>>>> dd93825b68edbdc4a9e7ff7d6e6aad1d874a6213

@@ -1,0 +1,4 @@
+TITULO: Entrenamieto intensivo de redes neuronas y clasificasion automatica de texto en Python
+CATEGORIA_ESPERADA: AI/ML
+
+Rechazo de candidattos y evaluacion: El departameto de sencias de datos se enfoco en refinar el algorithmo de porsesamiento natural del lenguage. El modedlo de Machin Learnig alcanza un F1-Skore considerablemete alto al clasifikar documentos usando TF-IDF y regresion logistica. Este entrenamieto profundo se realizo sobre el conjunto de pruebas de validasion, evadiendo los priblemas de sobreajuste (oberfiting) que teniamos en los esenarios anteriores de prduccion.
