@@ -1,0 +1,124 @@
+.classification-card {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 24px !important;
+  background: linear-gradient(
+    135deg,
+    rgba(32, 44, 68, 0.98),
+    rgba(24, 34, 54, 0.98)
+  ) !important;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.35),
+    0 0 30px rgba(124, 58, 237, 0.15);
+  color: white;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.classification-header {
+  margin-bottom: 1.5rem;
+}
+
+.classification-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.8rem;
+}
+
+.classification-icon {
+  font-size: 3.4rem !important;
+  color: #8b5cf6;
+}
+
+.classification-header .classification-icon {
+  flex-shrink: 0;
+}
+
+.classification-title {
+  font-weight: 700 !important;
+  color: var(--color-surface);
+}
+
+.classification-subtitle {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.classification-section {
+  margin-bottom: 1.6rem;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.classification-label {
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #93c5fd;
+  margin-bottom: 0.5rem !important;
+}
+
+.classification-value {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  color: white;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.classification-progress {
+  margin-top: 0.5rem !important;
+  height: 10px !important;
+  border-radius: 20px !important;
+}
+
+.classification-confidence {
+  margin-top: 0.5rem !important;
+  text-align: right;
+  font-weight: 700 !important;
+  color: var(--color-surface);
+}
+
+.classification-section .MuiStack-root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.classification-section .MuiChip-root {
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+}
+
+.classification-section .classification-progress,
+.classification-section .classification-confidence {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .classification-card {
+    padding: 1rem;
+  }
+
+  .classification-icon {
+    font-size: 2.4rem !important;
+  }
+
+  .classification-title {
+    font-size: 1.1rem !important;
+  }
+
+  .classification-value {
+    font-size: 1rem !important;
+  }
+}
+
+.classification-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+}

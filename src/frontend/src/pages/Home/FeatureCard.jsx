@@ -7,7 +7,7 @@ function FeatureCard({ icon, title, description }) {
       <Stack
         direction="row"
         spacing={2}
-        alignItems="center"
+        sx={{ alignItems: "center" }}
         className="feature-card-content"
       >
         <Avatar className="feature-card-avatar">{icon}</Avatar>
