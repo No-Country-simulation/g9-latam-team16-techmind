@@ -1,31 +1,20 @@
 import "./TextContentForm.css";
-import { useState } from "react";
-import { createRegisterTextRequest } from "../../dto/request/RegisterTextRequest";
-import { registerText } from "../../services/contentService";
+import { useRef } from "react";
 import { Card, TextField, Typography, Button, Stack } from "@mui/material";
-import ClassificationResult from "./ClassificationResult";
 
-function TextContentForm() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+function TextContentForm({
+  formData,
+  setFormData,
+  loading,
+  classification,
+  onSubmit,
+  onReset,
+}) {
+  const titleInputRef = useRef(null);
 
-  const [loading, setLoading] = useState(false);
-  const [classification, setClassification] = useState(null);
-
-  const handleSubmit = async () => {
-    try {
-      setLoading(true);
-
-      const request = createRegisterTextRequest(title, content);
-
-      const response = await registerText(request);
-
-      setClassification(response);
-    } catch (error) {
-      console.error("Error al registrar el contenido:", error);
-    } finally {
-      setLoading(false);
-    }
+  const handleReset = () => {
+    onReset();
+    titleInputRef.current?.focus();
   };
 
   return (
@@ -36,11 +25,14 @@ function TextContentForm() {
 
       <Stack spacing={3}>
         <TextField
+          inputRef={titleInputRef}
           label="Título (opcional)"
           variant="outlined"
           fullWidth
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          value={formData.title}
+          onChange={(event) =>
+            setFormData((prev) => ({ ...prev, title: event.target.value }))
+          }
         />
 
         <TextField
@@ -49,21 +41,32 @@ function TextContentForm() {
           rows={8}
           fullWidth
           required
-          value={content}
-          onChange={(event) => setContent(event.target.value)}
+          value={formData.textContent}
+          onChange={(event) =>
+            setFormData((prev) => ({
+              ...prev,
+              textContent: event.target.value,
+            }))
+          }
         />
 
         <Button
           variant="contained"
           className="text-form-button"
-          onClick={handleSubmit}
-          disabled={!content.trim() || loading}
+          onClick={onSubmit}
+          disabled={!formData.textContent.trim() || loading}
         >
           {loading ? "Clasificando..." : "Clasificar contenido"}
         </Button>
 
         {classification && (
-          <ClassificationResult classification={classification} />
+          <Button
+            variant="outlined"
+            className="text-form-clear-button"
+            onClick={handleReset}
+          >
+            Limpiar formulario
+          </Button>
         )}
       </Stack>
     </Card>
