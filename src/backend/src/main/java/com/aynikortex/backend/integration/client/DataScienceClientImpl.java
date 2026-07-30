@@ -9,6 +9,7 @@ import com.aynikortex.backend.integration.dto.response.DataScienceErrorResponse;
 import com.aynikortex.backend.integration.dto.response.HealthResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -80,9 +81,9 @@ public class DataScienceClientImpl implements DataScienceClient {
             );
 
 
-            InputStreamResource resource =
-                    new InputStreamResource(
-                            request.file().getInputStream()
+            ByteArrayResource resource =
+                    new ByteArrayResource(
+                            request.file().getBytes()
                     ) {
 
                         @Override
@@ -93,7 +94,7 @@ public class DataScienceClientImpl implements DataScienceClient {
                     };
 
 
-            HttpEntity<InputStreamResource> fileEntity =
+            HttpEntity<ByteArrayResource> fileEntity =
                     new HttpEntity<>(
                             resource,
                             fileHeaders
