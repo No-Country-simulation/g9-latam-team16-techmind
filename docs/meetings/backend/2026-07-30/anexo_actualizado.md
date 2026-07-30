@@ -128,6 +128,7 @@ Actualiza el registro en la base de datos
 
 ## Cuando el contenido es un archivo
 
+```
 Usuario
 
 ↓
@@ -166,7 +167,4 @@ Actualiza:
 - keywords
 - modelVersion
 - resume
-
-```
-
 ```
