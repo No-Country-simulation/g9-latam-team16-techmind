@@ -1,0 +1,4 @@
+TITULO: """Texto con comillas dobles y comillas simples anidadas'''
+CATEGORIA_ESPERADA: Data Engineering
+
+SELECT * FROM users WHERE title = 'SELECT 1 FROM table WHERE id = 100';

@@ -1,8 +1,8 @@
 package com.aynikortex.backend.domain;
 
 import jakarta.validation.constraints.NotBlank;
-
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public record DatosContentDto(
@@ -11,7 +11,7 @@ public record DatosContentDto(
         String title,
         String description,
         @NotBlank
-        String contentType,
+        ContentType contentType, // Asegúrate de que usa com.aynikortex.backend.domain.ContentType
         @NotBlank
         String textContent,
         String fileName,
@@ -20,7 +20,7 @@ public record DatosContentDto(
         String subCategory,
         Double confidence,
         String modelVersion,
-        String keywords,
+        List<Keyword> keywords,
         LocalDateTime createdAt,
-        LocalDateTime updateAt) {
-}
+        LocalDateTime updateAt
+) {}

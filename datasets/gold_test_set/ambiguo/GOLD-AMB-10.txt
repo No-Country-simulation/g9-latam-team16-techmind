@@ -1,0 +1,4 @@
+TITULO: Librería Móvil Nativa en Kotlin para Autenticación Biométrica y Comunicación Cifrada TLS
+CATEGORIA_ESPERADA: Mobile
+
+Creamos un módulo nativo para Android utilizando el lenguaje Kotlin que abstrae la verificación mediante huella dactilar (BiometricPrompt) e impone la validación de certificados SSL Pinning en todas las conexiones de red HTTPS. En el marco de la modernización de la plataforma, este componente fue refactorizado para garantizar un rendimiento óptimo bajo cargas de trabajo pesadas. El equipo de arquitectura técnica documentó cada decisión de diseño para asegurar que el despliegue a producción cumpla con todos los estándares de calidad ISO y las regulaciones corporativas vigentes de protección de datos (GDPR).

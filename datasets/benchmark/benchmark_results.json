@@ -1,0 +1,212 @@
+[
+  {
+    "experiment": "EXP-01 (1K)",
+    "dataset_size": 1000,
+    "accuracy": 0.1,
+    "precision": 0.1513,
+    "recall": 0.1,
+    "f1_score": 0.0875,
+    "training_time_sec": 0.2536,
+    "avg_inference_latency_ms": 0.164,
+    "vocab_size": 10000,
+    "approx_model_size_mb": 1.34,
+    "test_type_breakdown": {
+      "corto": {
+        "accuracy": 0.2,
+        "f1_score": 0.2
+      },
+      "mediano": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "largo": {
+        "accuracy": 0.1,
+        "f1_score": 0.1333
+      },
+      "tecnico_especializado": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "ambiguo": {
+        "accuracy": 0.1,
+        "f1_score": 0.05
+      },
+      "errores_ortograficos": {
+        "accuracy": 0.2,
+        "f1_score": 0.0889
+      },
+      "casos_limite": {
+        "accuracy": 0.1,
+        "f1_score": 0.1
+      }
+    }
+  },
+  {
+    "experiment": "EXP-02 (2.5K)",
+    "dataset_size": 2500,
+    "accuracy": 0.0429,
+    "precision": 0.0701,
+    "recall": 0.0429,
+    "f1_score": 0.0401,
+    "training_time_sec": 0.5181,
+    "avg_inference_latency_ms": 0.142,
+    "vocab_size": 10000,
+    "approx_model_size_mb": 1.75,
+    "test_type_breakdown": {
+      "corto": {
+        "accuracy": 0.1,
+        "f1_score": 0.08
+      },
+      "mediano": {
+        "accuracy": 0.1,
+        "f1_score": 0.1
+      },
+      "largo": {
+        "accuracy": 0.1,
+        "f1_score": 0.1333
+      },
+      "tecnico_especializado": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "ambiguo": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "errores_ortograficos": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "casos_limite": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      }
+    }
+  },
+  {
+    "experiment": "EXP-03 (5K)",
+    "dataset_size": 5000,
+    "accuracy": 0.0571,
+    "precision": 0.0493,
+    "recall": 0.0571,
+    "f1_score": 0.0513,
+    "training_time_sec": 1.0549,
+    "avg_inference_latency_ms": 0.117,
+    "vocab_size": 10000,
+    "approx_model_size_mb": 2.44,
+    "test_type_breakdown": {
+      "corto": {
+        "accuracy": 0.2,
+        "f1_score": 0.18
+      },
+      "mediano": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "largo": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "tecnico_especializado": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "ambiguo": {
+        "accuracy": 0.1,
+        "f1_score": 0.1
+      },
+      "errores_ortograficos": {
+        "accuracy": 0.1,
+        "f1_score": 0.05
+      },
+      "casos_limite": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      }
+    }
+  },
+  {
+    "experiment": "EXP-04 (7.5K)",
+    "dataset_size": 7500,
+    "accuracy": 0.1714,
+    "precision": 0.1792,
+    "recall": 0.1714,
+    "f1_score": 0.163,
+    "training_time_sec": 1.6589,
+    "avg_inference_latency_ms": 0.135,
+    "vocab_size": 10000,
+    "approx_model_size_mb": 3.11,
+    "test_type_breakdown": {
+      "corto": {
+        "accuracy": 0.2,
+        "f1_score": 0.18
+      },
+      "mediano": {
+        "accuracy": 0.0,
+        "f1_score": 0.0
+      },
+      "largo": {
+        "accuracy": 0.4,
+        "f1_score": 0.2667
+      },
+      "tecnico_especializado": {
+        "accuracy": 0.1,
+        "f1_score": 0.08
+      },
+      "ambiguo": {
+        "accuracy": 0.1,
+        "f1_score": 0.1333
+      },
+      "errores_ortograficos": {
+        "accuracy": 0.1,
+        "f1_score": 0.0286
+      },
+      "casos_limite": {
+        "accuracy": 0.3,
+        "f1_score": 0.3
+      }
+    }
+  },
+  {
+    "experiment": "EXP-05 (10K)",
+    "dataset_size": 10000,
+    "accuracy": 0.1571,
+    "precision": 0.1951,
+    "recall": 0.1571,
+    "f1_score": 0.1572,
+    "training_time_sec": 2.5836,
+    "avg_inference_latency_ms": 0.146,
+    "vocab_size": 10000,
+    "approx_model_size_mb": 3.79,
+    "test_type_breakdown": {
+      "corto": {
+        "accuracy": 0.2,
+        "f1_score": 0.1667
+      },
+      "mediano": {
+        "accuracy": 0.1,
+        "f1_score": 0.04
+      },
+      "largo": {
+        "accuracy": 0.1,
+        "f1_score": 0.05
+      },
+      "tecnico_especializado": {
+        "accuracy": 0.2,
+        "f1_score": 0.2
+      },
+      "ambiguo": {
+        "accuracy": 0.1,
+        "f1_score": 0.1
+      },
+      "errores_ortograficos": {
+        "accuracy": 0.1,
+        "f1_score": 0.0286
+      },
+      "casos_limite": {
+        "accuracy": 0.3,
+        "f1_score": 0.3
+      }
+    }
+  }
+]

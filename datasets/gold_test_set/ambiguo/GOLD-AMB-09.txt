@@ -1,0 +1,4 @@
+TITULO: Preprocesamiento Masivo de Corpus de Texto para Entrenamiento de Modelos LLM Transformer
+CATEGORIA_ESPERADA: Data Engineering
+
+Previo a la fase de entrenamiento del modelo de lenguaje, se desarrolló un pipeline de datos en PySpark que limpia carácteres inválidos, remueve stop-words y tokeniza miles de millones de documentos técnicos conservando la estructura semántica original. En el marco de la modernización de la plataforma, este componente fue refactorizado para garantizar un rendimiento óptimo bajo cargas de trabajo pesadas. El equipo de arquitectura técnica documentó cada decisión de diseño para asegurar que el despliegue a producción cumpla con todos los estándares de calidad ISO y las regulaciones corporativas vigentes de protección de datos (GDPR).

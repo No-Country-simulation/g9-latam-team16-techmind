@@ -1,0 +1,4 @@
+TITULO: 🚀🤖📊 Cloud AI Machine Learning Kubernetes Docker Python Data Security Backend Frontend Mobile
+CATEGORIA_ESPERADA: AI/ML
+
+🤖 ML ⚡ AWS 🔐 Security 💻 Java 📱 iOS 🌐 Frontend 🐘 PostgreSQL 🐳 Docker 📊 Spark ⚡ FastAPI 🛠️ Terraform ⚙️ CI/CD 🚀 Next.js

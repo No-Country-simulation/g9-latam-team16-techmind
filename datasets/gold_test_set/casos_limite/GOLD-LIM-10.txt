@@ -1,0 +1,4 @@
+TITULO: Mobile App UI Test Android iOS Flutter React Native Swift Kotlin Repetitive Test String
+CATEGORIA_ESPERADA: Mobile
+
+Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile Mobile
