@@ -1,5 +1,6 @@
-package com.aynikortex.backend.domain;
+package com.aynikortex.backend.content.dto;
 
+import com.aynikortex.backend.entity.ContentType;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +21,7 @@ public record DatosContentDto(
         String subCategory,
         Double confidence,
         String modelVersion,
-        List<Keyword> keywords,
+        List<KeywordDTO> keywords,
         LocalDateTime createdAt,
         LocalDateTime updateAt
 ) {}

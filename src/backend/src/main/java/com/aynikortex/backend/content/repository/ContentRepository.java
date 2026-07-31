@@ -1,6 +1,6 @@
 package com.aynikortex.backend.content.repository;
 
-import com.aynikortex.backend.domain.Contenido;
+import com.aynikortex.backend.entity.Contenido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

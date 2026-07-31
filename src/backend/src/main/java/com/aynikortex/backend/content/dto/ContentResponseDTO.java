@@ -1,6 +1,6 @@
 package com.aynikortex.backend.content.dto;
 
-import com.aynikortex.backend.domain.ContentType;
+import com.aynikortex.backend.entity.ContentType;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

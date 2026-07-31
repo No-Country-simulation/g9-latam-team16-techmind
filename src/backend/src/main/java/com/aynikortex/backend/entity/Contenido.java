@@ -1,5 +1,7 @@
-package com.aynikortex.backend.domain;
+package com.aynikortex.backend.entity;
 
+import com.aynikortex.backend.content.dto.KeywordDTO;
+import com.aynikortex.backend.content.dto.DatosContentDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +40,7 @@ public class Contenido {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json")
-    private List<Keyword> keywords;
+    private List<KeywordDTO> keywords;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -60,7 +62,7 @@ public class Contenido {
         this.subcategory = datosContentDto.subCategory();
         this.confidence = datosContentDto.confidence();
         this.modelVersion = datosContentDto.modelVersion();
-        this.keywords = (List<Keyword>) datosContentDto.keywords();
+        this.keywords = (List<KeywordDTO>) datosContentDto.keywords();
         this.createdAt = datosContentDto.createdAt();
         this.updatedAt = datosContentDto.updateAt() != null ? datosContentDto.updateAt() : LocalDateTime.now();
     }
@@ -98,8 +100,8 @@ public class Contenido {
     public String getModelVersion() { return modelVersion; }
     public void setModelVersion(String modelVersion) { this.modelVersion = modelVersion; }
 
-    public List<Keyword> getKeywords() { return keywords; }
-    public void setKeywords(List<Keyword> keywords) { this.keywords = keywords; }
+    public List<KeywordDTO> getKeywords() { return keywords; }
+    public void setKeywords(List<KeywordDTO> keywords) { this.keywords = keywords; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

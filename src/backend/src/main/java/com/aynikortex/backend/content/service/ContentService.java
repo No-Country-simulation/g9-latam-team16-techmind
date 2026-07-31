@@ -4,7 +4,7 @@ import com.aynikortex.backend.content.dto.ContentRequestDTO;
 import com.aynikortex.backend.content.dto.ContentResponseDTO;
 import com.aynikortex.backend.content.mapper.ContentMapper;
 import com.aynikortex.backend.content.repository.ContentRepository;
-import com.aynikortex.backend.domain.Contenido;
+import com.aynikortex.backend.entity.Contenido;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

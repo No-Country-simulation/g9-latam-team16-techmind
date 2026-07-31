@@ -1,4 +1,4 @@
-package com.aynikortex.backend.domain;
+package com.aynikortex.backend.entity;
 
 public enum ContentType {
     TEXT,

@@ -1,4 +1,4 @@
-package com.aynikortex.backend.domain;
+package com.aynikortex.backend.entity;
 
 import java.io.Serializable;
 
@@ -6,9 +6,9 @@ public class Keywords implements Serializable {
     private String word;
     private Double relevance;
 
-    public void KeywordDto() {}
+    public void KeywordDTO() {}
 
-    public void KeywordDto(String word, Double relevance) {
+    public void KeywordDTO(String word, Double relevance) {
         this.word = word;
         this.relevance = relevance;
     }
