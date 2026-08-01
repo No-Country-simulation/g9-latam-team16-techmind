@@ -1,7 +1,7 @@
 | Proyecto | AyniKortex |
 |-----------|------------|
 | Documento | Backend-Data-Contract |
-| Versión | 2.1 |
+| Versión | 2.2 |
 | Estado | En Diseño |
 | Responsable | Equipo Data Science |
 | Consumidor | Equipo Backend |
@@ -14,7 +14,8 @@
 |----------|-------|--------|-------------|
 | 1.0 | 2026-07-21 | Equipo Data Science | Versión inicial del contrato de integración entre Backend y Data Science. |
 | 2.0 | 2026-07-22 | Equipo Data Science | Actualización del contrato para la arquitectura basada en API REST (FastAPI), incorporación de clasificación documental y extracción de palabras clave como funcionalidades principales del MVP. |
-| **2.1** | **2026-07-30** | **Equipo Data Science** | **Actualización del contrato para incorporar la generación automática de un resumen descriptivo del contenido (`summary`) como parte del proceso de clasificación. Se actualizan el alcance funcional del componente Data Science y las capacidades oficiales del MVP, manteniendo la compatibilidad con la versión 2.0 del contrato.** |
+| 2.1 | 2026-07-30 | Equipo Data Science | Actualización del contrato para incorporar la generación automática de un resumen descriptivo del contenido (`summary`) como parte del proceso de clasificación. Se actualizan el alcance funcional del componente Data Science y las capacidades oficiales del MVP, manteniendo la compatibilidad con la versión 2.0 del contrato. |
+| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` del contrato de integración y de los modelos de solicitud. Corrección del ejemplo de `ClassificationResponse` para alinearlo con la especificación oficial. Ajustes de consistencia documental y alineación con Backend-Data-Model v2.2. |
 
 ---
 
@@ -121,6 +122,8 @@ El componente **Backend**, desarrollado en **Java con Spring Boot**, actúa como
 El componente **Data Science**, desarrollado en **Python con FastAPI**, encapsula todas las capacidades relacionadas con el procesamiento de documentos, el preprocesamiento de texto, la ejecución del modelo de Machine Learning y la generación de los resultados de clasificación.
 
 La comunicación entre ambos componentes se realizará exclusivamente mediante solicitudes **HTTP REST**, utilizando estructuras de datos definidas en el documento **Backend-Data-Model.md**.
+
+Backend es el único responsable de construir las solicitudes que consume la API de Data Science de acuerdo con los modelos definidos en Backend-Data-Model.
 
 > [!IMPORTANT]
 >
@@ -242,7 +245,6 @@ De igual forma, Data Science no administra:
 - Autorización.
 - Persistencia.
 - Reglas de negocio.
-- Gestión de proyectos.
 
 ---
 
@@ -337,7 +339,6 @@ La entrega del componente incluirá:
 |---------------|:-------:|:------------:|
 | Gestión de usuarios | ✅ | ❌ |
 | Autenticación | ✅ | ❌ |
-| Gestión de proyectos | ✅ | ❌ |
 | Recepción de solicitudes | ✅ | ❌ |
 | Recepción de archivos | ✅ | ❌ |
 | Almacenamiento de documentos | ✅ | ❌ |
@@ -549,6 +550,8 @@ La respuesta deberá cumplir el modelo:
 ClassificationResponse
 ```
 
+- La respuesta incluirá la información general de la operación (status, processingTime, modelVersion, timestamp) y el resultado de la clasificación dentro del objeto classification, de acuerdo con el modelo ClassificationResponse.
+
 ---
 
 ## Código HTTP
@@ -628,6 +631,8 @@ La respuesta deberá cumplir el modelo:
 ClassificationResponse
 ```
 
+- La respuesta incluirá la información general de la operación (status, processingTime, modelVersion, timestamp) y el resultado de la clasificación dentro del objeto classification, de acuerdo con el modelo ClassificationResponse.
+
 ---
 
 ## Código HTTP
@@ -646,6 +651,8 @@ ClassificationResponse
 El contenido recibido será procesado utilizando el mismo pipeline de inferencia empleado para la clasificación documental.
 
 De esta forma se garantiza consistencia entre ambos mecanismos de entrada.
+
+
 
 ---
 
@@ -748,6 +755,7 @@ La API REST del componente Data Science garantiza:
 - Independencia de la implementación interna.
 - Consistencia entre los distintos mecanismos de entrada.
 - Versionado de la API mediante el prefijo **/api/v1/**.
+- Las respuestas exitosas respetarán siempre la estructura definida por ClassificationResponse.
 
 ---
 
@@ -758,7 +766,6 @@ La API no será responsable de:
 - Gestión de usuarios.
 - Autenticación.
 - Persistencia.
-- Administración de proyectos.
 - Almacenamiento de documentos.
 - Presentación de resultados.
 
@@ -831,8 +838,8 @@ Este flujo corresponde al procesamiento de documentos enviados por el usuario me
 | 9 | | Extrae las palabras clave más relevantes. |
 | 10 | | Genera automáticamente un resumen descriptivo del contenido procesado. |
 | 11 | | Calcula el nivel de confianza de la clasificación. |
-| 12 | | Genera la respuesta JSON. |
-| 13 | Recibe la respuesta del servicio. | |
+| 12 | | Genera el objeto `ClassificationResponse` y lo devuelve al Backend.. |
+| 13 | Backend recibe `ClassificationResponse`. | |
 | 14 | Persiste el resultado de clasificación. | |
 | 15 | Devuelve la respuesta al Frontend. | |
 
@@ -861,7 +868,7 @@ Este flujo permite clasificar contenido enviado directamente como texto libre.
 | 8 | | Extrae las palabras clave más relevantes. |
 | 9 | | Genera automáticamente un resumen descriptivo del contenido procesado. |
 | 10 | | Calcula el nivel de confianza de la clasificación. |
-| 11 | | Genera la respuesta JSON. |
+| 11 | | Genera C`lassificationResponse`. |
 | 12 | Recibe la respuesta. | |
 | 13 | Persiste el resultado. | |
 | 14 | Devuelve la información al Frontend. | |

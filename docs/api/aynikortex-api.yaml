@@ -2,7 +2,7 @@ openapi: 3.1.0
 
 info:
   title: AyniKortex Data Science API
-  version: 2.1.0
+  version: 2.2.0
   description: |
     API REST del componente Data Science del proyecto AyniKortex.
 
@@ -98,7 +98,7 @@ paths:
           multipart/form-data:
 
             schema:
-              $ref: '#/components/schemas/FilePredictionRequest'
+              $ref: '#/components/schemas/FileClassificationRequest'
 
       responses:
 
@@ -152,7 +152,7 @@ paths:
           application/json:
 
             schema:
-              $ref: '#/components/schemas/TextPredictionRequest'
+              $ref: '#/components/schemas/TextClassificationRequest'
 
       responses:
 
@@ -210,7 +210,7 @@ components:
 
   schemas:
 
-    FilePredictionRequest:
+    FileClassificationRequest:
       type: object
 
       required:
@@ -226,7 +226,7 @@ components:
       example:
         file: documentacion.pdf
 
-    TextPredictionRequest:
+    TextClassificationRequest:
       type: object
 
       required:
@@ -314,34 +314,70 @@ components:
       type: object
 
       required:
+        - status
         - classification
+        - processingTime
+        - modelVersion
+        - timestamp
 
       properties:
 
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - FAILED
+
         classification:
           $ref: '#/components/schemas/Classification'
+
+        processingTime:
+          type: integer
+          description: Tiempo de procesamiento en milisegundos.
+
+        modelVersion:
+          type: string
+          example: "1.0.0"
+
+        timestamp:
+          type: string
+          format: date-time
+
 
       example:
 
         classification:
 
-          category: Backend
+          "status": "SUCCESS"
 
-          subcategory: Spring Boot
+          "classification": 
+          
+            "category": "Arquitectura"
 
-          confidence: 0.96
+            "subcategory": "Microservicios"
 
-          keywords:
-            - spring
-            - backend
-            - api
-            - java
-
-          summary: >
-            Documento técnico que describe la arquitectura Backend
-            utilizando Spring Boot y una API REST para integrar
-            componentes de Machine Learning.
-
+            "confidence": 0.97,
+            
+            "keywords": [
+              {
+                "term": "docker",
+                "score": 0.96
+              },
+              {
+                "term": "kubernetes",
+                "score": 0.93
+              },
+              {
+                "term": "api",
+                "score": 0.89
+              }
+            ]
+            "summary": "Documento técnico que describe una arquitectura basada en microservicios utilizando Docker y Kubernetes para el despliegue y la orquestación de aplicaciones."
+          
+          "processingTime": 124,
+          "modelVersion": "1.0.0"
+          "timestamp": "2026-08-01T15:45:22Z"
+        
     HealthResponse:
       type: object
 

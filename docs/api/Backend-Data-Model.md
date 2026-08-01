@@ -3,7 +3,7 @@
 | Proyecto | AyniKortex |
 |-----------|------------|
 | Documento | Backend-Data-Model |
-| Versión | 2.1 |
+| Versión | 2. |
 | Estado | En Diseño |
 | Responsable | Equipo Data Science |
 | Consumidor | Equipo Backend |
@@ -17,6 +17,7 @@
 | 1.0 | 2026-07-21 | Equipo Data Science | Versión inicial basada en la arquitectura de Base de Conocimiento. |
 | 2.0 | 2026-07-22 | Equipo Data Science | Rediseño completo del modelo de datos para la arquitectura REST de clasificación documental mediante Machine Learning. |
 | 2.1 | 2026-07-30 | Equipo Data Science | Se incorpora el atributo `summary` dentro del modelo de clasificación para representar el resumen descriptivo generado automáticamente durante el proceso de inferencia. Se actualizan las estructuras de datos y ejemplos JSON manteniendo compatibilidad con la versión 2.0. |
+| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` de los modelos de solicitud. Corrección del ejemplo de `ClassificationResponse para alinearlo con la especificación del contrato. Ajustes de consistencia documental y aclaraciones sobre trazabilidad mediante requestId.
 
 ---
 
@@ -259,14 +260,13 @@ Estas reglas aplican a todos los modelos de solicitud, respuesta y objetos compa
 
 | Atributo | Restricción |
 |-----------|-------------|
-| projectId | UUID versión 4 válido. |
 | requestId | Cadena alfanumérica única generada por Backend. |
 | correlationId *(futuras versiones)* | Identificador único para trazabilidad distribuida. |
 
 ### Observaciones
 
 - Todos los identificadores deberán ser únicos dentro del contexto de la operación.
-- Data Science no generará ni modificará los identificadores enviados por Backend.
+- El atributo `requestId`, cuando sea proporcionado por Backend, deberá mantenerse sin modificaciones en la respuesta generada por Data Science para facilitar la trazabilidad entre componentes
 
 ---
 
@@ -452,7 +452,6 @@ El documento será procesado por el componente Data Science para obtener su clas
 | Campo | Tipo | Obligatorio | Descripción |
 |--------|------|-------------|-------------|
 | file | Binary | Sí | Archivo que será procesado. |
-| projectId | UUID | Sí | Identificador del proyecto asociado. |
 | metadata | Metadata | No | Información complementaria de la solicitud. |
 
 ---
@@ -483,8 +482,6 @@ El documento será procesado por el componente Data Science para obtener su clas
 multipart/form-data
 
 file=documentacion.pdf
-
-projectId=550e8400-e29b-41d4-a716-446655440000
 ```
 
 ---
@@ -534,7 +531,6 @@ POST /api/v1/predict/text
 {
     "title": "Manual de Arquitectura",
     "text": "Este documento describe la arquitectura del sistema...",
-    "projectId": "550e8400-e29b-41d4-a716-446655440000",
     "metadata": {
         "source": "WEB",
         "language": "es"
@@ -608,28 +604,33 @@ Este modelo será utilizado por los endpoints:
 
 ### Ejemplo
 
-### Ejemplo
-
 ```json
-"classification": {
+{
+  "requestId": "REQ-20260801-000001",
+  "status": "SUCCESS",
+  "classification": {
     "category": "Arquitectura",
     "subcategory": "Microservicios",
     "confidence": 0.97,
     "keywords": [
-        {
-            "term": "docker",
-            "score": 0.96
-        },
-        {
-            "term": "kubernetes",
-            "score": 0.93
-        },
-        {
-            "term": "api",
-            "score": 0.89
-        }
+      {
+        "term": "docker",
+        "score": 0.96
+      },
+      {
+        "term": "kubernetes",
+        "score": 0.93
+      },
+      {
+        "term": "api",
+        "score": 0.89
+      }
     ],
     "summary": "Documento técnico que describe una arquitectura basada en microservicios utilizando Docker y Kubernetes para el despliegue y la orquestación de aplicaciones."
+  },
+  "processingTime": 124,
+  "modelVersion": "1.0.0",
+  "timestamp": "2026-08-01T15:45:22Z"
 }
 ```
 
@@ -856,6 +857,8 @@ Representa información adicional enviada por Backend para complementar una soli
 
 Su contenido es completamente opcional y podrá evolucionar sin afectar la compatibilidad del contrato.
 
+Todos los atributos de Metadata son opcionales y no modifican el comportamiento funcional del proceso de clasificación
+
 ---
 
 ### Atributos
@@ -1042,7 +1045,7 @@ Se consideran cambios compatibles:
 - Incorporar nuevos valores de enumeraciones cuando no afecten el comportamiento existente.
 - Mejorar la documentación.
 
-> **Nota:** La incorporación del atributo `summary` en la versión 2.1 constituye una evolución compatible del contrato. Los consumidores que no utilicen este atributo podrán ignorarlo sin afectar el procesamiento de la respuesta.
+> **Nota:** Las versiones 2.1 y 2.2 incorporan mejoras compatibles al contrato sin afectar la estructura principal de los modelos existentes.
 
 No se consideran compatibles:
 
