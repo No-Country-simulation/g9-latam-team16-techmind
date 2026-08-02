@@ -1,6 +1,7 @@
 package com.aynikortex.backend.content.repository;
 
 import com.aynikortex.backend.entity.Contenido;
+import com.aynikortex.backend.entity.ContentType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +12,6 @@ import java.util.UUID;
 public interface ContentRepository extends JpaRepository<Contenido, UUID> {
 
     List<Contenido> findByCategory(String category);
+
+    List<Contenido> findByContentType(ContentType contentType);
 }
