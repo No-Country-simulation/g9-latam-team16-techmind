@@ -5,6 +5,7 @@ import com.aynikortex.backend.content.dto.ContentResponseDTO;
 import com.aynikortex.backend.content.mapper.ContentMapper;
 import com.aynikortex.backend.content.repository.ContentRepository;
 import com.aynikortex.backend.entity.Contenido;
+import com.aynikortex.backend.entity.ContentType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,20 @@ public class ContentService {
 
     @Transactional
     public ContentResponseDTO createContent(ContentRequestDTO requestDTO) {
+        if (requestDTO.contentType() == ContentType.TEXT){
+            if (requestDTO.textContent() == null ||
+            requestDTO.textContent().trim().isEmpty()){
+                throw new IllegalArgumentException("Text content is required for TEXT type");
+            }
+
+        } else if (requestDTO.contentType() == ContentType.FILE) {
+            if (requestDTO.fileName() == null ||
+                requestDTO.filePath() == null){
+                throw new IllegalArgumentException("File content is required for FILE type");
+            }
+        }else {
+            throw new IllegalArgumentException("Invalid content type");
+        }
         Contenido contenido = contentMapper.toEntity(requestDTO);
         contenido.setCreatedAt(LocalDateTime.now());
         contenido.setCategory("PENDIENTE_CLASIFICACION");

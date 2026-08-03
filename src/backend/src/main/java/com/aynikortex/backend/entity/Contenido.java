@@ -33,6 +33,7 @@ public class Contenido {
     private String textContent;
     private String fileName;
     private String filePath;
+    private String fileFormat;
     private String category;
     private String subcategory;
     private Double confidence;
@@ -87,6 +88,14 @@ public class Contenido {
 
     public String getFilePath() { return filePath; }
     public void setFilePath(String filePath) { this.filePath = filePath; }
+
+    public String getFileFormat() {
+        return fileFormat;
+    }
+
+    public void setFileFormat(String fileFormat) {
+        this.fileFormat = fileFormat;
+    }
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }

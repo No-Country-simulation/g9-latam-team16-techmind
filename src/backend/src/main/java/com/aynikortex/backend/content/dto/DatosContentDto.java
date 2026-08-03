@@ -17,6 +17,7 @@ public record DatosContentDto(
         String textContent,
         String fileName,
         String filePath,
+        String fileFormat,
         String category,
         String subCategory,
         Double confidence,
