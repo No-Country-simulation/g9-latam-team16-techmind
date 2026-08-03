@@ -17,7 +17,7 @@
 | 1.0 | 2026-07-21 | Equipo Data Science | Versión inicial basada en la arquitectura de Base de Conocimiento. |
 | 2.0 | 2026-07-22 | Equipo Data Science | Rediseño completo del modelo de datos para la arquitectura REST de clasificación documental mediante Machine Learning. |
 | 2.1 | 2026-07-30 | Equipo Data Science | Se incorpora el atributo `summary` dentro del modelo de clasificación para representar el resumen descriptivo generado automáticamente durante el proceso de inferencia. Se actualizan las estructuras de datos y ejemplos JSON manteniendo compatibilidad con la versión 2.0. |
-| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` de los modelos de solicitud. Corrección del ejemplo de `ClassificationResponse para alinearlo con la especificación del contrato. Ajustes de consistencia documental y aclaraciones sobre trazabilidad mediante requestId.
+| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` de los modelos de solicitud. Eliminación del atributo `requestId` de los modelos de respuesta por acuerdo de integración con Backend. Corrección del modelo `ClassificationResponse` y sus ejemplos JSON. Incorporación de aclaraciones sobre atributos funcionales y metadatos técnicos. Ajustes generales de consistencia documental. |
 
 ---
 
@@ -209,15 +209,13 @@ No se permitirá el intercambio de fechas utilizando formatos locales.
 
 # 4.5 Convenciones para Identificadores
 
-Todos los identificadores deberán utilizar UUID versión 4.
+Los identificadores utilizados internamente por los componentes **Backend** y **Data Science** no forman parte del contrato de integración definido en este documento.
 
-### Ejemplo
+Cada componente será responsable de gestionar los identificadores requeridos para sus procesos internos de trazabilidad, auditoría o monitoreo, sin afectar la estructura de los modelos de datos intercambiados entre ambos componentes.
 
-```text
-550e8400-e29b-41d4-a716-446655440000
-```
-
-No deberán utilizarse identificadores secuenciales como parte del contrato de integración.
+> [!NOTE]
+>
+> El contrato de integración no define identificadores de solicitud (`requestId`) ni identificadores de correlación (`correlationId`) para el MVP del proyecto.
 
 ---
 
@@ -258,15 +256,14 @@ Estas reglas aplican a todos los modelos de solicitud, respuesta y objetos compa
 
 ## 4.8.1 Restricciones para Identificadores
 
-| Atributo | Restricción |
-|-----------|-------------|
-| requestId | Cadena alfanumérica única generada por Backend. |
-| correlationId *(futuras versiones)* | Identificador único para trazabilidad distribuida. |
+Para la versión MVP del proyecto, el contrato de integración no define atributos de tipo identificador dentro de los modelos de solicitud o respuesta.
+
+Los identificadores utilizados para trazabilidad, auditoría o correlación serán responsabilidad de cada componente y no forman parte de la información intercambiada entre Backend y Data Science.
 
 ### Observaciones
 
-- Todos los identificadores deberán ser únicos dentro del contexto de la operación.
-- El atributo `requestId`, cuando sea proporcionado por Backend, deberá mantenerse sin modificaciones en la respuesta generada por Data Science para facilitar la trazabilidad entre componentes
+- Backend gestionará sus propios identificadores para el seguimiento de las operaciones.
+- Data Science podrá utilizar identificadores internos para fines de monitoreo, registros o diagnóstico sin exponerlos mediante la API REST.
 
 ---
 
@@ -512,7 +509,6 @@ POST /api/v1/predict/text
 |--------|------|-------------|-------------|
 | title | String | No | Título asociado al contenido. |
 | text | String | Sí | Texto que será clasificado. |
-| projectId | UUID | Sí | Identificador del proyecto. |
 | metadata | Metadata | No | Información complementaria de la solicitud. |
 
 ---
@@ -593,12 +589,11 @@ Este modelo será utilizado por los endpoints:
 
 | Campo | Tipo | Obligatorio | Descripción |
 |--------|------|-------------|-------------|
-| requestId | String | No | Identificador de la solicitud recibido desde Backend. |
 | status | Status | Sí | Estado general de la operación. |
 | classification | Classification | Sí | Resultado completo de la inferencia, incluyendo categoría, subcategoría, palabras clave, resumen descriptivo y nivel de confianza de la clasificación. |
-| processingTime | Integer | Sí | Tiempo de procesamiento en milisegundos. |
-| modelVersion | String | Sí | Versión del modelo de Machine Learning utilizada para generar la inferencia. Sigue el esquema de Versionado Semántico (MAJOR.MINOR.PATCH). |
-| timestamp | DateTime | Sí | Fecha y hora de generación de la respuesta. |
+| processingTime | Integer | Sí | Tiempo total de procesamiento de la inferencia expresado en milisegundos. Campo informativo utilizado para monitoreo y análisis de rendimiento. Su consumo por parte de Backend es opcional. |
+| modelVersion | String | Sí | Versión del modelo de Machine Learning utilizada para generar la clasificación. Permite auditoría, reproducibilidad y seguimiento de la evolución del modelo. Su consumo por parte de Backend es opcional. |
+| timestamp | DateTime | Sí | Fecha y hora en que el componente Data Science generó la respuesta. Campo informativo cuyo consumo por parte de Backend es opcional. |
 
 ---
 
@@ -606,7 +601,6 @@ Este modelo será utilizado por los endpoints:
 
 ```json
 {
-  "requestId": "REQ-20260801-000001",
   "status": "SUCCESS",
   "classification": {
     "category": "Arquitectura",
@@ -633,6 +627,24 @@ Este modelo será utilizado por los endpoints:
   "timestamp": "2026-08-01T15:45:22Z"
 }
 ```
+---
+
+### Clasificación de atributos
+
+El objeto **ClassificationResponse** contiene dos tipos de información:
+
+- **Información funcional**, utilizada por Backend para procesar el resultado de la clasificación.
+- **Información técnica**, proporcionada por el componente Data Science con fines de auditoría, monitoreo, análisis de rendimiento y trazabilidad del modelo.
+
+El consumo de los atributos técnicos por parte de Backend es opcional y no afecta el funcionamiento de la integración.
+
+| Campo | Clasificación | Uso esperado |
+|--------|---------------|--------------|
+| `status` | Funcional | Indica el estado del procesamiento y debe ser utilizado por Backend. |
+| `classification` | Funcional | Contiene el resultado de la clasificación que será procesado por Backend. |
+| `processingTime` | Técnico | Tiempo de procesamiento de la inferencia. Campo informativo utilizado para monitoreo y benchmarking. Backend puede ignorarlo. |
+| `modelVersion` | Técnico | Identifica la versión del modelo utilizada para la clasificación. Útil para auditoría y reproducibilidad. Backend puede ignorarlo. |
+| `timestamp` | Técnico | Fecha y hora de generación de la respuesta. Campo informativo. Backend puede ignorarlo. |
 
 ---
 
@@ -658,7 +670,6 @@ Este modelo será utilizado independientemente del endpoint invocado.
 
 | Campo | Tipo | Obligatorio | Descripción |
 |--------|------|-------------|-------------|
-| requestId | String | No | Identificador de la solicitud. |
 | timestamp | DateTime | Sí | Fecha y hora del error. |
 | status | Integer | Sí | Código HTTP asociado. |
 | error | String | Sí | Nombre del error. |
@@ -672,7 +683,6 @@ Este modelo será utilizado independientemente del endpoint invocado.
 
 ```json
 {
-    "requestId": "REQ-20260722-000001",
     "timestamp": "2026-07-22T15:42:01Z",
     "status": 422,
     "error": "DOCUMENT_PROCESSING_ERROR",

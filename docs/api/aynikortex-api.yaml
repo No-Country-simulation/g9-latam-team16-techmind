@@ -333,50 +333,62 @@ components:
 
         processingTime:
           type: integer
-          description: Tiempo de procesamiento en milisegundos.
+          description: >
+            Tiempo total de procesamiento de la inferencia expresado en
+            milisegundos. Campo informativo utilizado para monitoreo y
+            análisis de rendimiento. Su consumo por parte de Backend es opcional.
 
         modelVersion:
           type: string
+          description: >
+            Versión del modelo de Machine Learning utilizada para generar la
+            clasificación. Permite auditoría, reproducibilidad y seguimiento
+            de la evolución del modelo. Su consumo por parte de Backend es opcional.
           example: "1.0.0"
 
         timestamp:
           type: string
           format: date-time
-
+          description: >
+            Fecha y hora en que el componente Data Science generó la respuesta.
+            Campo informativo cuyo consumo por parte de Backend es opcional.
 
       example:
+        status: SUCCESS
 
         classification:
+          category: Arquitectura
+          subcategory: Microservicios
+          confidence: 0.97
 
-          "status": "SUCCESS"
+          keywords:
+            - term: docker
+              score: 0.96
 
-          "classification": 
-          
-            "category": "Arquitectura"
+            - term: kubernetes
+              score: 0.93
 
-            "subcategory": "Microservicios"
+            - term: api
+              score: 0.89
 
-            "confidence": 0.97,
-            
-            "keywords": [
-              {
-                "term": "docker",
-                "score": 0.96
-              },
-              {
-                "term": "kubernetes",
-                "score": 0.93
-              },
-              {
-                "term": "api",
-                "score": 0.89
-              }
-            ]
-            "summary": "Documento técnico que describe una arquitectura basada en microservicios utilizando Docker y Kubernetes para el despliegue y la orquestación de aplicaciones."
-          
-          "processingTime": 124,
-          "modelVersion": "1.0.0"
-          "timestamp": "2026-08-01T15:45:22Z"
+          summary: >
+            Documento técnico que describe una arquitectura basada en
+            microservicios utilizando Docker y Kubernetes para el
+            despliegue y la orquestación de aplicaciones.
+
+        processingTime: 124
+
+        modelVersion: "1.0.0"
+
+        timestamp: "2026-08-01T15:45:22Z"
+
+      description: >
+        La respuesta incluye el resultado de la clasificación y metadatos técnicos
+        generados por el componente Data Science.
+
+        Los atributos processingTime, modelVersion y timestamp forman parte del
+        contrato de integración y podrán ser utilizados o ignorados por Backend
+        según sus necesidades, sin afectar la lógica funcional de la integración.
         
     HealthResponse:
       type: object

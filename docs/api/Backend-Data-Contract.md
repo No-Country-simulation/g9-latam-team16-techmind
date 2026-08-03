@@ -15,7 +15,7 @@
 | 1.0 | 2026-07-21 | Equipo Data Science | Versión inicial del contrato de integración entre Backend y Data Science. |
 | 2.0 | 2026-07-22 | Equipo Data Science | Actualización del contrato para la arquitectura basada en API REST (FastAPI), incorporación de clasificación documental y extracción de palabras clave como funcionalidades principales del MVP. |
 | 2.1 | 2026-07-30 | Equipo Data Science | Actualización del contrato para incorporar la generación automática de un resumen descriptivo del contenido (`summary`) como parte del proceso de clasificación. Se actualizan el alcance funcional del componente Data Science y las capacidades oficiales del MVP, manteniendo la compatibilidad con la versión 2.0 del contrato. |
-| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` del contrato de integración y de los modelos de solicitud. Corrección del ejemplo de `ClassificationResponse` para alinearlo con la especificación oficial. Ajustes de consistencia documental y alineación con Backend-Data-Model v2.2. |
+| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` del contrato de integración y de los modelos de solicitud. Eliminación del atributo `requestId` de los modelos de respuesta por acuerdo entre Backend y Data Science. Corrección del modelo `ClassificationResponse` y de sus ejemplos JSON. Incorporación de aclaraciones sobre atributos funcionales y metadatos técnicos. Ajustes generales de consistencia documental y alineación con Backend-Data-Model v2.2. |
 
 ---
 
@@ -550,7 +550,19 @@ La respuesta deberá cumplir el modelo:
 ClassificationResponse
 ```
 
-- La respuesta incluirá la información general de la operación (status, processingTime, modelVersion, timestamp) y el resultado de la clasificación dentro del objeto classification, de acuerdo con el modelo ClassificationResponse.
+La respuesta deberá cumplir el modelo **ClassificationResponse** definido en **Backend-Data-Model.md**.
+
+La respuesta incluirá:
+
+- El estado general de la operación (`status`).
+- El resultado de la clasificación (`classification`).
+- Metadatos técnicos generados por el componente Data Science (`processingTime`, `modelVersion` y `timestamp`).
+
+> [!NOTE]
+>
+> Los atributos `processingTime`, `modelVersion` y `timestamp` forman parte de los metadatos técnicos de la respuesta.
+>
+> Su consumo por parte del componente Backend es opcional y no afecta la lógica funcional de la integración.
 
 ---
 
@@ -631,7 +643,19 @@ La respuesta deberá cumplir el modelo:
 ClassificationResponse
 ```
 
-- La respuesta incluirá la información general de la operación (status, processingTime, modelVersion, timestamp) y el resultado de la clasificación dentro del objeto classification, de acuerdo con el modelo ClassificationResponse.
+La respuesta deberá cumplir el modelo **ClassificationResponse** definido en **Backend-Data-Model.md**.
+
+La respuesta incluirá:
+
+- El estado general de la operación (`status`).
+- El resultado de la clasificación (`classification`).
+- Metadatos técnicos generados por el componente Data Science (`processingTime`, `modelVersion` y `timestamp`).
+
+> [!NOTE]
+>
+> Los atributos `processingTime`, `modelVersion` y `timestamp` forman parte de los metadatos técnicos de la respuesta.
+>
+> Su consumo por parte del componente Backend es opcional y no afecta la lógica funcional de la integración.
 
 ---
 
@@ -838,7 +862,7 @@ Este flujo corresponde al procesamiento de documentos enviados por el usuario me
 | 9 | | Extrae las palabras clave más relevantes. |
 | 10 | | Genera automáticamente un resumen descriptivo del contenido procesado. |
 | 11 | | Calcula el nivel de confianza de la clasificación. |
-| 12 | | Genera el objeto `ClassificationResponse` y lo devuelve al Backend.. |
+| 12 | | Genera el objeto `ClassificationResponse`, incluyendo el resultado de la clasificación y los metadatos técnicos de la inferencia, y lo devuelve al Backend. |
 | 13 | Backend recibe `ClassificationResponse`. | |
 | 14 | Persiste el resultado de clasificación. | |
 | 15 | Devuelve la respuesta al Frontend. | |
@@ -868,7 +892,7 @@ Este flujo permite clasificar contenido enviado directamente como texto libre.
 | 8 | | Extrae las palabras clave más relevantes. |
 | 9 | | Genera automáticamente un resumen descriptivo del contenido procesado. |
 | 10 | | Calcula el nivel de confianza de la clasificación. |
-| 11 | | Genera C`lassificationResponse`. |
+| 11 | | Genera el objeto `ClassificationResponse`, incluyendo el resultado de la clasificación y los metadatos técnicos de la inferencia. |
 | 12 | Recibe la respuesta. | |
 | 13 | Persiste el resultado. | |
 | 14 | Devuelve la información al Frontend. | |
@@ -1035,6 +1059,8 @@ Los mensajes enviados al Backend no deberán exponer información sensible relac
 - Dependencias utilizadas.
 - Estructuras internas del sistema.
 - Configuración de infraestructura.
+
+Los identificadores internos utilizados para trazabilidad o monitoreo forman parte de la implementación interna del componente Data Science y no serán expuestos mediante el contrato de integración de la API REST.
 
 ---
 
@@ -1283,6 +1309,10 @@ Se consideran cambios compatibles:
 
 Estos cambios no requerirán modificaciones en los consumidores existentes.
 
+> [!NOTE]
+>
+> Los metadatos técnicos incluidos en las respuestas (`processingTime`, `modelVersion` y `timestamp`) forman parte del contrato de integración y podrán ser utilizados o ignorados por Backend según sus necesidades, sin afectar la compatibilidad funcional de la integración.
+
 ---
 
 ## 11.4 Cambios Incompatibles
@@ -1454,7 +1484,7 @@ La elaboración del presente documento se fundamenta en las siguientes referenci
 
 ## 13.4 Documento Relacionado
 
-El presente contrato se complementa con el documento **Backend-Data-Model v2.0**, en el cual se definen los modelos de datos, estructuras JSON, DTOs, respuestas, validaciones y restricciones utilizadas por la API REST del componente Data Science.
+El presente contrato se complementa con el documento **Backend-Data-Model v2.2**, en el cual se definen los modelos de datos, estructuras JSON, DTOs, respuestas, validaciones y restricciones utilizadas por la API REST del componente Data Science.
 
 > [!IMPORTANT]
 >
