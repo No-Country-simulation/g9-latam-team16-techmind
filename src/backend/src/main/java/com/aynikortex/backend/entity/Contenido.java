@@ -59,6 +59,7 @@ public class Contenido {
         this.textContent = datosContentDto.textContent();
         this.fileName = datosContentDto.fileName();
         this.filePath = datosContentDto.filePath();
+        this.fileFormat = datosContentDto.fileFormat();
         this.category = datosContentDto.category();
         this.subcategory = datosContentDto.subCategory();
         this.confidence = datosContentDto.confidence();
