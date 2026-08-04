@@ -13,5 +13,11 @@ public interface ContentRepository extends JpaRepository<Contenido, UUID> {
 
     List<Contenido> findByCategory(String category);
 
+    List<Contenido> findByCategoryContainingIgnoreCaseOrSubcategoryContainingIgnoreCase(String category, String subcategory);
+
     List<Contenido> findByContentType(ContentType contentType);
+
+    List<Contenido> findByTitleContainingIgnoreCase(String title);
+
+
 }
