@@ -1,12 +1,8 @@
 package com.aynikortex.backend.entity;
 
-
-public enum ContentType {
-    TEXT,
-    FILE,
+public enum FileFormatType {
     PDF,
-    DOCX,
     TXT,
+    DOCX,
     MARKDOWN,
-    OTHER
 }

@@ -1,6 +1,4 @@
-package com.aynikortex.backend.content.dto;
-
-import com.aynikortex.backend.entity.ContentType;
+package com.aynikortex.backend.content.dto;import com.aynikortex.backend.entity.ContentType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;

@@ -25,7 +25,8 @@ public class Contenido {
     private UUID id;
 
     private String title;
-    private String description;
+    @Column(name ="resumen")
+    private String resumen;
 
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
@@ -33,7 +34,10 @@ public class Contenido {
     private String textContent;
     private String fileName;
     private String filePath;
-    private String fileFormat;
+
+    @Enumerated(EnumType.STRING)
+    private FileFormatType fileFormat;
+
     private String category;
     private String subcategory;
     private Double confidence;
@@ -54,7 +58,7 @@ public class Contenido {
     public Contenido(DatosContentDto datosContentDto) {
         this.id = datosContentDto.id();
         this.title = datosContentDto.title();
-        this.description = datosContentDto.description();
+        this.resumen = datosContentDto.resumen();
         this.contentType = datosContentDto.contentType();
         this.textContent = datosContentDto.textContent();
         this.fileName = datosContentDto.fileName();
@@ -75,8 +79,8 @@ public class Contenido {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getDescription() { return resumen; }
+    public void setDescription(String description) { this.resumen = description; }
 
     public ContentType getContentType() { return contentType; }
     public void setContentType(ContentType contentType) { this.contentType = contentType; }
@@ -90,11 +94,11 @@ public class Contenido {
     public String getFilePath() { return filePath; }
     public void setFilePath(String filePath) { this.filePath = filePath; }
 
-    public String getFileFormat() {
+    public FileFormatType getFileFormat() {
         return fileFormat;
     }
 
-    public void setFileFormat(String fileFormat) {
+    public void setFileFormat(FileFormatType fileFormat) {
         this.fileFormat = fileFormat;
     }
 
