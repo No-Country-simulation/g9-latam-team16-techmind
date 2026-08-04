@@ -37,6 +37,21 @@ public class ContentController {
         return ResponseEntity.ok(contentService.getContentById(id));
     }
 
+    @GetMapping("/search/title")
+    public ResponseEntity<List<ContentResponseDTO>> searchByTitle(@RequestParam String title) {
+        return ResponseEntity.ok(contentService.searchContentsByTitle(title));
+    }
+
+    @GetMapping("/search/category")
+    public ResponseEntity<List<ContentResponseDTO>> getByCategory(@RequestParam String term) {
+        return ResponseEntity.ok(contentService.getContentsByCategoryOrSubcategory(term));
+    }
+
+    @GetMapping("/search/keyword")
+    public ResponseEntity<List<ContentResponseDTO>> searchByKeyword(@RequestParam String q) {
+        return ResponseEntity.ok(contentService.searchContentsByKeyword(q));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteContent(@PathVariable UUID id) {
         contentService.deleteContent(id);

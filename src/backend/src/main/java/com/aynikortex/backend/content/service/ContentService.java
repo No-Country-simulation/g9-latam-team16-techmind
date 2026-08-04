@@ -120,4 +120,29 @@ public class ContentService {
         }
         contentRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<ContentResponseDTO> searchContentsByTitle(String title) {
+        return contentRepository.findByTitleContainingIgnoreCase(title).stream()
+                .map(contentMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ContentResponseDTO> getContentsByCategoryOrSubcategory(String term) {
+        return contentRepository.findByCategoryContainingIgnoreCaseOrSubcategoryContainingIgnoreCase(term, term).stream()
+                .map(contentMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ContentResponseDTO> searchContentsByKeyword(String keyword) {
+        String queryKeyword = keyword.toLowerCase();
+        return contentRepository.findAll().stream()
+                .filter(content -> content.getKeywords() != null &&
+                        content.getKeywords().stream()
+                                .anyMatch(k -> k.getWord() != null && k.getWord().toLowerCase().contains(queryKeyword)))
+                .map(contentMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
 }
