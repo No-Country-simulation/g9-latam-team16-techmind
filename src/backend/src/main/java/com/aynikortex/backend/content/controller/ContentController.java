@@ -4,6 +4,7 @@ import com.aynikortex.backend.content.dto.ContentRequestDTO;
 import com.aynikortex.backend.content.dto.ContentResponseDTO;
 import com.aynikortex.backend.content.service.ContentService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,9 @@ public class ContentController {
     }
 
     @PostMapping
-    public ResponseEntity<ContentResponseDTO> createContent(@Valid @RequestBody ContentRequestDTO requestDTO) {
-        ContentResponseDTO responseDTO = contentService.createContent(requestDTO);
-        return ResponseEntity.ok(responseDTO);
+    public ResponseEntity<ContentResponseDTO> createContent(@Valid @ModelAttribute ContentRequestDTO requestDTO) {
+        ContentResponseDTO response = contentService.createContent(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
@@ -37,8 +38,8 @@ public class ContentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteContent(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteContent(@PathVariable UUID id) {
         contentService.deleteContent(id);
-        return ResponseEntity.ok("Contenido eliminado correctamente con el ID: " + id);
+        return ResponseEntity.noContent().build();
     }
 }
