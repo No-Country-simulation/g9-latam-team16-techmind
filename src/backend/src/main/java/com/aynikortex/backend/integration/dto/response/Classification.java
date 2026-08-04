@@ -7,6 +7,6 @@ public record Classification(
         String category,
         String subcategory,
         BigDecimal confidence,
-        List<Keyword> keywords
-
+        List<Keyword> keywords,
+        String summary
 ) {}
