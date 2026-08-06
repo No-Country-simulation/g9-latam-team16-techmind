@@ -1,12 +1,13 @@
 package com.aynikortex.backend.content.service;
 
-import com.aynikortex.backend.content.dto.ContentRequestDTO;
 import com.aynikortex.backend.content.dto.ContentResponseDTO;
-import com.aynikortex.backend.content.mapper.ContentMapper;
+import com.aynikortex.backend.content.dto.FileContentRequest;
+import com.aynikortex.backend.content.dto.KeywordDTO;
+import com.aynikortex.backend.content.dto.TextContentRequest;
 import com.aynikortex.backend.content.repository.ContentRepository;
 import com.aynikortex.backend.entity.Contenido;
 import com.aynikortex.backend.entity.ContentType;
-import com.aynikortex.backend.integration.dto.response.Classification;
+import com.aynikortex.backend.entity.FileFormatType;
 import com.aynikortex.backend.integration.dto.response.ClassificationResponse;
 import com.aynikortex.backend.integration.service.DataScienceIntegrationService;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -22,87 +22,125 @@ import java.util.stream.Collectors;
 public class ContentService {
 
     private final ContentRepository contentRepository;
-    private final ContentMapper contentMapper;
     private final DataScienceIntegrationService dataScienceService;
 
     public ContentService(ContentRepository contentRepository,
-                          ContentMapper contentMapper,
                           DataScienceIntegrationService dataScienceService) {
         this.contentRepository = contentRepository;
-        this.contentMapper = contentMapper;
         this.dataScienceService = dataScienceService;
     }
 
     @Transactional
-    public ContentResponseDTO createContent(ContentRequestDTO requestDTO) {
-        if (requestDTO.contentType() == ContentType.TEXT){
-            if (requestDTO.textContent() == null || requestDTO.textContent().trim().isEmpty()){
-                throw new IllegalArgumentException("Text content is required for TEXT type");
-            }
-        } else if (requestDTO.contentType() == ContentType.FILE) {
-            if (requestDTO.file() == null && (requestDTO.fileName() == null || requestDTO.filePath() == null)){
-                throw new IllegalArgumentException("File content is required for FILE type");
-            }
-        } else {
-            throw new IllegalArgumentException("Invalid content type");
-        }
-
-        Contenido contenido = contentMapper.toEntity(requestDTO);
+    public ContentResponseDTO createTextContent(TextContentRequest requestDTO) {
+        Contenido contenido = new Contenido();
+        contenido.setTitle(requestDTO.title());
+        contenido.setTextContent(requestDTO.text());
+        contenido.setContentType(ContentType.TEXT);
         contenido.setCreatedAt(LocalDateTime.now());
+
         Contenido savedContenido = contentRepository.save(contenido);
 
         try {
-            ClassificationResponse dsResponse;
-
-            if (requestDTO.contentType() == ContentType.TEXT) {
-                Map<String, Object> textData = Map.of("text", requestDTO.textContent());
-
-                dsResponse = dataScienceService.classifyText(
-                        savedContenido.getId().toString(),
-                        requestDTO.title(),
-                        textData
-                );
-            } else {
-                Map<String, Object> fileMetadata = Map.of(
-                        "id", savedContenido.getId().toString(),
-                        "title", requestDTO.title() != null ? requestDTO.title() : "Sin título"
-                );
-
-                dsResponse = dataScienceService.classifyFile(
-                        requestDTO.file(),
-                        fileMetadata
-                );
-            }
+            ClassificationResponse dsResponse = dataScienceService.classifyText(
+                    requestDTO.title(),
+                    requestDTO.text(),
+                    requestDTO.metadata()
+            );
 
             if (dsResponse != null && "SUCCESS".equalsIgnoreCase(dsResponse.status())) {
-                var classification = dsResponse.classification();
-
-                if (classification != null) {
-                    savedContenido.setCategory(classification.category());
-                    savedContenido.setSubCategory(classification.subcategory());
-
-                    if (classification.confidence() != null) {
-                        savedContenido.setConfidence(classification.confidence().doubleValue());
-                    }
-                }
-
-                savedContenido.setModelVersion(dsResponse.modelVersion());
-                savedContenido.setUpdatedAt(LocalDateTime.now());
-
+                updateEntityWithClassification(savedContenido, dsResponse);
                 savedContenido = contentRepository.save(savedContenido);
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al comunicarse con el servicio de Ciencia de Datos: " + e.getMessage(), e);
+            throw new RuntimeException("Error durante la clasificación de texto: " + e.getMessage(), e);
         }
 
-        return contentMapper.toResponseDTO(savedContenido);
+        return mapToResponseDTO(savedContenido);
+    }
+
+    @Transactional
+    public ContentResponseDTO createFileContent(FileContentRequest requestDTO) {
+        String originalFileName = requestDTO.file().getOriginalFilename();
+        String simulatedFilePath = "/oci/storage/" + UUID.randomUUID() + "_" + originalFileName;
+
+        Contenido contenido = new Contenido();
+        contenido.setTitle(requestDTO.title() != null ? requestDTO.title() : originalFileName);
+        contenido.setFileName(originalFileName);
+        contenido.setFilePath(simulatedFilePath);
+        contenido.setFileFormat(determineFileFormat(originalFileName));
+        contenido.setContentType(ContentType.FILE);
+        contenido.setCreatedAt(LocalDateTime.now());
+
+        Contenido savedContenido = contentRepository.save(contenido);
+
+        try {
+            ClassificationResponse dsResponse = dataScienceService.classifyFile(
+                    requestDTO.file(),
+                    requestDTO.metadata()
+            );
+
+            if (dsResponse != null && "SUCCESS".equalsIgnoreCase(dsResponse.status())) {
+                updateEntityWithClassification(savedContenido, dsResponse);
+                savedContenido = contentRepository.save(savedContenido);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error durante la clasificación de archivo: " + e.getMessage(), e);
+        }
+
+        return mapToResponseDTO(savedContenido);
+    }
+
+    private void updateEntityWithClassification(Contenido entidad, ClassificationResponse response) {
+        var classification = response.classification();
+        if (classification != null) {
+            entidad.setCategory(classification.category());
+            entidad.setSubCategory(classification.subcategory());
+            if (classification.confidence() != null) {
+                entidad.setConfidence(classification.confidence().doubleValue());
+            }
+
+            if (classification.keywords() != null) {
+                List<KeywordDTO> keywordDTOs = classification.keywords().stream()
+                        .map(k -> new KeywordDTO(
+                                k.term(),
+                                k.score() != null ? k.score().doubleValue() : 0.0
+                        ))
+                        .collect(Collectors.toList());
+                entidad.setKeywords(keywordDTOs);
+            }
+
+            entidad.setDescription(classification.summary());
+        }
+        entidad.setModelVersion(response.modelVersion());
+        entidad.setUpdatedAt(LocalDateTime.now());
+    }
+
+    private FileFormatType determineFileFormat(String fileName) {
+        if (fileName == null) return FileFormatType.OTHER;
+        String lowerName = fileName.toLowerCase();
+        if (lowerName.endsWith(".pdf")) return FileFormatType.PDF;
+        if (lowerName.endsWith(".docx")) return FileFormatType.DOCX;
+        if (lowerName.endsWith(".txt")) return FileFormatType.TXT;
+        if (lowerName.endsWith(".md")) return FileFormatType.MARKDOWN;
+        return FileFormatType.OTHER;
+    }
+
+    private ContentResponseDTO mapToResponseDTO(Contenido c) {
+        return new ContentResponseDTO(
+                c.getId(),
+                c.getTitle(),
+                c.getContentType(),
+                c.getCategory(),
+                c.getCreatedAt()
+        );
     }
 
     @Transactional(readOnly = true)
     public List<ContentResponseDTO> getAllContents() {
         return contentRepository.findAll().stream()
-                .map(contentMapper::toResponseDTO)
+                .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -110,7 +148,7 @@ public class ContentService {
     public ContentResponseDTO getContentById(UUID id) {
         Contenido contenido = contentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contenido no encontrado con ID: " + id));
-        return contentMapper.toResponseDTO(contenido);
+        return mapToResponseDTO(contenido);
     }
 
     @Transactional
@@ -124,14 +162,14 @@ public class ContentService {
     @Transactional(readOnly = true)
     public List<ContentResponseDTO> searchContentsByTitle(String title) {
         return contentRepository.findByTitleContainingIgnoreCase(title).stream()
-                .map(contentMapper::toResponseDTO)
+                .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<ContentResponseDTO> getContentsByCategoryOrSubcategory(String term) {
         return contentRepository.findByCategoryContainingIgnoreCaseOrSubcategoryContainingIgnoreCase(term, term).stream()
-                .map(contentMapper::toResponseDTO)
+                .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -142,7 +180,7 @@ public class ContentService {
                 .filter(content -> content.getKeywords() != null &&
                         content.getKeywords().stream()
                                 .anyMatch(k -> k.getWord() != null && k.getWord().toLowerCase().contains(queryKeyword)))
-                .map(contentMapper::toResponseDTO)
+                .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 }

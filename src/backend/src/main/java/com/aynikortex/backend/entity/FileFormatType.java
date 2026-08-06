@@ -5,4 +5,5 @@ public enum FileFormatType {
     TXT,
     DOCX,
     MARKDOWN,
+    OTHER
 }

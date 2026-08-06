@@ -1,11 +1,13 @@
 package com.aynikortex.backend.content.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import java.util.Map;
 
 public record TextContentRequest(
-        @NotBlank(message = "El título es obligatorio")
         String title,
-        String description,
+
         @NotBlank(message = "El contenido de texto es obligatorio")
-        String textContent
+        String text,
+
+        Map<String, Object> metadata
 ) {}
