@@ -11,4 +11,11 @@ public record FileContentRequest(
         MultipartFile file,
 
         Map<String, Object> metadata
-) {}
+) {
+    // Constructor explícito para que Spring Boot y @ModelAttribute mapeen correctamente el multipart
+    public FileContentRequest(String title, MultipartFile file, Map<String, Object> metadata) {
+        this.title = title;
+        this.file = file;
+        this.metadata = metadata;
+    }
+}

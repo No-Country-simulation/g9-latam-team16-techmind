@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -30,7 +32,12 @@ public class ContentController {
     }
 
     @PostMapping(value = "/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ContentResponseDTO> createFileContent(@Valid @ModelAttribute FileContentRequest requestDTO) {
+    public ResponseEntity<ContentResponseDTO> createFileContent(
+            @RequestParam("title") String title,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "metadata", required = false) Map<String, Object> metadata
+    ) {
+        FileContentRequest requestDTO = new FileContentRequest(title, file, metadata);
         ContentResponseDTO response = contentService.createFileContent(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
