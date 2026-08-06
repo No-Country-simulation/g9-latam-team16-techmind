@@ -1,13 +1,14 @@
 package com.aynikortex.backend.content.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.Map;
 
 public record FileContentRequest(
-        @NotBlank(message = "El título es obligatorio")
         String title,
-        String description,
+
+        @NotNull(message = "El archivo es obligatorio")
         MultipartFile file,
-        String fileName,
-        String filePath
+
+        Map<String, Object> metadata
 ) {}

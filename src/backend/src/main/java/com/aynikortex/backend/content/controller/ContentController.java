@@ -1,10 +1,12 @@
 package com.aynikortex.backend.content.controller;
 
-import com.aynikortex.backend.content.dto.ContentRequestDTO;
 import com.aynikortex.backend.content.dto.ContentResponseDTO;
+import com.aynikortex.backend.content.dto.FileContentRequest;
+import com.aynikortex.backend.content.dto.TextContentRequest;
 import com.aynikortex.backend.content.service.ContentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,15 @@ public class ContentController {
         this.contentService = contentService;
     }
 
-    @PostMapping
-    public ResponseEntity<ContentResponseDTO> createContent(@Valid @ModelAttribute ContentRequestDTO requestDTO) {
-        ContentResponseDTO response = contentService.createContent(requestDTO);
+    @PostMapping(value = "/text", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ContentResponseDTO> createTextContent(@Valid @RequestBody TextContentRequest requestDTO) {
+        ContentResponseDTO response = contentService.createTextContent(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping(value = "/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ContentResponseDTO> createFileContent(@Valid @ModelAttribute FileContentRequest requestDTO) {
+        ContentResponseDTO response = contentService.createFileContent(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
