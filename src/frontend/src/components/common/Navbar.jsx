@@ -1,8 +1,21 @@
 import "./Navbar.css";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+} from "@mui/material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function Navbar() {
+  const { mode, toggleTheme } = useContext(ThemeContext);
+
   return (
     <AppBar position="sticky" className="navbar">
       <Toolbar className="navbar-content">
@@ -27,6 +40,14 @@ function Navbar() {
           <Button component={NavLink} to="/library" className="navbar-link">
             Biblioteca
           </Button>
+
+          <IconButton
+            onClick={toggleTheme}
+            color="inherit"
+            aria-label="toggle theme"
+          >
+            {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>

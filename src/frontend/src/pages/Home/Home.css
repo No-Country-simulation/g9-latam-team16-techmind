@@ -27,53 +27,6 @@
   padding: 2.5rem;
 }
 
-.home-icon {
-  width: 10.25rem;
-  height: auto;
-  object-fit: contain;
-}
-
-.home-title {
-  font-weight: 800 !important;
-  margin-bottom: 1rem !important;
-  color: #f8fafc;
-  letter-spacing: -0.04em;
-}
-
-.home-description {
-  margin: 0 auto 2rem auto !important;
-  opacity: 0.88;
-  max-width: 680px;
-}
-
-.MuiButton-root.home-cta {
-  text-transform: none;
-  padding: 0.95rem 2rem;
-  font-weight: 700;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #8b5cf6, #3b82f6);
-  box-shadow: 0 18px 30px rgba(59, 130, 246, 0.24);
-}
-
-.MuiButton-root.home-cta:hover {
-  background: linear-gradient(135deg, #7c3aed, #2563eb);
-}
-
-.home-features {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 1.5rem;
-  margin-top: 2.75rem;
-  flex-wrap: wrap;
-}
-
-.home-features > * {
-  display: flex;
-  flex: 1 1 270px;
-  max-width: 270px;
-}
-
 @media (max-width: 900px) {
   .home-content {
     padding: 2rem;
@@ -83,13 +36,5 @@
 @media (max-width: 720px) {
   .home-content {
     padding: 1rem;
-  }
-
-  .home-features {
-    gap: 0.9rem;
-  }
-
-  .home-features > * {
-    max-width: 100%;
   }
 }

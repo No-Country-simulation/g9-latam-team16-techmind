@@ -1,4 +1,3 @@
-import "./TextContentForm.css";
 import { useRef } from "react";
 import { Card, TextField, Typography, Button, Stack } from "@mui/material";
 
@@ -18,8 +17,8 @@ function TextContentForm({
   };
 
   return (
-    <Card className="text-form-card">
-      <Typography variant="h5" className="text-form-title">
+    <Card sx={{ borderRadius: 3, p: { xs: 2, md: 3 }, boxShadow: 1 }}>
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
         Texto libre
       </Typography>
 
@@ -52,17 +51,17 @@ function TextContentForm({
 
         <Button
           variant="contained"
-          className="text-form-button"
+          sx={{ borderRadius: 2, textTransform: "none", fontWeight: 600 }}
           onClick={onSubmit}
           disabled={!formData.textContent.trim() || loading}
         >
-          {loading ? "Clasificando..." : "Clasificar contenido"}
+          {loading ? "Analizando..." : "Analizar contenido"}
         </Button>
 
         {classification && (
           <Button
             variant="outlined"
-            className="text-form-clear-button"
+            sx={{ borderRadius: 2, textTransform: "none", fontWeight: 600 }}
             onClick={handleReset}
           >
             Limpiar formulario
