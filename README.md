@@ -1,330 +1,263 @@
-# 🚀 TechMind – Organización Inteligente del Conocimiento Técnico
+# 🚀 AyniKortex – Organización Inteligente del Conocimiento Técnico
 
-> TechMind es una plataforma inteligente diseñada para organizar, clasificar y facilitar el acceso al conocimiento técnico mediante técnicas de Machine Learning. El proyecto integra un componente Backend y un componente de Ciencia de Datos para construir un sistema escalable, modular y preparado para evolucionar hacia capacidades avanzadas de búsqueda y recomendación de información técnica.
+> Transformando documentación técnica en conocimiento inteligente.
 
-Desarrollado por el equipo **G9 – LATAM Team 16** para el **Hackathon Oracle Next Education (ONE)**.
+*"Organizando el conocimiento de hoy para impulsar las decisiones del mañana."*
 
+## Estado del proyecto (Julio 2026)
 
-# Estado del Proyecto
+AyniKortex es una plataforma inteligente diseñada para organizar, clasificar y facilitar el acceso al conocimiento técnico mediante Inteligencia Artificial y Machine Learning.
 
-Versión del MVP: 0.1
+Su propósito es transformar documentación dispersa en una base de conocimiento estructurada, reutilizable y fácil de consultar, mejorando la gestión del conocimiento dentro de equipos de desarrollo y organizaciones.
 
-Estado General
-
-🟢 Arquitectura estable
-
-🟢 Dataset Maestro construido
-
-🟢 Pipeline de preprocesamiento validado
-
-🟢 109/109 pruebas aprobadas
-
-🟡 Backend en desarrollo
-
-🟡 Frontend en desarrollo
-
-🔵 Próxima etapa: entrenamiento del modelo e integración
 ---
 
-| Componente      | Estado | Observaciones                             |
-| --------------- | :----:  | -----------------------------------------|
-| Arquitectura    |   ✅   | Definida y aprobada                       |
-| Backend         |   🚧   | Desarrollo en progreso                    |
-| Data Science    |   🚧   | Dataset y preprocesamiento completados    |
-| Frontend        |   🚧   | Desarrollo en progreso                    |
-| Integración     |   ⏳   | Pendiente                                 |
-| Infraestructura |   ⏳   | Pendiente                                 |
-| Despliegue      |   ⏳   | Pendiente                                 |
+## 🌄 ¿Por qué AyniKortex?
 
+El nombre **AyniKortex** representa la esencia del proyecto.
 
-# Descripción
+**Ayni** es un principio ancestral andino basado en la reciprocidad, la colaboración y el intercambio de conocimiento para el beneficio común.
 
-TechMind es una plataforma diseñada para centralizar, organizar y clasificar documentación técnica proveniente de diferentes fuentes de información.
+**Kortex**, inspirado en la palabra *cortex*, representa la capacidad de aprender, analizar y transformar información en conocimiento mediante Inteligencia Artificial.
 
-El objetivo del proyecto es facilitar el acceso al conocimiento técnico mediante técnicas de Machine Learning, permitiendo clasificar documentos y servir como base para futuras funcionalidades de búsqueda inteligente y asistencia técnica.
+La unión de ambos conceptos simboliza una plataforma donde el conocimiento técnico deja de estar disperso para convertirse en información organizada, accesible e inteligente.
 
-La solución está organizada en componentes independientes que facilitan el desarrollo colaborativo, la mantenibilidad y la evolución del sistema.
+---
 
-# Arquitectura General
+## 🎯 El problema
+
+En muchos equipos de desarrollo, el conocimiento técnico se encuentra distribuido en múltiples fuentes:
+
+- Documentación interna.
+- Tutoriales.
+- Artículos técnicos.
+- Repositorios.
+- Notas personales.
+- Wikis.
+- Manuales.
+
+Esta información suele crecer de manera desorganizada, dificultando su consulta, reutilización y mantenimiento.
+
+Como consecuencia:
+
+- Se pierde conocimiento con el paso del tiempo.
+- Se duplica información.
+- La búsqueda de contenido es lenta.
+- La clasificación depende de procesos manuales.
+- La transferencia de conocimiento resulta poco eficiente.
+
+---
+
+## 💡 Nuestra solución
+
+AyniKortex propone una plataforma inteligente que utiliza técnicas de Machine Learning para transformar documentación técnica en conocimiento organizado.
+
+La plataforma permite clasificar automáticamente documentos, estructurar la información y facilitar su consulta mediante una arquitectura modular compuesta por Frontend, Backend y un componente especializado de Ciencia de Datos.
+
+El resultado es una base de conocimiento más accesible, reutilizable y preparada para evolucionar junto con las necesidades del proyecto.
+
+---
+
+## ✨ Características principales
+
+- 📚 Organización inteligente de documentación técnica.
+- 🤖 Clasificación automática mediante Machine Learning.
+- 🔍 Estructuración del conocimiento para facilitar su consulta.
+- 🏗️ Arquitectura modular basada en componentes.
+- 🔗 Integración entre Frontend, Backend y Ciencia de Datos.
+- 📈 Diseño preparado para evolucionar y escalar.
+
+---
+
+## 🏗️ Ecosistema AyniKortex
+
+AyniKortex está diseñado como una plataforma modular donde cada componente cumple una responsabilidad específica y colabora con los demás para transformar documentación técnica en conocimiento estructurado.
 
 ```mermaid
 flowchart LR
 
-    User["Usuario"]
+    Usuario["👤 Usuario"]
 
-    Backend["Backend"]
+    Frontend["🎨 Frontend"]
 
-    DataScience["Componente Data Science"]
+    Backend["⚙️ Backend"]
 
-    MachineLearningModel["Modelo de Machine Learning"]
+    DataScience["🤖 Componente Data Science"]
 
-    User --> Backend
+    Inferencia["🧠 Motor de Inferencia"]
 
-    Backend -->|"Solicita predicción"| DataScience
+    Modelo["📦 Modelo Persistido"]
 
-    DataScience --> MachineLearningModel
+    BaseDatos[("🗄️ MySQL")]
 
-    MachineLearningModel --> DataScience
-
-    DataScience --> Backend
-
-    Backend --> User
+    Usuario --> Frontend
+    Frontend --> Backend
+    Backend --> DataScience
+    DataScience --> Inferencia
+    Inferencia --> Modelo
+    Backend --> BaseDatos
 ```
 
-El Backend constituye el único punto de acceso al sistema y coordina la comunicación con el componente de Ciencia de Datos, responsable del procesamiento y clasificación de documentos.
+La arquitectura de AyniKortex sigue un enfoque modular basado en componentes, donde cada uno tiene responsabilidades claramente definidas.
 
-# Componentes del Proyecto
+El Backend, desarrollado con Spring Boot, actúa como el punto central de comunicación entre el Frontend, la base de datos y el componente de Ciencia de Datos.
 
-## Backend
+El componente de Data Science expone el modelo de Machine Learning mediante una API desarrollada con FastAPI, permitiendo que el Backend solicite clasificaciones automáticas y reciba los resultados en formato JSON para integrarlos con la lógica de negocio del sistema.
 
-El componente Backend es responsable de:
-
-- Exponer la API REST.
-- Gestionar las solicitudes de los usuarios.
-- Validar la información recibida.
-- Integrar el componente de Ciencia de Datos.
-- Documentar la API mediante Swagger/OpenAPI.
-
-📄 Documentación específica:
-
-- `src/backend/README.md`
+Esta separación de responsabilidades facilita el mantenimiento, la escalabilidad y la evolución independiente de cada componente.
 
 ---
 
-## Ciencia de Datos
+## 🧩 Componentes del Proyecto
 
-El componente de Ciencia de Datos es responsable de:
+| Componente | Responsabilidad |
+|------------|-----------------|
+| 🎨 **Frontend** | Proporciona la interfaz de usuario para registrar, consultar y visualizar información técnica mediante una experiencia intuitiva. |
+| ⚙️ **Backend** | Centraliza la lógica de negocio, expone la API REST, gestiona la persistencia de datos y coordina la comunicación con el componente de Ciencia de Datos. |
+| 🤖 **Data Science** | Procesa el contenido técnico utilizando modelos de Machine Learning para realizar la clasificación automática y generar información enriquecida. |
+| 🗄️ **Base de Datos** | Almacena la información estructurada generada por la plataforma y garantiza su disponibilidad para futuras consultas. |
 
-- Construcción del dataset.
-- Preprocesamiento de datos.
-- Entrenamiento del modelo.
-- Evaluación.
-- Predicción de categorías.
+---
 
-📄 Documentación específica:
+## 🚧 Estado del Proyecto
 
-- `src/data_science/README.md`
+AyniKortex se encuentra actualmente en desarrollo activo. La arquitectura principal ha sido definida y los diferentes componentes avanzan de forma coordinada hacia la integración del sistema.
 
+| Área | Estado |
+|------|:------:|
+| 🏗️ Arquitectura | ✅ Definida |
+| 🤖 Data Science |  🚧 En desarrollo (DS-08 completado)|
+| ⚙️ Backend | 🚧 En desarrollo |
+| 🎨 Frontend | 🚧 En desarrollo |
+| 🔗 Integración | ⏳ Pendiente |
+| 🚀 Despliegue | ⏳ Pendiente |
 
-## Estado del Componente Data Science
+---
 
-### Completado
+---
 
-- Arquitectura del componente
-- Dataset Maestro
-- Readers
-- Loaders
-- Validación del dataset
-- Pipeline de preprocesamiento
-- Refactorización del dominio
-- Suite de pruebas automatizadas (109/109)
+## 💻 Stack Tecnológico
 
-### En desarrollo
+AyniKortex integra diferentes tecnologías especializadas para construir una plataforma modular, escalable y orientada a la gestión inteligente del conocimiento técnico.
 
-- Entrenamiento del modelo
-- Evaluación
-- Persistencia
-- Integración con Backend
+| Componente | Tecnologías | Propósito |
+|------------|-------------|-----------|
+| 🎨 Frontend | React | Desarrollo de la interfaz de usuario y experiencia del usuario. |
+| ⚙️ Backend | Java, Spring Boot | API REST principal, lógica de negocio, persistencia y comunicación con Data Science. |
+| 🤖 Data Science | Python, FastAPI, Scikit-learn, Pandas | Procesamiento de datos, entrenamiento, inferencia y exposición del modelo mediante API. |
+| 🗄️ Base de Datos | MySQL | Persistencia y gestión de la información del sistema. |
+| 🔧 Control de Versiones | Git & GitHub | Gestión colaborativa del código fuente y control de versiones. |
 
+---
 
-# Estructura del Repositorio
+## 📂 Estructura del Repositorio
 
 ```text
-TechMind/
-│
-├── docs/
-│   ├── ADR/
-│   ├── Architecture/
-│   ├── Roadmap/
-│   ├── SDS/
-│   └── Standards/
-│
+AyniKortex/
+
+├── datasets/              # Conjuntos de datos utilizados para entrenamiento y pruebas
+├── docs/                  # Documentación técnica y funcional del proyecto
+├── models/                # Modelos entrenados y artefactos relacionados
+├── scripts/               # Scripts de apoyo para automatización y utilidades
 ├── src/
-│   ├── backend/
-│   └── data_science/
-│
-├── tests/
-│
-├── datasets/
-│
-├── artifacts/
-│
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
-└── requirements.txt
+│   ├── backend/           # API principal desarrollada con Spring Boot
+│   ├── data_science/      # Componente de Machine Learning y API FastAPI
+│   ├── frontend/          # Aplicación web desarrollada en React
+│   └── shared/            # Recursos compartidos entre componentes
+├── tests/                 # Pruebas automatizadas del proyecto
+├── .github/               # Configuración de GitHub
+├── README.md              # Presentación general del proyecto
+├── CONTRIBUTING.md        # Guía para colaboradores
+├── CODE_OF_CONDUCT.md     # Código de conducta de la comunidad
+├── LICENSE.md             # Licencia del proyecto
+└── requirements.txt       # Dependencias del proyecto
 ```
 
-La estructura detallada del proyecto se encuentra documentada en:
+> **Nota:** La estructura del repositorio podrá evolucionar conforme avance el desarrollo del proyecto y se incorporen nuevos componentes o recursos.
+---
 
-- `docs/Architecture/RepositoryStructure.md`
+## 🚀 Primeros Pasos
 
-# Stack Tecnológico
+Si deseas conocer AyniKortex o colaborar en su desarrollo, te recomendamos seguir el siguiente recorrido:
 
-## Backend
+1. Explora este **README** para comprender la visión general y la arquitectura del proyecto.
+2. Consulta la documentación disponible en el directorio **docs/** para conocer los estándares, lineamientos y decisiones de diseño.
+3. Revisa el README específico de cada componente para comprender su arquitectura, responsabilidades y estado de desarrollo.
+4. Sigue la guía de **CONTRIBUTING.md** para conocer el flujo de trabajo y las buenas prácticas del equipo.
 
-- Python
-- FastAPI
-- Pydantic
-- Uvicorn
+> **Nota:** Las instrucciones de instalación y ejecución de cada componente se documentan de manera independiente conforme avanzan los diferentes equipos del proyecto.
 
-## Ciencia de Datos
+---
 
-- Pandas
-- NumPy
-- Scikit-Learn
-- Joblib
+## 📚 Documentación
 
-## DevOps y Herramientas
-
-- Git
-- GitHub
-- GitHub Projects
-- GitHub Actions *(próximamente)*
-
-## Infraestructura
-
-- Oracle Cloud Infrastructure (OCI)
-
-# Instalación
-
-## Clonar el repositorio
-
-```bash
-git clone <https://github.com/No-Country-simulation/g9-latam-team16-techmindO>
-```
-
-## Ingresar al proyecto
-
-```bash
-cd TechMind
-```
-
-## Crear un entorno virtual
-
-```bash
-python -m venv .venv
-```
-
-## Activar el entorno virtual
-
-### Windows
-
-```bash
-.venv\Scripts\activate
-```
-
-### Linux / macOS
-
-```bash
-source .venv/bin/activate
-```
-
-## Instalar dependencias
-
-```bash
-pip install -r requirements.txt
-```
-
-# Testing
-
-Ejecutar todas las pruebas del proyecto:
-
-```bash
-python -m pytest
-```
-
-Generar el reporte de cobertura:
-
-```bash
-python -m pytest --cov=src --cov-report=term-missing
-```
-
-## Estado actual
-
-| Métrica | Valor |
-|----------|------:|
-| Tests automatizados | 109 |
-| Cobertura del componente Data Science | 98% |
-
-> La cobertura corresponde al módulo de adquisición de datos del componente de Ciencia de Datos.
-
-# Documentación
-
-La documentación del proyecto está organizada para facilitar la navegación y el mantenimiento.
+La documentación de AyniKortex está organizada para facilitar la incorporación de nuevos colaboradores y mantener una única fuente de información para cada aspecto del proyecto.
 
 | Documento | Descripción |
 |------------|-------------|
-| `README.md` | Visión general del proyecto. |
-| `src/backend/README.md` | Documentación del componente Backend. |
-| `src/data_science/README.md` | Documentación del componente de Ciencia de Datos. |
-| `docs/Architecture/` | Arquitectura del sistema y del repositorio. |
-| `docs/SDS/` | Software Design Specification. |
-| `docs/ADR/` | Architecture Decision Records. |
-| `docs/Roadmap/` | Plan de evolución del proyecto. |
-| `docs/Standards/` | Estándares de desarrollo y documentación. |
+| 📘 README.md | Presentación general del proyecto y visión de la solución. |
+| 🏛️ ARCHITECTURE.md | Arquitectura general del sistema. |
+| 📂 docs/ | Documentación técnica, funcional y de diseño del proyecto. |
+| 🤖 src/data_science/README.md | Documentación del componente de Ciencia de Datos. |
+| 🤝 CONTRIBUTING.md | Guía para contribuir al proyecto. |
+| 📜 CODE_OF_CONDUCT.md | Normas de convivencia de la comunidad. |
+| 🔒 SECURITY.md | Política para el reporte de vulnerabilidades. |
+| 🆘 SUPPORT.md | Canales de soporte y ayuda. |
+| 🗺️ ROADMAP.md | Evolución y planificación del proyecto. |
+| 📖 DOCUMENTATION_STYLE_GUIDE.md | Estándares de documentación del proyecto. |
 
-# Roadmap
+---
 
-## Arquitectura
+## 🗺️ Roadmap
 
-- ✅ Arquitectura General
-- ✅ Diseño Técnico
+La evolución de AyniKortex se organiza en etapas que abarcan el diseño, desarrollo, integración y despliegue de todos los componentes del sistema.
 
-## Backend
+### Arquitectura y Planificación
+- ✅ Definición de la arquitectura del proyecto.
+- ✅ Diseño de la arquitectura del componente Data Science.
+- ✅ Definición de estándares de ingeniería y documentación.
 
-- 🚧 API REST
-- 🚧 Integración con Ciencia de Datos
-- ⏳ Persistencia
-- ⏳ Despliegue
+### Desarrollo de Componentes
+- 🚧 Frontend.
+- 🚧 Backend.
+- 🚧 Data Science (DS-08 completado).
 
-## Ciencia de Datos
+### Próximos Hitos
+- ⏳ DS-09 – API REST e integración con Backend.
+- ⏳ DS-10 – Optimización, validación y cierre del componente Data Science.
+- ⏳ Integración completa de los componentes del sistema.
+- ⏳ Despliegue de la plataforma.
+- ⏳ Mejoras continuas y evolución del producto.
 
-| Sprint | Objetivo                                            |
-| ------ | --------------------------------------------------- |
-| DS-01  | ✅ Arquitectura del Componente de Ciencia de Datos     |
-| DS-02  | ✅ Investigación y selección de fuentes de información |
-| DS-03  | ✅ Construcción e integración del Dataset Maestro      |
-| DS-04  | ✅ Limpieza, validación y preprocesamiento del Dataset |
-| DS-05  | ⏳ Análisis Exploratorio de Datos (EDA)                |
-| DS-06  | ⏳ Ingeniería de Características                       |
-| DS-07  | ⏳ Entrenamiento del Modelo                            |
-| DS-08  | ⏳ Evaluación y Optimización                           |
-| DS-09  | ⏳ Persistencia y Versionado del Modelo                |
-| DS-10  | ⏳ Motor de Inferencia                                 |
-| DS-11  | ⏳ Integración con Backend                             |
-| DS-12  | ⏳ Pruebas y Validación                                |
-| DS-13  | ⏳ Hardening y Optimización                            |
-| DS-14  | ⏳ Cierre del Componente de Ciencia de Datos           |
+---
 
+## 👥 Equipo
 
+AyniKortex es desarrollado de manera colaborativa por un equipo multidisciplinario conformado por especialistas en diferentes áreas de ingeniería de software e inteligencia artificial.
 
-## Características
+Cada equipo aporta su experiencia para construir una plataforma modular, escalable y orientada a la gestión inteligente del conocimiento técnico.
 
-- Clasificación automática de documentación técnica.
-- Construcción de un Dataset Maestro a partir de múltiples fuentes.
-- Pipeline de validación y preprocesamiento.
-- Arquitectura modular Backend + Ciencia de Datos.
-- Integración mediante una interfaz estable (`predict(title, text)`).
-- Documentación técnica basada en SDS y ADR.
-- Infraestructura preparada para Oracle Cloud Infrastructure (OCI).
-- Validación automática del dataset.
-- Pipeline de preprocesamiento.
-- Arquitectura basada en DocumentRecord.
-- Suite de pruebas automatizadas.
-- Readers y Loaders para múltiples formatos (si ya están implementados).
+| Área | Responsabilidad |
+|------|-----------------|
+| 🎨 Frontend | Desarrollo de la interfaz de usuario y experiencia del usuario. |
+| ⚙️ Backend | Lógica de negocio, API REST, persistencia e integración de componentes. |
+| 🤖 Data Science | Procesamiento de datos, entrenamiento, inferencia y clasificación automática mediante Machine Learning. |
+| 📚 Documentación | Elaboración y mantenimiento de la documentación técnica y funcional del proyecto. |
+| 🏗️ Arquitectura | Definición de estándares, diseño de la solución y evolución de la arquitectura. |
 
+El proyecto promueve la colaboración, el intercambio de conocimiento y la mejora continua como principios fundamentales para el desarrollo de soluciones de calidad.
 
-# Contribución
+---
 
-Las contribuciones al proyecto deberán respetar:
+## 🤝 Cómo contribuir
 
-- La arquitectura definida para el sistema.
-- Los estándares de desarrollo del equipo.
-- La documentación técnica vigente.
-- El flujo de trabajo basado en Git y Pull Requests.
+¡Las contribuciones son bienvenidas!
 
-Antes de proponer cambios arquitectónicos, estos deberán ser discutidos y aprobados por el equipo.
+Si deseas colaborar con el proyecto, consulta la guía disponible en **CONTRIBUTING.md**.
+
+Allí encontrarás las convenciones, estándares, flujo de trabajo y buenas prácticas utilizadas por el equipo para garantizar un desarrollo colaborativo y consistente.
+
+---
 
 # Licencia
 

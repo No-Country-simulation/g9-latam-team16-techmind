@@ -59,9 +59,7 @@ class FeatureBuilder:
         """
 
         self._vectorizer = vectorizer
-        self._text_columns = tuple(
-            text_columns or self.DEFAULT_TEXT_COLUMNS
-        )
+        self._text_columns = tuple(text_columns or self.DEFAULT_TEXT_COLUMNS)
 
     def build(
         self,
@@ -82,15 +80,12 @@ class FeatureBuilder:
         """
 
         missing_columns = [
-            column
-            for column in self._text_columns
-            if column not in dataset.columns
+            column for column in self._text_columns if column not in dataset.columns
         ]
 
         if missing_columns:
             raise ValueError(
-                "Faltan columnas requeridas: "
-                + ", ".join(missing_columns)
+                "Faltan columnas requeridas: " + ", ".join(missing_columns)
             )
 
         documents = (

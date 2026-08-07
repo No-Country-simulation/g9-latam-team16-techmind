@@ -1,0 +1,4 @@
+TITULO: Migrasión y Configurasion Avansada de cluster de Kubernets en la nubee de Amazom AWS
+CATEGORIA_ESPERADA: Cloud
+
+Contexto e implemtación: En el proseso de modernisasion de la infraestrutura del proyeto, hemos desidido adoptar la orquestasion de contenedors. Kubernets permite desplegar contenedors Dokker con autoescalado automatico en nodos de computacion AWS de maner facil y rapida. A pesar de los erorres iniciales en la configurasion del ingress controlller, se logro estableser un balanceo de karga sin perder la conexxion de red entre los pods internos del servisio.

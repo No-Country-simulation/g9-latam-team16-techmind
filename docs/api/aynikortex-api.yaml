@@ -1,0 +1,527 @@
+openapi: 3.1.0
+
+info:
+  title: AyniKortex Data Science API
+  version: 2.2.0
+  description: |
+    API REST del componente Data Science del proyecto AyniKortex.
+
+    Esta API proporciona capacidades de clasificación automática de documentación técnica
+    utilizando modelos de Machine Learning.
+
+    Funcionalidades principales:
+
+      • Clasificación de documentos técnicos
+
+      • Clasificación de texto libre
+
+      • Extracción automática de palabras clave
+
+      • Generación automática de un resumen descriptivo
+
+      • Cálculo del nivel de confianza de la clasificación
+
+      • Verificación del estado del servicio
+
+    Esta especificación complementa los documentos:
+
+      - Backend-Data-Contract.md
+
+      - Backend-Data-Model.md
+
+  contact:
+    name: Equipo Data Science
+    email: ds@aynikortex.local
+
+  license:
+    name: Proyecto Académico - Hackathon ONE
+
+
+servers:
+  - url: http://localhost:8000
+    description: Desarrollo Local
+
+  - url: https://dev.api.aynikortex.com
+    description: Ambiente de Desarrollo
+
+  - url: https://staging.api.aynikortex.com
+    description: Ambiente de Pruebas
+
+  - url: https://api.aynikortex.com
+    description: Producción
+
+
+tags:
+  - name: Prediction
+    description: Endpoints para clasificación documental y de texto.
+
+  - name: Health
+    description: Verificación del estado del servicio.
+
+externalDocs:
+  description: Documentación Técnica del Proyecto
+  url: https://github.com/No-Country-simulation/g9-latam-team16-techmind
+
+paths:
+
+  /api/v1/predict/file:
+   
+    post:
+      tags:
+        - Prediction
+
+      summary: Clasificar un documento técnico
+
+      description: |
+        Procesa un archivo de documentación técnica.
+
+        Formatos soportados:
+            - PDF
+            - DOCX
+            - TXT
+            - MD
+
+        Devuelve:
+            - Categoría
+            - Subcategoría
+            - Palabras clave
+            - Resumen descriptivo
+            - Nivel de confianza
+
+      operationId: predictFile
+
+      requestBody:
+        required: true
+
+        content:
+
+          multipart/form-data:
+
+            schema:
+              $ref: '#/components/schemas/FileClassificationRequest'
+
+      responses:
+
+        "200":
+          description: Documento procesado correctamente.
+
+          content:
+
+            application/json:
+
+              schema:
+                $ref: '#/components/schemas/ClassificationResponse'
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+
+        "415":
+          $ref: '#/components/responses/UnsupportedMediaType'
+
+        "422":
+          $ref: '#/components/responses/ValidationErrorResponse'
+
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+
+  /api/v1/predict/text:
+
+    post:
+      tags:
+        - Prediction
+
+      summary: Clasificar texto técnico
+
+      description: |
+        Procesa texto libre y devuelve:
+
+        - Categoría
+        - Subcategoría
+        - Palabras clave
+        - Resumen descriptivo
+        - Nivel de confianza
+
+      operationId: predictText
+
+      requestBody:
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+              $ref: '#/components/schemas/TextClassificationRequest'
+
+      responses:
+
+        "200":
+          description: Texto procesado correctamente.
+
+          content:
+
+            application/json:
+
+              schema:
+                $ref: '#/components/schemas/ClassificationResponse'
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+
+        "422":
+          $ref: '#/components/responses/ValidationErrorResponse'
+
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/health:
+
+    get:
+      tags:
+        - Health
+
+      summary: Estado del servicio
+
+      description: |
+        Permite verificar que el servicio Data Science
+        se encuentra disponible y operativo.
+
+      operationId: healthCheck
+
+      responses:
+
+        "200":
+
+          description: Servicio disponible.
+
+          content:
+
+            application/json:
+
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+
+
+components:
+
+  schemas:
+
+    FileClassificationRequest:
+      type: object
+
+      required:
+        - file
+
+      properties:
+
+        file:
+          type: string
+          format: binary
+          description: Archivo de documentación técnica a procesar.
+
+      example:
+        file: documentacion.pdf
+
+    TextClassificationRequest:
+      type: object
+
+      required:
+        - title
+        - content
+
+      properties:
+
+        title:
+          type: string
+          description: Título del documento.
+
+          example: Guía de Arquitectura Backend
+
+        content:
+          type: string
+          description: Contenido del documento técnico.
+
+          example: >
+            Esta documentación describe la arquitectura
+            del sistema utilizando Spring Boot,
+            FastAPI y Machine Learning.
+
+      example:
+
+        title: Guía de Arquitectura Backend
+
+        content: >
+          Esta documentación describe la arquitectura
+          del sistema utilizando Spring Boot,
+          FastAPI y Machine Learning.
+
+    Classification:
+      type: object
+
+      required:
+        - category
+        - subcategory
+        - confidence
+        - keywords
+        - summary
+
+      properties:
+
+        category:
+          type: string
+          description: Categoría principal del documento.
+          example: Backend
+
+        subcategory:
+          type: string
+          description: Subcategoría del documento.
+          example: Spring Boot
+
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Nivel de confianza de la clasificación.
+          example: 0.96
+
+        keywords:
+          type: array
+          description: Lista de palabras clave identificadas.
+
+          items:
+            type: string
+
+          example:
+            - spring
+            - backend
+            - api
+            - java
+
+        summary:
+          type: string
+          description: Resumen descriptivo generado automáticamente por el componente Data Science.
+          example: >
+            Documento técnico que describe la arquitectura Backend
+            utilizando Spring Boot y una API REST para integrar
+            componentes de Machine Learning.
+
+    ClassificationResponse:
+      type: object
+
+      required:
+        - status
+        - classification
+        - processingTime
+        - modelVersion
+        - timestamp
+
+      properties:
+
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - FAILED
+
+        classification:
+          $ref: '#/components/schemas/Classification'
+
+        processingTime:
+          type: integer
+          description: >
+            Tiempo total de procesamiento de la inferencia expresado en
+            milisegundos. Campo informativo utilizado para monitoreo y
+            análisis de rendimiento. Su consumo por parte de Backend es opcional.
+
+        modelVersion:
+          type: string
+          description: >
+            Versión del modelo de Machine Learning utilizada para generar la
+            clasificación. Permite auditoría, reproducibilidad y seguimiento
+            de la evolución del modelo. Su consumo por parte de Backend es opcional.
+          example: "1.0.0"
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >
+            Fecha y hora en que el componente Data Science generó la respuesta.
+            Campo informativo cuyo consumo por parte de Backend es opcional.
+
+      example:
+        status: SUCCESS
+
+        classification:
+          category: Arquitectura
+          subcategory: Microservicios
+          confidence: 0.97
+
+          keywords:
+            - term: docker
+              score: 0.96
+
+            - term: kubernetes
+              score: 0.93
+
+            - term: api
+              score: 0.89
+
+          summary: >
+            Documento técnico que describe una arquitectura basada en
+            microservicios utilizando Docker y Kubernetes para el
+            despliegue y la orquestación de aplicaciones.
+
+        processingTime: 124
+
+        modelVersion: "1.0.0"
+
+        timestamp: "2026-08-01T15:45:22Z"
+
+      description: >
+        La respuesta incluye el resultado de la clasificación y metadatos técnicos
+        generados por el componente Data Science.
+
+        Los atributos processingTime, modelVersion y timestamp forman parte del
+        contrato de integración y podrán ser utilizados o ignorados por Backend
+        según sus necesidades, sin afectar la lógica funcional de la integración.
+        
+    HealthResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: UP
+
+        service:
+          type: string
+          example: AyniKortex Data Science API
+
+        version:
+          type: string
+          example: 2.1.0
+
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-07-30T18:20:35Z"
+
+        uptime:
+          type: string
+          description: Tiempo de actividad del servicio.
+          example: "3d 12h 45m"
+    
+    ErrorResponse:
+      type: object
+
+      required:
+        - code
+        - message
+
+      properties:
+
+        code:
+          type: string
+          description: Código interno del error.
+          example: INVALID_REQUEST
+
+        message:
+          type: string
+          description: Descripción del error.
+          example: La solicitud contiene datos inválidos.
+
+        details:
+          type: string
+          description: Información adicional para facilitar el diagnóstico.
+          example: El archivo enviado está vacío.
+    
+    ValidationErrorResponse:
+      type: object
+
+      required:
+        - code
+        - message
+        - errors
+
+      properties:
+
+        code:
+          type: string
+          example: VALIDATION_ERROR
+
+        message:
+          type: string
+          example: Error de validación.
+
+        errors:
+          type: array
+
+          items:
+            type: object
+
+            properties:
+
+              field:
+                type: string
+                example: content
+
+              message:
+                type: string
+                example: El campo content es obligatorio.
+    
+  responses:
+
+    BadRequest:
+      description: Solicitud inválida.
+
+      content:
+
+        application/json:
+
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    UnsupportedMediaType:
+      description: Tipo de archivo no soportado.
+
+      content:
+
+        application/json:
+
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+       
+    ValidationErrorResponse:
+      description: Error de validación de datos.
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationErrorResponse'
+
+    InternalServerError:
+      description: Error interno del servidor.
+
+      content:
+
+        application/json:
+
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    ServiceUnavailable:
+      description: Servicio temporalmente no disponible.
+
+      content:
+
+        application/json:
+
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'  

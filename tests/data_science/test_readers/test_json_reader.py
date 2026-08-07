@@ -26,10 +26,10 @@ import pytest
 
 from data_science.readers.json_reader import JsonReader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_read_valid_json_object(tmp_path: Path) -> None:
     """

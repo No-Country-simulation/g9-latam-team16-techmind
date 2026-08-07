@@ -1,0 +1,4 @@
+TITULO: Diseñoo y Componentes de la interfaz visual en ReactJS con Typscript y estandares HTML5
+CATEGORIA_ESPERADA: Frontend
+
+Reatividade en el DOM virtal: Al implemntar un modelo puramnete declaratibo, optimizmos los siclos de bida de la aplication de una pagnia (SPA). El rendizado del navegador se actualisa unicamnte cuando cambia el esttado del componete web en el fronend, logrando una experiencia fluida y evirnando recargas de pantalla engorrosas para el usuario final mientrss nanvega por las diferntes vistas interactivs del dashboard general de la paltaforma.

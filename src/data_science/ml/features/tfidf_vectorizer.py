@@ -29,7 +29,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from data_science.ml.features.base_vectorizer import BaseVectorizer
 
 
-
 class TfidfVectorizerAdapter(BaseVectorizer):
     """
     Adaptador de Scikit-Learn para la representación

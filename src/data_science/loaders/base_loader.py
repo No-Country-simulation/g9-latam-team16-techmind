@@ -30,10 +30,10 @@ import pandas as pd
 from ..data.domain import DocumentRecord
 from ..readers import ReaderFactory
 
-
 # ==========================================================
 # Base Loader
 # ==========================================================
+
 
 class BaseLoader(ABC):
     """
@@ -79,9 +79,7 @@ class BaseLoader(ABC):
 
         if not self._source_path.exists():
 
-            raise FileNotFoundError(
-                f"No existe la ruta: {self._source_path}"
-            )
+            raise FileNotFoundError(f"No existe la ruta: {self._source_path}")
 
     def _find_files(self) -> list[Path]:
         """
@@ -106,11 +104,7 @@ class BaseLoader(ABC):
         Verifica si un archivo posee una extensión soportada.
         """
 
-        return (
-            file.is_file()
-            and file.suffix.lower()
-            in self.SUPPORTED_EXTENSIONS
-        )
+        return file.is_file() and file.suffix.lower() in self.SUPPORTED_EXTENSIONS
 
     def _read(
         self,
@@ -133,10 +127,7 @@ class BaseLoader(ABC):
         del dominio.
         """
 
-        return [
-            self._build_record(source)
-            for source in sources
-        ]
+        return [self._build_record(source) for source in sources]
 
     def _build_dataframe(
         self,

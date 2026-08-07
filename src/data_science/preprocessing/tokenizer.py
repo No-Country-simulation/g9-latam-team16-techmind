@@ -30,10 +30,10 @@ from data_science.preprocessing.base_preprocessor import (
     BasePreprocessor,
 )
 
-
 # ==========================================================
 # Preprocessing Components
 # ==========================================================
+
 
 class Tokenizer(BasePreprocessor):
     """
@@ -48,7 +48,7 @@ class Tokenizer(BasePreprocessor):
         Executes the tokenization process.
         """
 
-        #original_text = document["text"]
+        # original_text = document["text"]
         original_text = document.text
 
         tokens = self._tokenize_text(

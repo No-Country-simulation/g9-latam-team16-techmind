@@ -24,10 +24,10 @@ import pandas as pd
 
 from .base_reader import BaseReader
 
-
 # ==========================================================
 # CSV Reader
 # ==========================================================
+
 
 class CsvReader(BaseReader):
     """

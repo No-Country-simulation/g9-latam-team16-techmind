@@ -1,7 +1,7 @@
 | Proyecto | AyniKortex |
 |-----------|------------|
 | Documento | Backend-Data-Contract |
-| Versión | 2.0 |
+| Versión | 2.2 |
 | Estado | En Diseño |
 | Responsable | Equipo Data Science |
 | Consumidor | Equipo Backend |
@@ -14,6 +14,8 @@
 |----------|-------|--------|-------------|
 | 1.0 | 2026-07-21 | Equipo Data Science | Versión inicial del contrato de integración entre Backend y Data Science. |
 | 2.0 | 2026-07-22 | Equipo Data Science | Actualización del contrato para la arquitectura basada en API REST (FastAPI), incorporación de clasificación documental y extracción de palabras clave como funcionalidades principales del MVP. |
+| 2.1 | 2026-07-30 | Equipo Data Science | Actualización del contrato para incorporar la generación automática de un resumen descriptivo del contenido (`summary`) como parte del proceso de clasificación. Se actualizan el alcance funcional del componente Data Science y las capacidades oficiales del MVP, manteniendo la compatibilidad con la versión 2.0 del contrato. |
+| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` del contrato de integración y de los modelos de solicitud. Corrección del ejemplo de `ClassificationResponse` para alinearlo con la especificación oficial. Ajustes de consistencia documental y alineación con Backend-Data-Model v2.2. |
 
 ---
 
@@ -62,6 +64,7 @@ Definir un contrato de integración estable entre los componentes **Backend** y 
 - Definir claramente las responsabilidades de cada componente.
 - Garantizar la compatibilidad entre versiones del servicio.
 - Facilitar la integración con el Frontend y futuras extensiones del sistema.
+- Estandarizar la información generada por el componente Data Science, incluyendo la clasificación, las palabras clave y el resumen descriptivo del contenido.
 
 ---
 
@@ -77,11 +80,12 @@ El presente documento define:
 - Las políticas de validación y manejo de errores.
 - Las reglas de compatibilidad y versionado.
 
-Para la versión **MVP**, el componente Data Science ofrecerá las siguientes capacidades:
+Para la versión **MVP**, el componente **Data Science** ofrecerá las siguientes capacidades:
 
 - Clasificación de documentos técnicos.
 - Clasificación de texto libre.
 - Extracción de palabras clave.
+- Generación automática de un resumen descriptivo del contenido procesado.
 - Consulta del estado del servicio (Health Check).
 
 Las siguientes funcionalidades quedan fuera del alcance del MVP y podrán incorporarse en versiones posteriores:
@@ -118,6 +122,8 @@ El componente **Backend**, desarrollado en **Java con Spring Boot**, actúa como
 El componente **Data Science**, desarrollado en **Python con FastAPI**, encapsula todas las capacidades relacionadas con el procesamiento de documentos, el preprocesamiento de texto, la ejecución del modelo de Machine Learning y la generación de los resultados de clasificación.
 
 La comunicación entre ambos componentes se realizará exclusivamente mediante solicitudes **HTTP REST**, utilizando estructuras de datos definidas en el documento **Backend-Data-Model.md**.
+
+Backend es el único responsable de construir las solicitudes que consume la API de Data Science de acuerdo con los modelos definidos en Backend-Data-Model.
 
 > [!IMPORTANT]
 >
@@ -239,7 +245,6 @@ De igual forma, Data Science no administra:
 - Autorización.
 - Persistencia.
 - Reglas de negocio.
-- Gestión de proyectos.
 
 ---
 
@@ -309,7 +314,8 @@ Entre sus responsabilidades se encuentran:
 - Ejecución del pipeline de inferencia.
 - Clasificación automática del contenido.
 - Extracción de palabras clave.
-- Cálculo de la probabilidad de clasificación.
+- Generación automática de un resumen descriptivo del contenido procesado.
+- Cálculo del nivel de confianza de la clasificación.
 - Generación de la respuesta JSON.
 - Exposición de la API REST.
 
@@ -319,6 +325,7 @@ La entrega del componente incluirá:
 - Pipeline de inferencia.
 - API REST desarrollada en FastAPI.
 - Documentación del contrato de integración.
+- Generación automática de un resumen descriptivo del contenido como parte de la respuesta de clasificación.
 
 > [!NOTE]
 >
@@ -332,7 +339,6 @@ La entrega del componente incluirá:
 |---------------|:-------:|:------------:|
 | Gestión de usuarios | ✅ | ❌ |
 | Autenticación | ✅ | ❌ |
-| Gestión de proyectos | ✅ | ❌ |
 | Recepción de solicitudes | ✅ | ❌ |
 | Recepción de archivos | ✅ | ❌ |
 | Almacenamiento de documentos | ✅ | ❌ |
@@ -347,7 +353,7 @@ La entrega del componente incluirá:
 | Limpieza y normalización | ❌ | ✅ |
 | Clasificación documental | ❌ | ✅ |
 | Extracción de palabras clave | ❌ | ✅ |
-| Cálculo de probabilidad | ❌ | ✅ |
+| Cálculo del nivel de confianza de la clasificación | ❌ | ✅ |
 | Generación de respuesta JSON | ❌ | ✅ |
 | Persistencia del resultado | ✅ | ❌ |
 | Presentación al usuario | ✅ | ❌ |
@@ -426,14 +432,11 @@ La arquitectura permitirá incorporar nuevas capacidades del componente Data Sci
 
 ## 6.7 Funcionalidades del MVP
 
-Para la versión MVP del proyecto, el componente Data Science ofrecerá únicamente las siguientes capacidades:
-
 - Clasificación de documentos.
 - Clasificación de texto libre.
 - Extracción de palabras clave.
+- Generación automática de un resumen descriptivo del contenido procesado.
 - Consulta del estado del servicio.
-
-Estas capacidades constituyen el alcance oficial del MVP y serán las únicas garantizadas por la versión 2.0 del contrato.
 
 ---
 
@@ -492,9 +495,10 @@ El servicio realizará:
 - Lectura del documento.
 - Extracción del contenido.
 - Preprocesamiento.
-- Clasificación.
+- Clasificación automática del contenido.
 - Extracción de palabras clave.
-- Cálculo de probabilidad.
+- Generación automática de un resumen descriptivo del contenido procesado.
+- Cálculo del nivel de confianza de la clasificación.
 
 ---
 
@@ -545,6 +549,8 @@ La respuesta deberá cumplir el modelo:
 ```text
 ClassificationResponse
 ```
+
+- La respuesta incluirá la información general de la operación (status, processingTime, modelVersion, timestamp) y el resultado de la clasificación dentro del objeto classification, de acuerdo con el modelo ClassificationResponse.
 
 ---
 
@@ -625,6 +631,8 @@ La respuesta deberá cumplir el modelo:
 ClassificationResponse
 ```
 
+- La respuesta incluirá la información general de la operación (status, processingTime, modelVersion, timestamp) y el resultado de la clasificación dentro del objeto classification, de acuerdo con el modelo ClassificationResponse.
+
 ---
 
 ## Código HTTP
@@ -643,6 +651,8 @@ ClassificationResponse
 El contenido recibido será procesado utilizando el mismo pipeline de inferencia empleado para la clasificación documental.
 
 De esta forma se garantiza consistencia entre ambos mecanismos de entrada.
+
+
 
 ---
 
@@ -745,6 +755,7 @@ La API REST del componente Data Science garantiza:
 - Independencia de la implementación interna.
 - Consistencia entre los distintos mecanismos de entrada.
 - Versionado de la API mediante el prefijo **/api/v1/**.
+- Las respuestas exitosas respetarán siempre la estructura definida por ClassificationResponse.
 
 ---
 
@@ -755,7 +766,6 @@ La API no será responsable de:
 - Gestión de usuarios.
 - Autenticación.
 - Persistencia.
-- Administración de proyectos.
 - Almacenamiento de documentos.
 - Presentación de resultados.
 
@@ -824,11 +834,15 @@ Este flujo corresponde al procesamiento de documentos enviados por el usuario me
 | 5 | | Extrae el contenido del documento. |
 | 6 | | Ejecuta el preprocesamiento del texto. |
 | 7 | | Ejecuta el modelo de Machine Learning. |
-| 8 | | Calcula la categoría, probabilidad y palabras clave. |
-| 9 | | Genera la respuesta JSON. |
-| 10 | Recibe la respuesta del servicio. | |
-| 11 | Persiste el resultado de clasificación. | |
-| 12 | Devuelve la respuesta al Frontend. | |
+| 8 | | Determina la categoría y subcategoría del contenido. |
+| 9 | | Extrae las palabras clave más relevantes. |
+| 10 | | Genera automáticamente un resumen descriptivo del contenido procesado. |
+| 11 | | Calcula el nivel de confianza de la clasificación. |
+| 12 | | Genera el objeto `ClassificationResponse` y lo devuelve al Backend.. |
+| 13 | Backend recibe `ClassificationResponse`. | |
+| 14 | Persiste el resultado de clasificación. | |
+| 15 | Devuelve la respuesta al Frontend. | |
+
 
 ---
 
@@ -850,12 +864,14 @@ Este flujo permite clasificar contenido enviado directamente como texto libre.
 | 4 | | Valida el contenido recibido. |
 | 5 | | Ejecuta el pipeline de preprocesamiento. |
 | 6 | | Ejecuta la inferencia del modelo. |
-| 7 | | Extrae palabras clave. |
-| 8 | | Calcula la probabilidad de clasificación. |
-| 9 | | Genera la respuesta JSON. |
-| 10 | Recibe la respuesta. | |
-| 11 | Persiste el resultado. | |
-| 12 | Devuelve la información al Frontend. | |
+| 7 | | Determina la categoría y subcategoría del contenido. |
+| 8 | | Extrae las palabras clave más relevantes. |
+| 9 | | Genera automáticamente un resumen descriptivo del contenido procesado. |
+| 10 | | Calcula el nivel de confianza de la clasificación. |
+| 11 | | Genera C`lassificationResponse`. |
+| 12 | Recibe la respuesta. | |
+| 13 | Persiste el resultado. | |
+| 14 | Devuelve la información al Frontend. | |
 
 ---
 
@@ -1046,7 +1062,7 @@ Todas las respuestas de error deberán utilizar una estructura común definida e
 
 ---
 
-# 10.2 Principios
+## 10.2 Principios
 
 El manejo de errores deberá cumplir los siguientes principios.
 
@@ -1059,7 +1075,7 @@ El manejo de errores deberá cumplir los siguientes principios.
 
 ---
 
-# 10.3 Modelo General de Error
+## 10.3 Modelo General de Error
 
 Todas las respuestas de error deberán seguir la siguiente estructura.
 
@@ -1076,7 +1092,7 @@ Todas las respuestas de error deberán seguir la siguiente estructura.
 
 ---
 
-# 10.4 Códigos HTTP
+## 10.4 Códigos HTTP
 
 | Código | Significado |
 |---------|-------------|
@@ -1091,7 +1107,7 @@ Todas las respuestas de error deberán seguir la siguiente estructura.
 
 ---
 
-# 10.5 Catálogo de Errores Funcionales
+## 10.5 Catálogo de Errores Funcionales
 
 | Código | Error | Descripción |
 |---------|-------|-------------|
@@ -1108,7 +1124,7 @@ Todas las respuestas de error deberán seguir la siguiente estructura.
 
 ---
 
-# 10.6 Responsabilidades
+## 10.6 Responsabilidades
 
 ## Backend
 
@@ -1134,7 +1150,7 @@ Data Science será responsable de:
 
 ---
 
-# 10.7 Registro y Trazabilidad
+## 10.7 Registro y Trazabilidad
 
 Cada error deberá poder ser identificado de manera única mediante el campo **code**.
 
@@ -1147,7 +1163,7 @@ Esto permitirá:
 
 ---
 
-# 10.8 Consideraciones
+## 10.8 Consideraciones
 
 Los mensajes devueltos al Backend deberán describir el problema detectado sin revelar detalles relacionados con:
 
@@ -1165,7 +1181,7 @@ Los mensajes devueltos al Backend deberán describir el problema detectado sin r
 
 ---
 
-# 10.9 Convención de Códigos de Error
+## 10.9 Convención de Códigos de Error
 
 Con el fin de garantizar una identificación única y consistente de los errores del sistema, todos los componentes deberán utilizar una nomenclatura estandarizada para los códigos de error.
 
@@ -1318,97 +1334,6 @@ Las futuras versiones deberán mantener este documento como línea base para la 
 
 ---
 
-# 11. Compatibilidad y Versionado
-
-## 11.1 Objetivo
-
-Este capítulo establece las políticas de compatibilidad y versionado de la API REST del componente Data Science, con el fin de garantizar la estabilidad de la integración y facilitar la evolución del sistema sin afectar a los consumidores existentes.
-
----
-
-## 11.2 Versionado de la API
-
-Todos los endpoints deberán incluir explícitamente la versión de la API dentro de la ruta.
-
-Ejemplo:
-
-```text
-/api/v1/predict/file
-
-/api/v1/predict/text
-
-/api/v1/health
-```
-
-La versión deberá mantenerse estable durante todo el ciclo de vida del MVP.
-
----
-
-## 11.3 Compatibilidad hacia Atrás
-
-Siempre que sea posible, las nuevas versiones deberán mantener compatibilidad con las versiones anteriores.
-
-Se consideran cambios compatibles:
-
-- Incorporación de nuevos endpoints.
-- Adición de campos opcionales en las respuestas.
-- Incorporación de nuevos códigos de error.
-- Mejoras internas del modelo de Machine Learning.
-- Optimizaciones del pipeline de procesamiento.
-
-Estos cambios no requerirán modificaciones en los consumidores existentes.
-
----
-
-## 11.4 Cambios Incompatibles
-
-Se consideran cambios incompatibles aquellos que alteren el contrato de integración existente, tales como:
-
-- Eliminación de endpoints.
-- Cambio en la estructura de las solicitudes.
-- Eliminación de atributos obligatorios.
-- Modificación del significado de los campos existentes.
-- Cambio del formato de respuesta.
-
-Ante cualquiera de estos cambios será obligatoria la publicación de una nueva versión de la API.
-
----
-
-## 11.5 Estrategia de Evolución
-
-La evolución del componente Data Science deberá realizarse siguiendo los siguientes principios:
-
-- Mantener la estabilidad del contrato vigente.
-- Minimizar el impacto sobre Backend.
-- Preservar la interoperabilidad entre versiones.
-- Documentar todas las modificaciones antes de su liberación.
-
----
-
-## 11.6 Gestión de Versiones
-
-Cada versión del contrato deberá registrar como mínimo:
-
-- Número de versión.
-- Fecha de publicación.
-- Responsable.
-- Resumen de cambios.
-- Estado del documento.
-
----
-
-## 11.7 Vigencia
-
-La presente especificación corresponde a la versión **2.0** del contrato de integración y será la referencia oficial para el desarrollo del MVP.
-
-Las futuras versiones deberán mantener este documento como línea base para la evolución del sistema.
-
-> [!IMPORTANT]
->
-> Ninguna modificación del contrato podrá implementarse sin la correspondiente actualización de la documentación técnica y la aprobación de los equipos involucrados.
-
----
-
 # 12. Funcionalidades Fuera del Alcance del MVP
 
 ## 12.1 Objetivo
@@ -1460,7 +1385,8 @@ La versión MVP del componente Data Science comprende únicamente las siguientes
 - Clasificación de documentos.
 - Clasificación de texto libre.
 - Extracción de palabras clave.
-- Cálculo de probabilidad de clasificación.
+- Generación automática de un resumen descriptivo del contenido procesado.
+- Cálculo del nivel de confianza de la clasificación.
 - Verificación del estado del servicio.
 
 Cualquier funcionalidad distinta a las anteriores será considerada una evolución posterior al MVP.

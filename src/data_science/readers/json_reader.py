@@ -25,10 +25,10 @@ from typing import Any
 
 from .base_reader import BaseReader
 
-
 # ==========================================================
 # JSON Reader
 # ==========================================================
+
 
 class JsonReader(BaseReader):
     """
@@ -45,7 +45,6 @@ class JsonReader(BaseReader):
         self,
         file: Path,
     ) -> Any:
-        
         """
         Lee un archivo JSON y devuelve su contenido.
 

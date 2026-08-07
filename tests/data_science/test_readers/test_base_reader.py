@@ -22,10 +22,10 @@ import pytest
 
 from data_science.readers.base_reader import BaseReader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_base_reader_cannot_be_instantiated() -> None:
     """

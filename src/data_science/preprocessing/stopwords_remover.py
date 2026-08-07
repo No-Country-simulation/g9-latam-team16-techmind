@@ -45,19 +45,17 @@ class StopWordsRemover(BasePreprocessor):
         document: DocumentRecord,
     ) -> ProcessedDocument:
 
-        #original_text = document["text"]
+        # original_text = document["text"]
 
-        #language = (
+        # language = (
         #    document.get("language", "english")
         #    .lower()
         #    .strip()
-        #)
+        # )
 
         original_text = document.text
 
-        language = (
-            document.language.lower().strip()
-        )
+        language = document.language.lower().strip()
 
         processed_text = self._remove_stopwords(
             original_text,
@@ -80,16 +78,10 @@ class StopWordsRemover(BasePreprocessor):
             "english",
         )
 
-        stop_words = set(
-            stopwords.words(nltk_language)
-        )
+        stop_words = set(stopwords.words(nltk_language))
 
         words = text.split()
 
-        filtered_words = [
-            word
-            for word in words
-            if word.lower() not in stop_words
-        ]
+        filtered_words = [word for word in words if word.lower() not in stop_words]
 
         return " ".join(filtered_words)

@@ -25,15 +25,10 @@ from .technical_docs_loader import TechnicalDocsLoader
 class LoaderFactory:
 
     _LOADERS = {
-
         "github": GitHubLoader,
-
         "stack_exchange": StackExchangeLoader,
-
         "technical_docs": TechnicalDocsLoader,
-
         "huggingface": HuggingFaceLoader,
-
         "mock": MockLoader,
     }
 
@@ -50,8 +45,6 @@ class LoaderFactory:
 
         except KeyError as exc:
 
-            raise ValueError(
-                f"Loader no soportado: {loader_name}"
-            ) from exc
+            raise ValueError(f"Loader no soportado: {loader_name}") from exc
 
         return loader(**kwargs)

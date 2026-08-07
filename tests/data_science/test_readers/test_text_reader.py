@@ -24,10 +24,10 @@ import pytest
 
 from data_science.readers.text_reader import TextReader
 
-
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_read_valid_text_file(tmp_path: Path) -> None:
     """

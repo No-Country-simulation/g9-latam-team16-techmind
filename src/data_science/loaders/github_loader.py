@@ -28,10 +28,10 @@ import pandas as pd
 from ..data.domain import DocumentRecord
 from .base_loader import BaseLoader
 
-
 # ==========================================================
 # GitHub Loader
 # ==========================================================
+
 
 class GitHubLoader(BaseLoader):
     """
@@ -101,31 +101,18 @@ class GitHubLoader(BaseLoader):
         content: str = source["content"]
 
         return {
-            "document_id": file.relative_to(
-                self._source_path
-            ).as_posix(),
-
+            "document_id": file.relative_to(self._source_path).as_posix(),
             "title": file.stem,
-
             "text": content,
-
             "source": self.SOURCE,
-
             "category": self.DEFAULT_CATEGORY,
-
             "language": self.DEFAULT_LANGUAGE,
-
             "author": self.DEFAULT_AUTHOR,
-
             "tags": [],
-
             "url": file.as_posix(),
-
             "metadata": {
                 "extension": file.suffix,
-                "relative_path": file.relative_to(
-                    self._source_path
-                ).as_posix(),
+                "relative_path": file.relative_to(self._source_path).as_posix(),
                 "loader": self.__class__.__name__,
             },
         }

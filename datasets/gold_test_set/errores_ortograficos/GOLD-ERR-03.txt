@@ -1,0 +1,4 @@
+TITULO: Consurco de datos en PostgreSQL y optimisacion esctructural de consutlas SQL masivas
+CATEGORIA_ESPERADA: Data Engineering
+
+Prooblemas de latensia de datos: En los picos de traficco web, el modulo transasional generaba un cuello de botella terrible. La vandabase de datos Postgresql respnde extramadamente lento cuando no ay indices creados en las colunmas de buskeda principales y las tablas tienen millones de registros sin vacum (limpiesa de memoria muerta). Para solusionarlo, se agrego un indice kompiesto y se reliso una limpesa, logrendo reucir la lektura en un cientopociento de velocidad.

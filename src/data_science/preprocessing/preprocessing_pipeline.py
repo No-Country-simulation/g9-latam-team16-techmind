@@ -45,10 +45,10 @@ from data_science.preprocessing.lemmatizer import (
     Lemmatizer,
 )
 
-
 # ==========================================================
 # Preprocessing Pipeline
 # ==========================================================
+
 
 class PreprocessingPipeline:
     """
@@ -81,9 +81,7 @@ class PreprocessingPipeline:
         # Text Cleaning
         # ---------------------------------------------
 
-        processed = self._cleaner.process(
-            working_document
-        )
+        processed = self._cleaner.process(working_document)
 
         # working_document["text"] = processed.processed_text
         working_document.text = processed.processed_text
@@ -92,9 +90,7 @@ class PreprocessingPipeline:
         # Text Normalization
         # ---------------------------------------------
 
-        processed = self._normalizer.process(
-            working_document
-        )
+        processed = self._normalizer.process(working_document)
 
         # working_document["text"] = processed.processed_text
         working_document.text = processed.processed_text
@@ -103,9 +99,7 @@ class PreprocessingPipeline:
         # Stop Words Removal
         # ---------------------------------------------
 
-        processed = self._stopwords.process(
-            working_document
-        )
+        processed = self._stopwords.process(working_document)
 
         # working_document["text"] = processed.processed_text
         working_document.text = processed.processed_text
@@ -114,17 +108,13 @@ class PreprocessingPipeline:
         # Tokenization
         # ---------------------------------------------
 
-        tokens = self._tokenizer.process(
-            working_document
-        )
+        tokens = self._tokenizer.process(working_document)
 
         # ---------------------------------------------
         # Lemmatization
         # ---------------------------------------------
 
-        lemmas = self._lemmatizer.process(
-            working_document
-        )
+        lemmas = self._lemmatizer.process(working_document)
 
         return ProcessedDocument(
             document=document,

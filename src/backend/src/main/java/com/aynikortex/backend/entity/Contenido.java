@@ -1,0 +1,125 @@
+package com.aynikortex.backend.entity;
+
+import com.aynikortex.backend.content.dto.KeywordDTO;
+import com.aynikortex.backend.content.dto.DatosContentDto;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
+@Table(name = "contents")
+@Data
+@AllArgsConstructor
+public class Contenido {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private String title;
+    @Column(name ="resumen")
+    private String resumen;
+
+    @Enumerated(EnumType.STRING)
+    private ContentType contentType;
+
+    private String textContent;
+    private String fileName;
+    private String filePath;
+
+    @Enumerated(EnumType.STRING)
+    private FileFormatType fileFormat;
+
+    private String category;
+    private String subcategory;
+    private Double confidence;
+    private String modelVersion;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
+    private List<KeywordDTO> keywords;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    public Contenido() {}
+
+    public Contenido(DatosContentDto datosContentDto) {
+        this.id = datosContentDto.id();
+        this.title = datosContentDto.title();
+        this.resumen = datosContentDto.resumen();
+        this.contentType = datosContentDto.contentType();
+        this.textContent = datosContentDto.textContent();
+        this.fileName = datosContentDto.fileName();
+        this.filePath = datosContentDto.filePath();
+        this.fileFormat = datosContentDto.fileFormat();
+        this.category = datosContentDto.category();
+        this.subcategory = datosContentDto.subCategory();
+        this.confidence = datosContentDto.confidence();
+        this.modelVersion = datosContentDto.modelVersion();
+        this.keywords = (List<KeywordDTO>) datosContentDto.keywords();
+        this.createdAt = datosContentDto.createdAt();
+        this.updatedAt = datosContentDto.updateAt() != null ? datosContentDto.updateAt() : LocalDateTime.now();
+    }
+
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getDescription() { return resumen; }
+    public void setDescription(String description) { this.resumen = description; }
+
+    public ContentType getContentType() { return contentType; }
+    public void setContentType(ContentType contentType) { this.contentType = contentType; }
+
+    public String getTextContent() { return textContent; }
+    public void setTextContent(String textContent) { this.textContent = textContent; }
+
+    public String getFileName() { return fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
+
+    public String getFilePath() { return filePath; }
+    public void setFilePath(String filePath) { this.filePath = filePath; }
+
+    public FileFormatType getFileFormat() {
+        return fileFormat;
+    }
+
+    public void setFileFormat(FileFormatType fileFormat) {
+        this.fileFormat = fileFormat;
+    }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
+    public String getSubCategory() { return subcategory; }
+    public void setSubCategory(String subCategory) { this.subcategory = subCategory; }
+
+    public Double getConfidence() { return confidence; }
+    public void setConfidence(Double confidence) { this.confidence = confidence; }
+
+    public String getModelVersion() { return modelVersion; }
+    public void setModelVersion(String modelVersion) { this.modelVersion = modelVersion; }
+
+    public List<KeywordDTO> getKeywords() { return keywords; }
+    public void setKeywords(List<KeywordDTO> keywords) { this.keywords = keywords; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+}

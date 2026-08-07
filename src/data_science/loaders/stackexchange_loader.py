@@ -26,10 +26,10 @@ import pandas as pd
 from ..data.domain import DocumentRecord
 from .base_loader import BaseLoader
 
-
 # ==========================================================
 # Stack Exchange Loader
 # ==========================================================
+
 
 class StackExchangeLoader(BaseLoader):
     """
@@ -44,9 +44,7 @@ class StackExchangeLoader(BaseLoader):
 
     DEFAULT_AUTHOR = "community"
 
-    SUPPORTED_EXTENSIONS = (
-        ".json",
-    )
+    SUPPORTED_EXTENSIONS = (".json",)
 
     def __init__(
         self,
@@ -71,9 +69,7 @@ class StackExchangeLoader(BaseLoader):
 
             questions = self._read(file)
 
-            records.extend(
-                self._build_records(questions)
-            )
+            records.extend(self._build_records(questions))
 
         return self._build_dataframe(records)
 
@@ -87,54 +83,29 @@ class StackExchangeLoader(BaseLoader):
     ) -> DocumentRecord:
 
         return {
-
-            "document_id": str(
-                source["question_id"]
-            ),
-
+            "document_id": str(source["question_id"]),
             "title": source["title"],
-
             "text": source["body"],
-
             "source": self.SOURCE,
-
             "category": self.DEFAULT_CATEGORY,
-
             "language": self.DEFAULT_LANGUAGE,
-
             "author": source.get(
                 "author",
                 self.DEFAULT_AUTHOR,
             ),
-
             "tags": source.get(
                 "tags",
                 [],
             ),
-
             "url": source.get(
                 "link",
                 "",
             ),
-
             "metadata": {
-
-                "score": source.get(
-                    "score"
-                ),
-
-                "views": source.get(
-                    "views"
-                ),
-
-                "answers": source.get(
-                    "answers"
-                ),
-
-                "accepted": source.get(
-                    "accepted"
-                ),
-
+                "score": source.get("score"),
+                "views": source.get("views"),
+                "answers": source.get("answers"),
+                "accepted": source.get("accepted"),
                 "loader": self.__class__.__name__,
             },
         }

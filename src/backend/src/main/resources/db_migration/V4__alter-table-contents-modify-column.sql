@@ -1,0 +1,1 @@
+alter-table-contents-modify-column-fileFormat to enum (PDF, TXT, DOCX, MARKDOWN);

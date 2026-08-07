@@ -3,7 +3,7 @@
 | Proyecto | AyniKortex |
 |-----------|------------|
 | Documento | Backend-Data-Model |
-| Versión | 2.0 |
+| Versión | 2. |
 | Estado | En Diseño |
 | Responsable | Equipo Data Science |
 | Consumidor | Equipo Backend |
@@ -16,6 +16,8 @@
 |----------|-------|--------|-------------|
 | 1.0 | 2026-07-21 | Equipo Data Science | Versión inicial basada en la arquitectura de Base de Conocimiento. |
 | 2.0 | 2026-07-22 | Equipo Data Science | Rediseño completo del modelo de datos para la arquitectura REST de clasificación documental mediante Machine Learning. |
+| 2.1 | 2026-07-30 | Equipo Data Science | Se incorpora el atributo `summary` dentro del modelo de clasificación para representar el resumen descriptivo generado automáticamente durante el proceso de inferencia. Se actualizan las estructuras de datos y ejemplos JSON manteniendo compatibilidad con la versión 2.0. |
+| **2.2** | **2026-08-01** | **Equipo Data Science** | Eliminación del atributo `projectId` de los modelos de solicitud. Corrección del ejemplo de `ClassificationResponse para alinearlo con la especificación del contrato. Ajustes de consistencia documental y aclaraciones sobre trazabilidad mediante requestId.
 
 ---
 
@@ -65,7 +67,7 @@ El presente documento define los modelos de datos utilizados para el intercambio
 
 Su propósito es establecer una estructura común para las solicitudes y respuestas intercambiadas a través de la API REST del componente Data Science, garantizando una integración consistente, desacoplada e independiente de las tecnologías utilizadas por cada equipo.
 
-Los modelos descritos en este documento representan exclusivamente las estructuras de datos intercambiadas entre componentes. Los aspectos relacionados con la implementación de la API REST, protocolos de comunicación, flujos operativos y responsabilidades funcionales se encuentran definidos en el documento **Backend-Data-Contract v2.0**.
+Los modelos descritos en este documento representan exclusivamente las estructuras de datos intercambiadas entre componentes. Los aspectos relacionados con la implementación de la API REST, protocolos de comunicación, flujos operativos y responsabilidades funcionales se encuentran definidos en el documento **Backend-Data-Contract**.
 
 > [!IMPORTANT]
 >
@@ -96,6 +98,7 @@ Los modelos definidos en este documento cubren exclusivamente las capacidades in
 - Clasificación de documentos.
 - Clasificación de texto libre.
 - Extracción de palabras clave.
+- Generación automática de un resumen descriptivo del contenido procesado.
 - Cálculo del nivel de confianza de la clasificación.
 - Consulta del estado del servicio.
 
@@ -257,14 +260,13 @@ Estas reglas aplican a todos los modelos de solicitud, respuesta y objetos compa
 
 | Atributo | Restricción |
 |-----------|-------------|
-| projectId | UUID versión 4 válido. |
 | requestId | Cadena alfanumérica única generada por Backend. |
 | correlationId *(futuras versiones)* | Identificador único para trazabilidad distribuida. |
 
 ### Observaciones
 
 - Todos los identificadores deberán ser únicos dentro del contexto de la operación.
-- Data Science no generará ni modificará los identificadores enviados por Backend.
+- El atributo `requestId`, cuando sea proporcionado por Backend, deberá mantenerse sin modificaciones en la respuesta generada por Data Science para facilitar la trazabilidad entre componentes
 
 ---
 
@@ -278,6 +280,7 @@ Estas reglas aplican a todos los modelos de solicitud, respuesta y objetos compa
 | subcategory | Máximo 100 caracteres. |
 | keyword.term | Máximo 100 caracteres. |
 | message | Máximo 500 caracteres. |
+| summary | Máximo 500 caracteres recomendados. |
 
 ### Observaciones
 
@@ -400,7 +403,7 @@ Ejemplo:
 
 Antes de procesar cualquier solicitud, el componente Data Science deberá verificar que todos los atributos cumplan las restricciones definidas en esta sección.
 
-Cuando alguna validación falle, la API deberá responder utilizando el modelo **ErrorResponse** definido en este documento y el catálogo de errores especificado en **Backend-Data-Contract v2.0**.
+Cuando alguna validación falle, la API deberá responder utilizando el modelo **ErrorResponse** definido en este documento y el catálogo de errores especificado en **Backend-Data-Contract**.
 
 > [!IMPORTANT]
 >
@@ -449,7 +452,6 @@ El documento será procesado por el componente Data Science para obtener su clas
 | Campo | Tipo | Obligatorio | Descripción |
 |--------|------|-------------|-------------|
 | file | Binary | Sí | Archivo que será procesado. |
-| projectId | UUID | Sí | Identificador del proyecto asociado. |
 | metadata | Metadata | No | Información complementaria de la solicitud. |
 
 ---
@@ -480,8 +482,6 @@ El documento será procesado por el componente Data Science para obtener su clas
 multipart/form-data
 
 file=documentacion.pdf
-
-projectId=550e8400-e29b-41d4-a716-446655440000
 ```
 
 ---
@@ -531,7 +531,6 @@ POST /api/v1/predict/text
 {
     "title": "Manual de Arquitectura",
     "text": "Este documento describe la arquitectura del sistema...",
-    "projectId": "550e8400-e29b-41d4-a716-446655440000",
     "metadata": {
         "source": "WEB",
         "language": "es"
@@ -553,7 +552,7 @@ Esto garantiza consistencia entre ambos mecanismos de entrada.
 
 Este capítulo define los modelos de datos utilizados por el componente **Data Science** para responder las solicitudes realizadas por **Backend**.
 
-Todos los modelos de respuesta deberán cumplir las convenciones establecidas en este documento y mantener compatibilidad con el contrato de integración definido en **Backend-Data-Contract v2.0**.
+Todos los modelos de respuesta deberán cumplir las convenciones establecidas en este documento y mantener compatibilidad con el contrato de integración definido en **Backend-Data-Contract**.
 
 Los modelos descritos en este capítulo representan exclusivamente la información intercambiada entre componentes y no exponen detalles internos de la implementación del modelo de Machine Learning.
 
@@ -581,6 +580,8 @@ classDiagram
 
 Representa la respuesta generada por el componente Data Science después de procesar una solicitud de clasificación.
 
+Este modelo encapsula el resultado completo de la inferencia realizada por el modelo de Machine Learning, incluyendo la categoría, subcategoría, palabras clave, resumen descriptivo del contenido procesado y el nivel de confianza asociado a la clasificación.
+
 Este modelo será utilizado por los endpoints:
 
 - POST /api/v1/predict/file
@@ -594,7 +595,7 @@ Este modelo será utilizado por los endpoints:
 |--------|------|-------------|-------------|
 | requestId | String | No | Identificador de la solicitud recibido desde Backend. |
 | status | Status | Sí | Estado general de la operación. |
-| classification | Classification | Sí | Resultado de la clasificación realizada. |
+| classification | Classification | Sí | Resultado completo de la inferencia, incluyendo categoría, subcategoría, palabras clave, resumen descriptivo y nivel de confianza de la clasificación. |
 | processingTime | Integer | Sí | Tiempo de procesamiento en milisegundos. |
 | modelVersion | String | Sí | Versión del modelo de Machine Learning utilizada para generar la inferencia. Sigue el esquema de Versionado Semántico (MAJOR.MINOR.PATCH). |
 | timestamp | DateTime | Sí | Fecha y hora de generación de la respuesta. |
@@ -603,34 +604,33 @@ Este modelo será utilizado por los endpoints:
 
 ### Ejemplo
 
-### Ejemplo
-
 ```json
 {
-    "requestId": "REQ-20260722-000001",
-    "status": "SUCCESS",
-    "classification": {
-        "category": "Arquitectura",
-        "subcategory": "Microservicios",
-        "confidence": 0.97,
-        "keywords": [
-            {
-                "term": "docker",
-                "score": 0.96
-            },
-            {
-                "term": "kubernetes",
-                "score": 0.93
-            },
-            {
-                "term": "api",
-                "score": 0.89
-            }
-        ]
-    },
-    "processingTime": 624,
-    "modelVersion": "1.0.0",
-    "timestamp": "2026-07-22T15:40:18Z"
+  "requestId": "REQ-20260801-000001",
+  "status": "SUCCESS",
+  "classification": {
+    "category": "Arquitectura",
+    "subcategory": "Microservicios",
+    "confidence": 0.97,
+    "keywords": [
+      {
+        "term": "docker",
+        "score": 0.96
+      },
+      {
+        "term": "kubernetes",
+        "score": 0.93
+      },
+      {
+        "term": "api",
+        "score": 0.89
+      }
+    ],
+    "summary": "Documento técnico que describe una arquitectura basada en microservicios utilizando Docker y Kubernetes para el despliegue y la orquestación de aplicaciones."
+  },
+  "processingTime": 124,
+  "modelVersion": "1.0.0",
+  "timestamp": "2026-08-01T15:45:22Z"
 }
 ```
 
@@ -638,9 +638,9 @@ Este modelo será utilizado por los endpoints:
 
 ### Observaciones
 
-El objeto **classification** concentra toda la información funcional generada por el modelo.
+El objeto **classification** concentra toda la información funcional generada por el modelo de Machine Learning, incluyendo la clasificación del contenido, las palabras clave relevantes, el resumen descriptivo generado automáticamente y el nivel de confianza asociado a la inferencia.
 
-Esto facilita la evolución futura del contrato sin afectar la estructura principal de la respuesta.
+Esta organización facilita la evolución futura del contrato sin afectar la estructura principal de la respuesta.
 
 ---
 
@@ -778,6 +778,7 @@ Este modelo concentra toda la información relacionada con la clasificación obt
 | subcategory | String | No | Subcategoría detectada. |
 | confidence | Decimal | Sí | Nivel de confianza de la clasificación. |
 | keywords | Keyword[] | Sí | Palabras clave relevantes extraídas del contenido. |
+| summary | String | Sí | Resumen descriptivo del contenido procesado generado automáticamente por el componente Data Science. |
 
 ---
 
@@ -785,6 +786,8 @@ Este modelo concentra toda la información relacionada con la clasificación obt
 
 - El valor de **confidence** deberá estar comprendido entre **0.0 y 1.0**.
 - La lista de palabras clave podrá estar vacía cuando no se detecten términos relevantes.
+- El atributo **summary** deberá generarse automáticamente durante el proceso de inferencia.
+- La longitud recomendada para **summary** será de hasta 500 caracteres.
 - Las categorías deberán corresponder al catálogo oficial utilizado por el modelo.
 
 ---
@@ -805,7 +808,8 @@ Este modelo concentra toda la información relacionada con la clasificación obt
             "term": "kubernetes",
             "score": 0.93
         }
-    ]
+    ],
+    "summary": "Documento técnico que describe una arquitectura basada en microservicios utilizando Docker y Kubernetes para el despliegue y la orquestación de aplicaciones."
 }
 ```
 
@@ -852,6 +856,8 @@ Cuando el atributo **score** sea informado deberá encontrarse entre **0.0 y 1.0
 Representa información adicional enviada por Backend para complementar una solicitud.
 
 Su contenido es completamente opcional y podrá evolucionar sin afectar la compatibilidad del contrato.
+
+Todos los atributos de Metadata son opcionales y no modifican el comportamiento funcional del proceso de clasificación
 
 ---
 
@@ -1039,6 +1045,8 @@ Se consideran cambios compatibles:
 - Incorporar nuevos valores de enumeraciones cuando no afecten el comportamiento existente.
 - Mejorar la documentación.
 
+> **Nota:** Las versiones 2.1 y 2.2 incorporan mejoras compatibles al contrato sin afectar la estructura principal de los modelos existentes.
+
 No se consideran compatibles:
 
 - Eliminar atributos obligatorios.
@@ -1101,6 +1109,7 @@ Cuando un atributo o endpoint sea reemplazado:
 | Inferencia | Proceso mediante el cual el modelo genera una predicción a partir de una entrada. |
 | Keyword | Palabra clave relevante identificada durante el procesamiento del contenido. |
 | Metadata | Información adicional utilizada para contextualizar una solicitud. |
+| Summary | Resumen descriptivo del contenido procesado generado automáticamente por el componente Data Science. |
 
 ---
 

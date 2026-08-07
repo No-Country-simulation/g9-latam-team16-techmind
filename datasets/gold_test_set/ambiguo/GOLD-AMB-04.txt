@@ -1,0 +1,4 @@
+TITULO: Dashboard Web Frontend en React con Visualización en Tiempo Real de Métricas de MLOps
+CATEGORIA_ESPERADA: Frontend
+
+Desarrollamos un panel de control interactivo en el frontend utilizando React, TypeScript y bibliotecas de gráficos D3.js. La interfaz visualiza en tiempo real las métricas de rendimiento de los modelos de aprendizaje automático (F1-Score, matriz de confusión y desviaciones del dataset de prueba). En el marco de la modernización de la plataforma, este componente fue refactorizado para garantizar un rendimiento óptimo bajo cargas de trabajo pesadas. El equipo de arquitectura técnica documentó cada decisión de diseño para asegurar que el despliegue a producción cumpla con todos los estándares de calidad ISO y las regulaciones corporativas vigentes de protección de datos (GDPR).
