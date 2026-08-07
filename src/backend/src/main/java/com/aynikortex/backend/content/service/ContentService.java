@@ -80,6 +80,8 @@ public class ContentService {
                     requestDTO.metadata()
             );
 
+            System.out.println(">>> RESPUESTA COMPLETA DE DS: " + dsResponse);
+
             if (dsResponse != null && "SUCCESS".equalsIgnoreCase(dsResponse.status())) {
                 updateEntityWithClassification(savedContenido, dsResponse);
                 savedContenido = contentRepository.save(savedContenido);
@@ -128,11 +130,22 @@ public class ContentService {
     }
 
     private ContentResponseDTO mapToResponseDTO(Contenido c) {
+        List<String> keywordStrings = null;
+        if (c.getKeywords() != null) {
+            keywordStrings = c.getKeywords().stream()
+                    .map(KeywordDTO::getWord)
+                    .collect(Collectors.toList());
+        }
+
         return new ContentResponseDTO(
                 c.getId(),
                 c.getTitle(),
                 c.getContentType(),
                 c.getCategory(),
+                c.getSubCategory(),
+                c.getConfidence(),
+                keywordStrings,
+                c.getDescription(),
                 c.getCreatedAt()
         );
     }

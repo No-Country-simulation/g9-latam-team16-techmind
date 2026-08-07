@@ -10,7 +10,6 @@ import com.aynikortex.backend.integration.dto.response.HealthResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -23,13 +22,11 @@ import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
 
-
 @Component
 public class DataScienceClientImpl implements DataScienceClient {
 
-    private final RestClient dataScienceRestClient; // Cliente http de spring
+    private final RestClient dataScienceRestClient;
     private final ObjectMapper objectMapper;
-
 
     public DataScienceClientImpl(
             RestClient dataScienceRestClient,
@@ -39,12 +36,10 @@ public class DataScienceClientImpl implements DataScienceClient {
         this.objectMapper = objectMapper;
     }
 
-
     @Override
     public ClassificationResponse predictText(
             TextClassificationRequest request
     ) {
-
         return dataScienceRestClient.post()
                 .uri("/api/v1/predict/text")
                 .body(request)
@@ -58,20 +53,14 @@ public class DataScienceClientImpl implements DataScienceClient {
                 .body(ClassificationResponse.class);
     }
 
-
     @Override
     public ClassificationResponse predictFile(
             FileClassificationRequest request
     ) {
-
         try {
-
-            MultiValueMap<String, Object> body =
-                    new LinkedMultiValueMap<>();
-
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
             HttpHeaders fileHeaders = new HttpHeaders();
-
             fileHeaders.setContentType(
                     MediaType.parseMediaType(
                             request.file().getContentType() != null
@@ -80,34 +69,24 @@ public class DataScienceClientImpl implements DataScienceClient {
                     )
             );
 
-
             ByteArrayResource resource =
                     new ByteArrayResource(
                             request.file().getBytes()
                     ) {
-
                         @Override
                         public String getFilename() {
-                            return request.file()
-                                    .getOriginalFilename();
+                            return request.file().getOriginalFilename();
                         }
                     };
 
-
             HttpEntity<ByteArrayResource> fileEntity =
-                    new HttpEntity<>(
-                            resource,
-                            fileHeaders
-                    );
-
+                    new HttpEntity<>(resource, fileHeaders);
 
             body.add("file", fileEntity);
-
 
             if (request.metadata() != null) {
                 body.add("metadata", request.metadata());
             }
-
 
             return dataScienceRestClient.post()
                     .uri("/api/v1/predict/file")
@@ -122,9 +101,7 @@ public class DataScienceClientImpl implements DataScienceClient {
                     )
                     .body(ClassificationResponse.class);
 
-
         } catch (IOException e) {
-
             throw new DataScienceException(
                     "No se pudo preparar el archivo para Data Science",
                     e
@@ -132,10 +109,8 @@ public class DataScienceClientImpl implements DataScienceClient {
         }
     }
 
-
     @Override
     public HealthResponse checkHealth() {
-
         return dataScienceRestClient.get()
                 .uri("/api/v1/health")
                 .retrieve()
@@ -148,19 +123,15 @@ public class DataScienceClientImpl implements DataScienceClient {
                 .body(HealthResponse.class);
     }
 
-
     private ExternalServiceException handleHttpError(
             ClientHttpResponse response
     ) {
-
         try {
-
             DataScienceErrorResponse error =
                     objectMapper.readValue(
                             response.getBody(),
                             DataScienceErrorResponse.class
                     );
-
 
             return new ExternalServiceException(
                     error.message(),
@@ -170,11 +141,8 @@ public class DataScienceClientImpl implements DataScienceClient {
                     error.requestId()
             );
 
-
         } catch (IOException e) {
-
             try {
-
                 return new ExternalServiceException(
                         "Error comunicando con Data Science",
                         response.getStatusCode(),
@@ -182,9 +150,7 @@ public class DataScienceClientImpl implements DataScienceClient {
                         null,
                         null
                 );
-
-            } catch (IOException statusException) {
-
+            } catch (Exception statusException) {
                 return new ExternalServiceException(
                         "Error desconocido comunicando con Data Science"
                 );
