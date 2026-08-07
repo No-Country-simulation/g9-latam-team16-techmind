@@ -82,7 +82,8 @@ Fecha: ${new Date().toLocaleString("es-ES")}
       elevation={0}
       sx={{
         height: "100%",
-        width: 420,
+        width: "100%",
+        maxWidth: 420,
         display: "flex",
         flexDirection: "column",
         borderRadius: 3,
