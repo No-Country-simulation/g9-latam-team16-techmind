@@ -27,7 +27,7 @@ pypdf==6.0.0
 # Machine Learning
 # ==========================
 
-scikit-learn==1.7.2
+scikit-learn==1.9.0
 joblib==1.5.2
 
 # ==========================
@@ -48,3 +48,11 @@ pytest-cov==7.0.0
 # NLTK
 # ==========================
 nltk>=3.9
+
+# ==========================
+# API Web (FastAPI)
+# ==========================
+fastapi>=0.110.0
+uvicorn>=0.29.0
+python-multipart>=0.0.9
+pydantic>=2.7.0
