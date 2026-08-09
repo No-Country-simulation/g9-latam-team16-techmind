@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # 1. Servicio de Base de Datos MySQL
   aynikortex-db:
     image: mysql:8.0
     container_name: aynikortex_mysql
@@ -15,6 +16,23 @@ services:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
     command: --default-authentication-plugin=mysql_native_password
+
+  # 2. Servicio del Backend (Spring Boot)
+  backend-api:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile # O DockerFile dependiendo de cómo lo tenga nombrado
+    container_name: aynikortex_backend
+    ports:
+      - "8080:8080"
+    environment:
+      # AQUI ESTA LA MAGIA: En vez de localhost, usa el nombre del contenedor de la DB
+      - DB_URL=jdbc:mysql://aynikortex-db:3306/aynikortex_db
+      - DB_USERNAME=ayni_user
+      - DB_PASSWORD=ayni_password
+    depends_on:
+      - aynikortex-db
+    restart: unless-stopped
 
 volumes:
   mysql_data:

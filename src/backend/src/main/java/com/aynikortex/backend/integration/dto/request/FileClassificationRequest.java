@@ -8,4 +8,5 @@ public record FileClassificationRequest(
         MultipartFile file,
         Map<String, Object> metadata
 ) {
+
 }
