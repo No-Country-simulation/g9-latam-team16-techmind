@@ -113,7 +113,7 @@ public class ContentService {
                 entidad.setKeywords(keywordDTOs);
             }
 
-            entidad.setDescription(classification.summary());
+            entidad.setSummary(classification.summary());
         }
         entidad.setModelVersion(response.modelVersion());
         entidad.setUpdatedAt(LocalDateTime.now());
@@ -141,11 +141,12 @@ public class ContentService {
                 c.getId(),
                 c.getTitle(),
                 c.getContentType(),
+                c.getTextContent(),
                 c.getCategory(),
                 c.getSubCategory(),
                 c.getConfidence(),
                 keywordStrings,
-                c.getDescription(),
+                c.getSummary(),
                 c.getCreatedAt()
         );
     }

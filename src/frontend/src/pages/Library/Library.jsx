@@ -21,6 +21,7 @@ import {
   searchByTitle,
   searchByKeyword,
   searchByCategory,
+  deleteContent,
 } from "../../services/contentService";
 
 function Library() {
@@ -173,6 +174,23 @@ function Library() {
       return matchesCategory && matchesSubcategory && matchesType;
     });
   }, [contents, categoryFilter, subcategoryFilter, typeFilter]);
+
+  const handleDeleteContent = async (id) => {
+    try {
+      setError("");
+
+      await deleteContent(id);
+
+      // Actualizar la lista completa
+      setAllContents((prev) => prev.filter((item) => item.id !== id));
+
+      // Actualizar los resultados que se están mostrando
+      setContents((prev) => prev.filter((item) => item.id !== id));
+    } catch (err) {
+      console.error("Error al eliminar contenido:", err);
+      setError("No fue posible eliminar el contenido.");
+    }
+  };
 
   return (
     <Box
@@ -451,7 +469,11 @@ function Library() {
             }}
           >
             {filteredContent.map((content) => (
-              <ContentCard key={content.id} content={content} />
+              <ContentCard
+                key={content.id}
+                content={content}
+                onDelete={handleDeleteContent}
+              />
             ))}
           </Box>
         )}

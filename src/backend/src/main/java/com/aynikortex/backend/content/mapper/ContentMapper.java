@@ -23,11 +23,12 @@ public class ContentMapper {
                 contenido.getId(),
                 contenido.getTitle(),
                 contenido.getContentType(),
+                contenido.getTextContent(),
                 contenido.getCategory(),
                 contenido.getSubCategory(), // Subcategoría
                 contenido.getConfidence(),    // Confianza
                 keywordStrings,               // Lista de keywords
-                contenido.getDescription(),   // Resumen guardado en descripción
+                contenido.getSummary(),   // Resumen guardado en descripción
                 contenido.getCreatedAt()
         );
     }

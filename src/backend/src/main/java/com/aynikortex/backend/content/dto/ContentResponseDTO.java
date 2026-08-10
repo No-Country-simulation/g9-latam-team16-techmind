@@ -9,6 +9,7 @@ public record ContentResponseDTO(
         UUID id,
         String title,
         ContentType contentType,
+        String textContent,
         String category,
         String subcategory,
         Double confidence,
