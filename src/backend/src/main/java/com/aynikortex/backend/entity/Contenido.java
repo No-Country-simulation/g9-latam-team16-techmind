@@ -25,8 +25,7 @@ public class Contenido {
     private UUID id;
 
     private String title;
-    @Column(name ="resumen")
-    private String resumen;
+    private String summary;
 
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
@@ -58,7 +57,7 @@ public class Contenido {
     public Contenido(DatosContentDto datosContentDto) {
         this.id = datosContentDto.id();
         this.title = datosContentDto.title();
-        this.resumen = datosContentDto.resumen();
+        this.summary = datosContentDto.summary();
         this.contentType = datosContentDto.contentType();
         this.textContent = datosContentDto.textContent();
         this.fileName = datosContentDto.fileName();
@@ -79,8 +78,8 @@ public class Contenido {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public String getDescription() { return resumen; }
-    public void setDescription(String description) { this.resumen = description; }
+    public String getDescription() { return summary; }
+    public void setDescription(String description) { this.summary = description; }
 
     public ContentType getContentType() { return contentType; }
     public void setContentType(ContentType contentType) { this.contentType = contentType; }

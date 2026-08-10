@@ -11,7 +11,7 @@ public record DatosContentDto(
         @NotBlank
         UUID id,
         String title,
-        String resumen,
+        String summary,
         @NotBlank
         ContentType contentType, // Asegúrate de que usa com.aynikortex.backend.domain.ContentType
         @NotBlank

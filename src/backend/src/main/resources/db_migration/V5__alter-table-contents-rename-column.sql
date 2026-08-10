@@ -1,0 +1,1 @@
+alter-table-contents-rename-column-resumen to summary;
