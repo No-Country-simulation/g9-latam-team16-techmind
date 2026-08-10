@@ -22,7 +22,7 @@ async def lifespan(app: FastAPI):
     print("Cargando modelo de Machine Learning...")
     try:
         repo = FilesystemArtifactRepository(root_directory=os.path.join(os.path.dirname(__file__), "models"))
-        model_bundle = repo.load("aynikortex_classifier-v1.0.0")
+        model_bundle = repo.load("aynikortex_classifier-v1.4.0")
         print("Modelo cargado exitosamente.")
     except Exception as e:
         print(f"Error al cargar el modelo: {e}")
