@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Card, Container, Grid, Typography } from "@mui/material";
+import { Box, Card, Container, Typography } from "@mui/material";
 
 import UploadPanel from "../../components/register/panels/UploadPanel";
 import ResultPanel from "../../components/register/panels/ResultPanel";
@@ -23,7 +23,12 @@ function RegisterContent() {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await analyzeContent({ contentType, formData });
+
+      const response = await analyzeContent({
+        contentType,
+        formData,
+      });
+
       setAnalysis(response);
     } catch (error) {
       console.error("Error al registrar el contenido:", error);
@@ -48,65 +53,121 @@ function RegisterContent() {
       sx={{
         bgcolor: "background.default",
         minHeight: "100vh",
-        py: { xs: 3, md: 5 },
+        py: {
+          xs: 3,
+          md: 5,
+        },
       }}
     >
-      <Container maxWidth="xl" sx={{ width: "100%" }}>
-        <Box sx={{ mb: 4, textAlign: "center" }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          px: {
+            xs: 2,
+            sm: 3,
+          },
+        }}
+      >
+        {/* Encabezado */}
+        <Box
+          sx={{
+            mb: {
+              xs: 3,
+              md: 4,
+            },
+            textAlign: "center",
+          }}
+        >
           <Typography
             variant="h3"
-            sx={{ fontWeight: 700, color: "text.primary", mb: 1 }}
+            sx={{
+              fontWeight: 700,
+              color: "text.primary",
+              mb: 1,
+              fontSize: {
+                xs: "2rem",
+                sm: "2.5rem",
+                md: "3rem",
+              },
+            }}
           >
             Registrar contenido
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{
+              maxWidth: 800,
+              mx: "auto",
+            }}
+          >
             Centraliza la evaluación de texto y archivos en una experiencia
             clara, rápida y visualmente consistente.
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={5}>
-            <Card
-              elevation={0}
-              sx={{
-                height: "100%",
-                borderRadius: 3,
-                border: "1px solid",
-                borderColor: "divider",
-                p: { xs: 2, md: 3 },
-                bgcolor: "background.paper",
-              }}
-            >
-              <UploadPanel
-                contentType={contentType}
-                onContentTypeChange={handleContentTypeChange}
-                formData={formData}
-                setFormData={setFormData}
-                loading={loading}
-                analysis={analysis}
-                onAnalyze={handleSubmit}
-                onReset={handleReset}
-              />
-            </Card>
-          </Grid>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              md: "7fr 5fr",
+            },
+            gap: {
+              xs: 2,
+              md: 3,
+            },
+            alignItems: "stretch",
+          }}
+        >
+          {/* Panel de carga */}
+          <Card
+            elevation={0}
+            sx={{
+              height: "100%",
+              borderRadius: 3,
+              border: "1px solid",
+              borderColor: "divider",
+              p: {
+                xs: 2,
+                sm: 2.5,
+                md: 3,
+              },
+              bgcolor: "background.paper",
+            }}
+          >
+            <UploadPanel
+              contentType={contentType}
+              onContentTypeChange={handleContentTypeChange}
+              formData={formData}
+              setFormData={setFormData}
+              loading={loading}
+              analysis={analysis}
+              onAnalyze={handleSubmit}
+              onReset={handleReset}
+            />
+          </Card>
 
-          <Grid item xs={12} md={7}>
-            <Card
-              elevation={0}
-              sx={{
-                height: "100%",
-                borderRadius: 3,
-                border: "1px solid",
-                borderColor: "divider",
-                p: { xs: 2, md: 3 },
-                bgcolor: "background.paper",
-              }}
-            >
-              <ResultPanel analysis={analysis} loading={loading} />
-            </Card>
-          </Grid>
-        </Grid>
+          {/* Panel de resultado */}
+          <Card
+            elevation={0}
+            sx={{
+              height: "100%",
+              borderRadius: 3,
+              border: "1px solid",
+              borderColor: "divider",
+              p: {
+                xs: 2,
+                sm: 2.5,
+                md: 3,
+              },
+              bgcolor: "background.paper",
+            }}
+          >
+            <ResultPanel analysis={analysis} loading={loading} />
+          </Card>
+        </Box>
       </Container>
     </Box>
   );

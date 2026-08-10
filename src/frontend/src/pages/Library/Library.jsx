@@ -8,18 +8,30 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Grid,
   InputAdornment,
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 
 import ContentCard from "../../components/library/ContentCard";
 import EmptyState from "../../components/common/EmptyState";
-import { getContents } from "../../services/contentService";
+
+import {
+  getContents,
+  searchByTitle,
+  searchByKeyword,
+  searchByCategory,
+} from "../../services/contentService";
 
 function Library() {
+  const [allContents, setAllContents] = useState([]);
+
   const [contents, setContents] = useState([]);
+
+  // Búsqueda
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState("title");
+
+  // Filtros
   const [categoryFilter, setCategoryFilter] = useState("");
   const [subcategoryFilter, setSubcategoryFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
@@ -27,7 +39,6 @@ function Library() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Cargar contenidos desde el backend
   useEffect(() => {
     const loadContents = async () => {
       try {
@@ -35,6 +46,8 @@ function Library() {
         setError("");
 
         const data = await getContents();
+
+        setAllContents(data);
         setContents(data);
       } catch (err) {
         console.error("Error al cargar contenidos:", err);
@@ -47,12 +60,13 @@ function Library() {
     loadContents();
   }, []);
 
-  // Obtener categorías a partir de los contenidos reales
   const categories = useMemo(() => {
-    return [...new Set(contents.map((item) => item.category).filter(Boolean))];
-  }, [contents]);
+    return [
+      ...new Set(allContents.map((item) => item.category).filter(Boolean)),
+    ];
+  }, [allContents]);
 
-  // Obtener subcategorías según la categoría seleccionada
+  // Subcategorías disponibles según categoría seleccionada
   const subcategories = useMemo(() => {
     if (!categoryFilter) {
       return [];
@@ -60,36 +74,83 @@ function Library() {
 
     return [
       ...new Set(
-        contents
+        allContents
           .filter((item) => item.category === categoryFilter)
           .map((item) => item.subcategory)
           .filter(Boolean),
       ),
     ];
-  }, [contents, categoryFilter]);
+  }, [allContents, categoryFilter]);
 
-  // Obtener tipos de contenido disponibles
+  // Tipos de contenido disponibles
   const contentTypes = useMemo(() => {
     return [
-      ...new Set(contents.map((item) => item.contentType).filter(Boolean)),
+      ...new Set(allContents.map((item) => item.contentType).filter(Boolean)),
     ];
-  }, [contents]);
+  }, [allContents]);
 
-  // Filtrar contenidos
+  // =========================================================
+  // BÚSQUEDA EN BACKEND
+  // =========================================================
+
+  const handleSearch = async () => {
+    const normalizedSearch = searchTerm.trim();
+
+    // Si la búsqueda está vacía, mostrar nuevamente todos
+    // los contenidos cargados inicialmente.
+    if (!normalizedSearch) {
+      setContents(allContents);
+      setError("");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      let data;
+
+      switch (searchType) {
+        case "title":
+          data = await searchByTitle(normalizedSearch);
+          break;
+
+        case "keyword":
+          data = await searchByKeyword(normalizedSearch);
+          break;
+
+        case "category":
+          data = await searchByCategory(normalizedSearch);
+          break;
+
+        default:
+          data = await searchByTitle(normalizedSearch);
+      }
+
+      setContents(data);
+    } catch (err) {
+      console.error("Error al buscar contenidos:", err);
+      setError("No fue posible realizar la búsqueda.");
+      setContents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Ejecutar búsqueda al presionar Enter
+  const handleSearchKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const handleCategoryChange = (event) => {
+    setCategoryFilter(event.target.value);
+    setSubcategoryFilter("");
+  };
+
   const filteredContent = useMemo(() => {
-    const normalizedSearch = searchTerm.toLowerCase().trim();
-
     return contents.filter((item) => {
-      const matchesSearch =
-        normalizedSearch === "" ||
-        item.title?.toLowerCase().includes(normalizedSearch) ||
-        item.summary?.toLowerCase().includes(normalizedSearch) ||
-        item.category?.toLowerCase().includes(normalizedSearch) ||
-        item.subcategory?.toLowerCase().includes(normalizedSearch) ||
-        item.keywords?.some((keyword) =>
-          keyword.toLowerCase().includes(normalizedSearch),
-        );
-
       const matchesCategory =
         categoryFilter === "" || item.category === categoryFilter;
 
@@ -98,16 +159,9 @@ function Library() {
 
       const matchesType = typeFilter === "" || item.contentType === typeFilter;
 
-      return (
-        matchesSearch && matchesCategory && matchesSubcategory && matchesType
-      );
+      return matchesCategory && matchesSubcategory && matchesType;
     });
-  }, [contents, searchTerm, categoryFilter, subcategoryFilter, typeFilter]);
-
-  const handleCategoryChange = (event) => {
-    setCategoryFilter(event.target.value);
-    setSubcategoryFilter("");
-  };
+  }, [contents, categoryFilter, subcategoryFilter, typeFilter]);
 
   return (
     <Box
@@ -118,8 +172,16 @@ function Library() {
       }}
     >
       <Container maxWidth="lg">
-        {/* Encabezado */}
-        <Box sx={{ mb: 4, textAlign: "center" }}>
+        {/* ===================================================
+            ENCABEZADO
+        =================================================== */}
+
+        <Box
+          sx={{
+            mb: 4,
+            textAlign: "center",
+          }}
+        >
           <Typography
             variant="h3"
             sx={{
@@ -138,105 +200,179 @@ function Library() {
           </Typography>
         </Box>
 
-        {/* Barra de búsqueda y filtros */}
+        {/* ===================================================
+            BÚSQUEDA
+        =================================================== */}
+
         <Box sx={{ mb: 4 }}>
-          {/* Búsqueda */}
-          <TextField
-            fullWidth
-            placeholder="Buscar por título, palabra clave o categoría..."
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            variant="outlined"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon color="action" />
-                </InputAdornment>
-              ),
-            }}
+          <Box
             sx={{
-              mb: 3,
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 2,
+              display: "flex",
+              gap: 2,
+              flexDirection: {
+                xs: "column",
+                md: "row",
               },
             }}
-          />
+          >
+            {/* Tipo de búsqueda */}
+            <FormControl
+              sx={{
+                minWidth: {
+                  xs: "100%",
+                  md: 200,
+                },
+              }}
+            >
+              <InputLabel>Buscar por</InputLabel>
 
-          {/* Filtros */}
-          <Grid container spacing={2}>
+              <Select
+                value={searchType}
+                onChange={(event) => setSearchType(event.target.value)}
+                label="Buscar por"
+                sx={{
+                  borderRadius: 2,
+                }}
+              >
+                <MenuItem value="title">Título</MenuItem>
+
+                <MenuItem value="keyword">Keyword</MenuItem>
+
+                <MenuItem value="category">Categoría</MenuItem>
+              </Select>
+            </FormControl>
+
+            {/* Campo de búsqueda */}
+            <TextField
+              fullWidth
+              placeholder={
+                searchType === "title"
+                  ? "Buscar por título..."
+                  : searchType === "keyword"
+                    ? "Buscar por keyword..."
+                    : "Buscar por categoría..."
+              }
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              variant="outlined"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon color="action" />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                },
+              }}
+            />
+          </Box>
+
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{
+              display: "block",
+              mt: 1,
+              ml: 0.5,
+            }}
+          >
+            Presiona Enter para buscar
+          </Typography>
+
+          {/* =================================================
+              FILTROS
+          ================================================= */}
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+              },
+              gap: 2,
+              mt: 3,
+            }}
+          >
             {/* Categoría */}
-            <Grid item xs={12} sm={6} md={4}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>Categoría</InputLabel>
+            <FormControl fullWidth>
+              <InputLabel>Categoría</InputLabel>
 
-                <Select
-                  value={categoryFilter}
-                  onChange={handleCategoryChange}
-                  label="Categoría"
-                  sx={{ borderRadius: 2 }}
-                >
-                  <MenuItem value="">Todas las categorías</MenuItem>
+              <Select
+                value={categoryFilter}
+                onChange={handleCategoryChange}
+                label="Categoría"
+                sx={{
+                  borderRadius: 2,
+                }}
+              >
+                <MenuItem value="">Todas las categorías</MenuItem>
 
-                  {categories.map((category) => (
-                    <MenuItem key={category} value={category}>
-                      {category}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+                {categories.map((category) => (
+                  <MenuItem key={category} value={category}>
+                    {category}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
             {/* Subcategoría */}
-            <Grid item xs={12} sm={6} md={4}>
-              <FormControl
-                fullWidth
-                variant="outlined"
-                disabled={!categoryFilter}
+            <FormControl fullWidth disabled={!categoryFilter}>
+              <InputLabel>Subcategoría</InputLabel>
+
+              <Select
+                value={subcategoryFilter}
+                onChange={(event) => setSubcategoryFilter(event.target.value)}
+                label="Subcategoría"
+                sx={{
+                  borderRadius: 2,
+                }}
               >
-                <InputLabel>Subcategoría</InputLabel>
+                <MenuItem value="">Todas las subcategorías</MenuItem>
 
-                <Select
-                  value={subcategoryFilter}
-                  onChange={(event) => setSubcategoryFilter(event.target.value)}
-                  label="Subcategoría"
-                  sx={{ borderRadius: 2 }}
-                >
-                  <MenuItem value="">Todas las subcategorías</MenuItem>
-
-                  {subcategories.map((subcategory) => (
-                    <MenuItem key={subcategory} value={subcategory}>
-                      {subcategory}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+                {subcategories.map((subcategory) => (
+                  <MenuItem key={subcategory} value={subcategory}>
+                    {subcategory}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
             {/* Tipo de contenido */}
-            <Grid item xs={12} sm={12} md={4}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>Tipo de contenido</InputLabel>
+            <FormControl fullWidth>
+              <InputLabel>Tipo de contenido</InputLabel>
 
-                <Select
-                  value={typeFilter}
-                  onChange={(event) => setTypeFilter(event.target.value)}
-                  label="Tipo de contenido"
-                  sx={{ borderRadius: 2 }}
-                >
-                  <MenuItem value="">Todos los tipos</MenuItem>
+              <Select
+                value={typeFilter}
+                onChange={(event) => setTypeFilter(event.target.value)}
+                label="Tipo de contenido"
+                sx={{
+                  borderRadius: 2,
+                }}
+              >
+                <MenuItem value="">Todos los tipos</MenuItem>
 
-                  {contentTypes.map((type) => (
-                    <MenuItem key={type} value={type}>
-                      {type}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+                {contentTypes.map((type) => (
+                  <MenuItem key={type} value={type}>
+                    {type}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
         </Box>
 
-        {/* Cargando */}
+        {/* ===================================================
+            CARGANDO
+        =================================================== */}
+
         {loading && (
           <Box
             sx={{
@@ -251,7 +387,10 @@ function Library() {
           </Box>
         )}
 
-        {/* Error */}
+        {/* ===================================================
+            ERROR
+        =================================================== */}
+
         {!loading && error && (
           <Box
             sx={{
@@ -264,15 +403,18 @@ function Library() {
           </Box>
         )}
 
-        {/* Resultados */}
+        {/* ===================================================
+            RESULTADOS
+        =================================================== */}
+
         {!loading && !error && filteredContent.length > 0 && (
           <Box
             sx={{
               display: "grid",
               gridTemplateColumns: {
                 xs: "1fr",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
+                sm: "repeat(2, minmax(0, 1fr))",
+                md: "repeat(3, minmax(0, 1fr))",
               },
               gap: 3,
             }}
@@ -283,7 +425,10 @@ function Library() {
           </Box>
         )}
 
-        {/* Sin resultados */}
+        {/* ===================================================
+            SIN RESULTADOS
+        =================================================== */}
+
         {!loading && !error && filteredContent.length === 0 && (
           <Box
             sx={{
