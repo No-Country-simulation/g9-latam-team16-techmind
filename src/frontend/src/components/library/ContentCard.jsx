@@ -45,12 +45,26 @@ function ContentCard({ content, onDelete }) {
 
   // Descargar el CONTENIDO COMPLETO como .txt
   const downloadAsText = () => {
-    const fileContent = content.textContent ?? "";
+    const fileContent = `
+TÍTULO: ${content.title}
 
-    if (!fileContent.trim()) {
-      console.warn("El contenido de texto está vacío.");
-      return;
-    }
+CATEGORÍA: ${content.category}
+SUBCATEGORÍA: ${content.subcategory}
+TIPO: ${content.contentType}
+CONFIANZA DE IA: ${confidencePercentage.toFixed(0)}%
+
+KEYWORDS: ${content.keywords?.join(", ") ?? ""}
+
+---
+
+CONTENIDO:
+${content.textContent ?? ""}
+
+---
+
+Contenido descargado desde AyniKortex
+Fecha: ${new Date().toLocaleString("es-ES")}
+`.trim();
 
     const blob = new Blob([fileContent], {
       type: "text/plain;charset=utf-8",
@@ -71,7 +85,7 @@ function ContentCard({ content, onDelete }) {
 
     URL.revokeObjectURL(url);
 
-    console.log(`✓ Contenido descargado: ${content.title}`);
+    console.log(`✓ Descargado: ${content.title}`);
   };
 
   // Pendiente del endpoint real de descarga de archivos
