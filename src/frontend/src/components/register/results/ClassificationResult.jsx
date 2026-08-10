@@ -1,47 +1,31 @@
-import { Box, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
+
+import ResultHeader from "./ResultHeader";
+import CategoryCard from "./CategoryCard";
+import ConfidenceCard from "./ConfidenceCard";
+import SummaryCard from "./SummaryCard";
+import KeywordsCard from "./KeywordsCard";
 
 function ClassificationResult({ classification }) {
-  const title = classification?.title || "Resultado";
-  const category = classification?.category || "Sin categoría";
-  const confidence = classification?.confidence;
+  if (!classification) {
+    return null;
+  }
 
   return (
-    <Card variant="outlined" sx={{ borderRadius: 3 }}>
-      <CardContent>
-        <Stack spacing={2}>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            Clasificación
-          </Typography>
+    <Stack spacing={2}>
+      <ResultHeader title={classification.title} />
 
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            {title}
-          </Typography>
+      <CategoryCard
+        category={classification.category}
+        subcategory={classification.subcategory}
+      />
 
-          <Chip
-            label={category}
-            color="primary"
-            sx={{ alignSelf: "flex-start" }}
-          />
+      <ConfidenceCard confidence={classification.confidence} />
 
-          {confidence !== undefined && confidence !== null && (
-            <Typography variant="body2" color="text.secondary">
-              Confianza: {(confidence * 100).toFixed(0)}%
-            </Typography>
-          )}
+      <SummaryCard summary={classification.summary} />
 
-          {classification?.summary && (
-            <Box>
-              <Typography variant="subtitle2" gutterBottom>
-                Resumen
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {classification.summary}
-              </Typography>
-            </Box>
-          )}
-        </Stack>
-      </CardContent>
-    </Card>
+      <KeywordsCard keywords={classification.keywords} />
+    </Stack>
   );
 }
 

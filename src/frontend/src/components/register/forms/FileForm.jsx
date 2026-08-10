@@ -5,7 +5,7 @@ function FileContentForm({
   formData,
   setFormData,
   loading,
-  classification,
+  analysis,
   onSubmit,
   onReset,
 }) {
@@ -68,7 +68,7 @@ function FileContentForm({
         {loading ? "Clasificando..." : "Clasificar contenido"}
       </Button>
 
-      {classification && (
+      {analysis && (
         <Button variant="outlined" sx={{ mt: 2 }} onClick={onReset}>
           Limpiar formulario
         </Button>

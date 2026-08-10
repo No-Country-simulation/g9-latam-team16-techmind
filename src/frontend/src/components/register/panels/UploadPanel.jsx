@@ -41,7 +41,7 @@ function UploadPanel({
         formData={formData}
         setFormData={setFormData}
         loading={loading}
-        classification={analysis}
+        analysis={analysis}
         onSubmit={onAnalyze}
         onReset={onReset}
       />

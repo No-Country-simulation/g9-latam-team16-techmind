@@ -11,7 +11,11 @@ export async function registerText(request) {
   });
 
   if (!response.ok) {
-    throw new Error(`Error al registrar contenido: ${response.status}`);
+    const errorBody = await response.text();
+
+    throw new Error(
+      `Error al registrar contenido: ${response.status} ${errorBody}`,
+    );
   }
 
   return response.json();
@@ -25,7 +29,11 @@ export async function registerFile(formData) {
   });
 
   if (!response.ok) {
-    throw new Error(`Error al registrar archivo: ${response.status}`);
+    const errorBody = await response.text();
+
+    throw new Error(
+      `Error al registrar archivo: ${response.status} ${errorBody}`,
+    );
   }
 
   return response.json();

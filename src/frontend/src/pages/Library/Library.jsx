@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   Box,
+  Button,
   Container,
   Typography,
   TextField,
@@ -135,6 +136,16 @@ function Library() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleResetFilters = () => {
+    setSearchTerm("");
+    setSearchType("title");
+    setCategoryFilter("");
+    setSubcategoryFilter("");
+    setTypeFilter("");
+    setContents(allContents);
+    setError("");
   };
 
   // Ejecutar búsqueda al presionar Enter
@@ -366,6 +377,26 @@ function Library() {
                 ))}
               </Select>
             </FormControl>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              mt: 2,
+            }}
+          >
+            <Button
+              variant="outlined"
+              onClick={handleResetFilters}
+              disabled={
+                !searchTerm &&
+                !categoryFilter &&
+                !subcategoryFilter &&
+                !typeFilter
+              }
+            >
+              Limpiar búsqueda y filtros
+            </Button>
           </Box>
         </Box>
 

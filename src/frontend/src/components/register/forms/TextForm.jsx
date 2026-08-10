@@ -5,7 +5,7 @@ function TextContentForm({
   formData,
   setFormData,
   loading,
-  classification,
+  analysis,
   onSubmit,
   onReset,
 }) {
@@ -58,11 +58,12 @@ function TextContentForm({
           {loading ? "Analizando..." : "Analizar contenido"}
         </Button>
 
-        {classification && (
+        {analysis && (
           <Button
             variant="outlined"
             sx={{ borderRadius: 2, textTransform: "none", fontWeight: 600 }}
             onClick={handleReset}
+            disabled={loading}
           >
             Limpiar formulario
           </Button>

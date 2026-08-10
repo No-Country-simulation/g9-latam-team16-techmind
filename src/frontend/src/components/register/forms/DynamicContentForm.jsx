@@ -9,7 +9,7 @@ function DynamicContentForm({
   formData,
   setFormData,
   loading,
-  classification,
+  analysis,
   onSubmit,
   onReset,
 }) {
@@ -38,7 +38,7 @@ function DynamicContentForm({
           formData={formData}
           setFormData={setFormData}
           loading={loading}
-          classification={classification}
+          analysis={analysis}
           onSubmit={onSubmit}
           onReset={onReset}
         />
@@ -47,7 +47,7 @@ function DynamicContentForm({
           formData={formData}
           setFormData={setFormData}
           loading={loading}
-          classification={classification}
+          analysis={analysis}
           onSubmit={onSubmit}
           onReset={onReset}
         />
