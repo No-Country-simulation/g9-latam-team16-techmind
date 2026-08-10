@@ -385,27 +385,90 @@ Fecha: ${new Date().toLocaleString("es-ES")}
       {/* =====================================================
           CONFIRMACIÓN DE ELIMINACIÓN
       ===================================================== */}
-
       <Dialog
         open={deleteDialogOpen}
         onClose={handleCancelDelete}
-        maxWidth="xs"
         fullWidth
+        maxWidth="xs"
+        margin="dense"
+        slotProps={{
+          paper: {
+            sx: {
+              width: "100%",
+              maxWidth: "400px",
+              margin: { xs: "16px", sm: "32px" },
+              borderRadius: 3,
+              boxSizing: "border-box",
+            },
+          },
+        }}
       >
-        <DialogTitle>Eliminar contenido</DialogTitle>
+        <DialogTitle
+          sx={{
+            px: { xs: 2, sm: 3 },
+            py: 2,
+            fontSize: { xs: "1.1rem", sm: "1.25rem" },
+            fontWeight: 700,
+            wordBreak: "break-word",
+          }}
+        >
+          Eliminar contenido
+        </DialogTitle>
 
-        <DialogContent>
-          <DialogContentText>
+        <DialogContent
+          sx={{
+            px: { xs: 2, sm: 3 },
+            py: 1,
+            minWidth: 0,
+            overflowX: "hidden",
+          }}
+        >
+          <DialogContentText
+            component="div"
+            sx={{
+              fontSize: { xs: "0.9rem", sm: "0.95rem" },
+              lineHeight: 1.6,
+              overflowWrap: "anywhere",
+              wordBreak: "break-word",
+            }}
+          >
             ¿Estás seguro/a de que deseas eliminar{" "}
-            <strong>{content.title}</strong>?
+            <Box
+              component="strong"
+              sx={{
+                overflowWrap: "anywhere",
+                wordBreak: "break-word",
+              }}
+            >
+              {content.title || "este contenido"}
+            </Box>
+            ?
             <br />
             <br />
             Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleCancelDelete} disabled={deleting}>
+        <DialogActions
+          sx={{
+            px: { xs: 2, sm: 3 },
+            py: { xs: 2, sm: 3 },
+            gap: 1,
+            flexDirection: { xs: "column", sm: "row" },
+            "& > button": {
+              width: { xs: "100%", sm: "auto" },
+              minHeight: 42,
+            },
+          }}
+        >
+          <Button
+            onClick={handleCancelDelete}
+            disabled={deleting}
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+            }}
+          >
             Cancelar
           </Button>
 
@@ -414,6 +477,10 @@ Fecha: ${new Date().toLocaleString("es-ES")}
             color="error"
             variant="contained"
             disabled={deleting}
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+            }}
           >
             {deleting ? "Eliminando..." : "Eliminar"}
           </Button>
