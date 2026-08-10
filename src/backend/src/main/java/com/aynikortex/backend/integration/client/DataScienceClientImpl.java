@@ -3,6 +3,7 @@ package com.aynikortex.backend.integration.client;
 import com.aynikortex.backend.exception.DataScienceException;
 import com.aynikortex.backend.exception.ExternalServiceException;
 import com.aynikortex.backend.integration.dto.request.FileClassificationRequest;
+import com.aynikortex.backend.integration.dto.request.TextClassificationRequest;
 import com.aynikortex.backend.integration.dto.response.ClassificationResponse;
 import com.aynikortex.backend.integration.dto.response.DataScienceErrorResponse;
 import com.aynikortex.backend.integration.dto.response.HealthResponse;
@@ -37,7 +38,7 @@ public class DataScienceClientImpl implements DataScienceClient {
 
     @Override
     public ClassificationResponse predictText(
-            String request
+            TextClassificationRequest request
     ) {
         return dataScienceRestClient.post()
                 .uri("/api/v1/predict/text")
