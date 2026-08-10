@@ -110,3 +110,19 @@ export async function searchByCategory(term) {
 
   return response.json();
 }
+
+// Eliminar contenido
+export const deleteContent = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/contents/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error(`Error al eliminar contenido: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error al eliminar contenido ${id}:`, error);
+    throw error;
+  }
+};
