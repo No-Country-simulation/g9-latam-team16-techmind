@@ -34,8 +34,7 @@ public class ContentService {
     public ContentResponseDTO createTextContent(TextContentRequest requestDTO) {
         Contenido contenido = new Contenido();
         contenido.setTitle(requestDTO.title());
-        contenido.setTextContent(requestD
-                TO.text());
+        contenido.setTextContent(requestDTO.text());
         contenido.setContentType(ContentType.TEXT);
         contenido.setCreatedAt(LocalDateTime.now());
 
