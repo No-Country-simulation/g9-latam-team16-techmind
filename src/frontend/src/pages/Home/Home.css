@@ -1,0 +1,40 @@
+.home {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(124, 58, 237, 0.45),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(37, 99, 235, 0.4),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #0f172a, #1e293b);
+
+  color: white;
+}
+
+.home-content {
+  text-align: center;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .home-content {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .home-content {
+    padding: 1rem;
+  }
+}

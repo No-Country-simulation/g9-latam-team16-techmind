@@ -1,0 +1,67 @@
+.navbar {
+  background: rgba(15, 23, 42, 0.92) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-logo:hover,
+.navbar-logo:focus,
+.navbar-logo:active {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-logo .navbar-title {
+  font-weight: 700 !important;
+  color: inherit;
+}
+
+.navbar-icon {
+  width: 3.8rem;
+  height: 3.8rem;
+  object-fit: contain;
+}
+
+.navbar-title {
+  font-weight: 700 !important;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.MuiButton-root.navbar-link {
+  color: white;
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  transition: all 0.25s ease;
+}
+
+.MuiButton-root.navbar-link:hover {
+  background: rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+}
+
+/* Ruta activa */
+.navbar-link.active {
+  background: rgba(124, 58, 237, 0.2);
+  color: #c4b5fd;
+}
