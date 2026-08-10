@@ -24,7 +24,7 @@ public class DataScienceIntegrationService {
      */
     public ClassificationResponse classifyText(String title, String text, Map<String, Object> metadata) {
         TextClassificationRequest request = new TextClassificationRequest(title, text, metadata);
-        return dataScienceClient.predictText(String.valueOf(request));
+        return dataScienceClient.predictText(request);
     }
 
     /**

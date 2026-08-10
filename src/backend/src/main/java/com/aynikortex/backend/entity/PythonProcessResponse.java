@@ -8,6 +8,7 @@ public class PythonProcessResponse {
     private String category;
     private String subcategory;
     private Double confidence;
+    private String summary;
     private String modelVersion;
     private List<Keyword> keywords;
 
@@ -29,6 +30,14 @@ public class PythonProcessResponse {
 
     public Double getConfidence() {
         return confidence;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public void setConfidence(Double confidence) {
