@@ -80,8 +80,13 @@ public class Contenido {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public String getDescription() { return summary; }
-    public void setDescription(String description) { this.summary = description; }
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     public ContentType getContentType() { return contentType; }
     public void setContentType(ContentType contentType) { this.contentType = contentType; }
