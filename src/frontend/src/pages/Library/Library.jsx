@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Container,
@@ -9,58 +9,104 @@ import {
   FormControl,
   InputLabel,
   Grid,
-  Stack,
+  InputAdornment,
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
+
 import ContentCard from "../../components/library/ContentCard";
 import EmptyState from "../../components/common/EmptyState";
-import {
-  libraryMock,
-  getCategoriesFromMock,
-  getSubcategoriesFromMock,
-  getContentTypesFromMock,
-} from "../../mocks/libraryMock";
+import { getContents } from "../../services/contentService";
 
 function Library() {
+  const [contents, setContents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [subcategoryFilter, setSubcategoryFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
 
-  const categories = useMemo(() => getCategoriesFromMock(), []);
-  const contentTypes = useMemo(() => getContentTypesFromMock(), []);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // Cargar contenidos desde el backend
+  useEffect(() => {
+    const loadContents = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const data = await getContents();
+        setContents(data);
+      } catch (err) {
+        console.error("Error al cargar contenidos:", err);
+        setError("No fue posible cargar la biblioteca.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContents();
+  }, []);
+
+  // Obtener categorías a partir de los contenidos reales
+  const categories = useMemo(() => {
+    return [...new Set(contents.map((item) => item.category).filter(Boolean))];
+  }, [contents]);
+
+  // Obtener subcategorías según la categoría seleccionada
   const subcategories = useMemo(() => {
-    if (!categoryFilter) return [];
-    return getSubcategoriesFromMock(categoryFilter);
-  }, [categoryFilter]);
+    if (!categoryFilter) {
+      return [];
+    }
 
-  // Filtrar contenidos basado en búsqueda y filtros
+    return [
+      ...new Set(
+        contents
+          .filter((item) => item.category === categoryFilter)
+          .map((item) => item.subcategory)
+          .filter(Boolean),
+      ),
+    ];
+  }, [contents, categoryFilter]);
+
+  // Obtener tipos de contenido disponibles
+  const contentTypes = useMemo(() => {
+    return [
+      ...new Set(contents.map((item) => item.contentType).filter(Boolean)),
+    ];
+  }, [contents]);
+
+  // Filtrar contenidos
   const filteredContent = useMemo(() => {
-    return libraryMock.filter((item) => {
+    const normalizedSearch = searchTerm.toLowerCase().trim();
+
+    return contents.filter((item) => {
       const matchesSearch =
-        searchTerm === "" ||
-        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.keywords.some((kw) =>
-          kw.toLowerCase().includes(searchTerm.toLowerCase()),
+        normalizedSearch === "" ||
+        item.title?.toLowerCase().includes(normalizedSearch) ||
+        item.summary?.toLowerCase().includes(normalizedSearch) ||
+        item.category?.toLowerCase().includes(normalizedSearch) ||
+        item.subcategory?.toLowerCase().includes(normalizedSearch) ||
+        item.keywords?.some((keyword) =>
+          keyword.toLowerCase().includes(normalizedSearch),
         );
 
       const matchesCategory =
         categoryFilter === "" || item.category === categoryFilter;
+
       const matchesSubcategory =
         subcategoryFilter === "" || item.subcategory === subcategoryFilter;
-      const matchesType = typeFilter === "" || item.type === typeFilter;
+
+      const matchesType = typeFilter === "" || item.contentType === typeFilter;
 
       return (
         matchesSearch && matchesCategory && matchesSubcategory && matchesType
       );
     });
-  }, [searchTerm, categoryFilter, subcategoryFilter, typeFilter]);
+  }, [contents, searchTerm, categoryFilter, subcategoryFilter, typeFilter]);
 
-  const handleCategoryChange = (e) => {
-    setCategoryFilter(e.target.value);
-    setSubcategoryFilter(""); // Reset subcategory cuando cambia la categoría
+  const handleCategoryChange = (event) => {
+    setCategoryFilter(event.target.value);
+    setSubcategoryFilter("");
   };
 
   return (
@@ -71,15 +117,20 @@ function Library() {
         py: { xs: 3, md: 5 },
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         {/* Encabezado */}
         <Box sx={{ mb: 4, textAlign: "center" }}>
           <Typography
             variant="h3"
-            sx={{ fontWeight: 700, color: "text.primary", mb: 1 }}
+            sx={{
+              fontWeight: 700,
+              color: "text.primary",
+              mb: 1,
+            }}
           >
             Biblioteca AyniKortex
           </Typography>
+
           <Typography variant="body1" color="text.secondary">
             Explora nuestra biblioteca de conocimiento técnico. Encuentra
             contenidos clasificados, filtra por categoría y descubre nuevas
@@ -92,13 +143,15 @@ function Library() {
           {/* Búsqueda */}
           <TextField
             fullWidth
-            placeholder="Search by title, keyword or category..."
+            placeholder="Buscar por título, palabra clave o categoría..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(event) => setSearchTerm(event.target.value)}
             variant="outlined"
             InputProps={{
               startAdornment: (
-                <SearchIcon sx={{ mr: 1, color: "action.active" }} />
+                <InputAdornment position="start">
+                  <SearchIcon color="action" />
+                </InputAdornment>
               ),
             }}
             sx={{
@@ -111,9 +164,11 @@ function Library() {
 
           {/* Filtros */}
           <Grid container spacing={2}>
+            {/* Categoría */}
             <Grid item xs={12} sm={6} md={4}>
               <FormControl fullWidth variant="outlined">
                 <InputLabel>Categoría</InputLabel>
+
                 <Select
                   value={categoryFilter}
                   onChange={handleCategoryChange}
@@ -121,15 +176,17 @@ function Library() {
                   sx={{ borderRadius: 2 }}
                 >
                   <MenuItem value="">Todas las categorías</MenuItem>
-                  {categories.map((cat) => (
-                    <MenuItem key={cat} value={cat}>
-                      {cat}
+
+                  {categories.map((category) => (
+                    <MenuItem key={category} value={category}>
+                      {category}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </Grid>
 
+            {/* Subcategoría */}
             <Grid item xs={12} sm={6} md={4}>
               <FormControl
                 fullWidth
@@ -137,32 +194,37 @@ function Library() {
                 disabled={!categoryFilter}
               >
                 <InputLabel>Subcategoría</InputLabel>
+
                 <Select
                   value={subcategoryFilter}
-                  onChange={(e) => setSubcategoryFilter(e.target.value)}
+                  onChange={(event) => setSubcategoryFilter(event.target.value)}
                   label="Subcategoría"
                   sx={{ borderRadius: 2 }}
                 >
                   <MenuItem value="">Todas las subcategorías</MenuItem>
-                  {subcategories.map((subcat) => (
-                    <MenuItem key={subcat} value={subcat}>
-                      {subcat}
+
+                  {subcategories.map((subcategory) => (
+                    <MenuItem key={subcategory} value={subcategory}>
+                      {subcategory}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </Grid>
 
+            {/* Tipo de contenido */}
             <Grid item xs={12} sm={12} md={4}>
               <FormControl fullWidth variant="outlined">
                 <InputLabel>Tipo de contenido</InputLabel>
+
                 <Select
                   value={typeFilter}
-                  onChange={(e) => setTypeFilter(e.target.value)}
+                  onChange={(event) => setTypeFilter(event.target.value)}
                   label="Tipo de contenido"
                   sx={{ borderRadius: 2 }}
                 >
                   <MenuItem value="">Todos los tipos</MenuItem>
+
                   {contentTypes.map((type) => (
                     <MenuItem key={type} value={type}>
                       {type}
@@ -174,16 +236,55 @@ function Library() {
           </Grid>
         </Box>
 
+        {/* Cargando */}
+        {loading && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              py: 6,
+            }}
+          >
+            <Typography color="text.secondary">
+              Cargando contenidos...
+            </Typography>
+          </Box>
+        )}
+
+        {/* Error */}
+        {!loading && error && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              py: 6,
+            }}
+          >
+            <Typography color="error">{error}</Typography>
+          </Box>
+        )}
+
         {/* Resultados */}
-        {filteredContent.length > 0 ? (
-          <Grid container spacing={3}>
+        {!loading && !error && filteredContent.length > 0 && (
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+              },
+              gap: 3,
+            }}
+          >
             {filteredContent.map((content) => (
-              <Grid item xs={12} sm={6} md={4} key={content.id}>
-                <ContentCard content={content} />
-              </Grid>
+              <ContentCard key={content.id} content={content} />
             ))}
-          </Grid>
-        ) : (
+          </Box>
+        )}
+
+        {/* Sin resultados */}
+        {!loading && !error && filteredContent.length === 0 && (
           <Box
             sx={{
               display: "flex",

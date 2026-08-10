@@ -8,7 +8,6 @@ import {
   Chip,
   LinearProgress,
   Button,
-  Stack,
   Collapse,
 } from "@mui/material";
 import {
@@ -20,36 +19,43 @@ import {
 function ContentCard({ content }) {
   const [expanded, setExpanded] = useState(false);
 
+  const confidence = Number(content.confidence ?? 0);
+  const confidencePercentage = confidence * 100;
+
   // Función para descargar contenido
   const handleDownload = () => {
-    if (content.type === "Text") {
+    if (content.contentType === "TEXT") {
       downloadAsText();
-    } else if (content.type === "File") {
+    } else if (content.contentType === "FILE") {
       downloadFile();
     }
   };
 
-  // Descargar contenido tipo Text como archivo .txt
+  // Descargar contenido tipo TEXT como archivo .txt
   const downloadAsText = () => {
     const fileContent = `
 TÍTULO: ${content.title}
 
 CATEGORÍA: ${content.category}
 SUBCATEGORÍA: ${content.subcategory}
-TIPO: ${content.type}
-CONFIANZA DE IA: ${content.confidence}%
+TIPO: ${content.contentType}
+CONFIANZA DE IA: ${confidencePercentage.toFixed(0)}%
 
 RESUMEN:
 ${content.summary}
 
-KEYWORDS: ${content.keywords.join(", ")}
+KEYWORDS: ${content.keywords?.join(", ") ?? ""}
 
 ---
+
 Contenido descargado desde AyniKortex
 Fecha: ${new Date().toLocaleString("es-ES")}
-    `.trim();
+`.trim();
 
-    const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
+    const blob = new Blob([fileContent], {
+      type: "text/plain;charset=utf-8",
+    });
+
     const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
 
@@ -58,23 +64,23 @@ Fecha: ${new Date().toLocaleString("es-ES")}
       "download",
       `${content.title.toLowerCase().replace(/\s+/g, "_")}.txt`,
     );
+
     link.style.visibility = "hidden";
 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
+    URL.revokeObjectURL(url);
+
     console.log(`✓ Descargado: ${content.title}`);
   };
 
-  // Para descargar archivos, preparado para backend
+  // Pendiente de endpoint real del backend
   const downloadFile = () => {
-    // TODO: Implementar con endpoint del backend
-    // GET /api/contents/{id}/download
     console.log(
       `[PENDING] Descargar archivo: ${content.title} (ID: ${content.id})`,
     );
-    console.log(`Preparado para: GET /api/contents/${content.id}/download`);
   };
 
   return (
@@ -83,7 +89,6 @@ Fecha: ${new Date().toLocaleString("es-ES")}
       sx={{
         height: "100%",
         width: "100%",
-        maxWidth: 420,
         display: "flex",
         flexDirection: "column",
         borderRadius: 3,
@@ -131,16 +136,33 @@ Fecha: ${new Date().toLocaleString("es-ES")}
 
         {/* Contenido expandible */}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <Box sx={{ pt: 2, borderTop: "1px solid", borderColor: "divider" }}>
+          <Box
+            sx={{
+              pt: 2,
+              borderTop: "1px solid",
+              borderColor: "divider",
+            }}
+          >
             {/* Categorías */}
             <Box sx={{ mb: 2 }}>
               <Typography
                 variant="caption"
-                sx={{ fontWeight: 600, color: "text.secondary" }}
+                sx={{
+                  fontWeight: 600,
+                  color: "text.secondary",
+                }}
               >
                 CATEGORÍA
               </Typography>
-              <Box sx={{ display: "flex", gap: 1, mt: 0.5, flexWrap: "wrap" }}>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  mt: 0.5,
+                  flexWrap: "wrap",
+                }}
+              >
                 <Chip
                   label={content.category}
                   size="small"
@@ -150,6 +172,7 @@ Fecha: ${new Date().toLocaleString("es-ES")}
                     fontWeight: 600,
                   }}
                 />
+
                 <Chip
                   label={content.subcategory}
                   size="small"
@@ -163,15 +186,19 @@ Fecha: ${new Date().toLocaleString("es-ES")}
             <Box sx={{ mb: 2 }}>
               <Typography
                 variant="caption"
-                sx={{ fontWeight: 600, color: "text.secondary" }}
+                sx={{
+                  fontWeight: 600,
+                  color: "text.secondary",
+                }}
               >
                 TIPO
               </Typography>
+
               <Box sx={{ mt: 0.5 }}>
                 <Chip
-                  label={content.type}
+                  label={content.contentType}
                   size="small"
-                  color={content.type === "Text" ? "success" : "info"}
+                  color={content.contentType === "TEXT" ? "success" : "info"}
                   variant="filled"
                 />
               </Box>
@@ -189,20 +216,28 @@ Fecha: ${new Date().toLocaleString("es-ES")}
               >
                 <Typography
                   variant="caption"
-                  sx={{ fontWeight: 600, color: "text.secondary" }}
+                  sx={{
+                    fontWeight: 600,
+                    color: "text.secondary",
+                  }}
                 >
                   CONFIANZA DE IA
                 </Typography>
+
                 <Typography
                   variant="caption"
-                  sx={{ fontWeight: 700, color: "primary.main" }}
+                  sx={{
+                    fontWeight: 700,
+                    color: "primary.main",
+                  }}
                 >
-                  {content.confidence}%
+                  {confidencePercentage.toFixed(0)}%
                 </Typography>
               </Box>
+
               <LinearProgress
                 variant="determinate"
-                value={content.confidence}
+                value={confidencePercentage}
                 sx={{
                   height: 6,
                   borderRadius: 3,
@@ -218,14 +253,23 @@ Fecha: ${new Date().toLocaleString("es-ES")}
             <Box>
               <Typography
                 variant="caption"
-                sx={{ fontWeight: 600, color: "text.secondary" }}
+                sx={{
+                  fontWeight: 600,
+                  color: "text.secondary",
+                }}
               >
                 KEYWORDS
               </Typography>
+
               <Box
-                sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mt: 0.5 }}
+                sx={{
+                  display: "flex",
+                  gap: 0.5,
+                  flexWrap: "wrap",
+                  mt: 0.5,
+                }}
               >
-                {content.keywords.map((keyword, index) => (
+                {content.keywords?.map((keyword, index) => (
                   <Chip
                     key={index}
                     label={keyword}
@@ -256,6 +300,7 @@ Fecha: ${new Date().toLocaleString("es-ES")}
         >
           {expanded ? "Hide Details" : "Show Details"}
         </Button>
+
         <Button
           fullWidth
           variant="outlined"

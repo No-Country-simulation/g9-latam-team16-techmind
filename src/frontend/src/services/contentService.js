@@ -1,29 +1,61 @@
-import { createRegisterTextRequest } from "../dto/request/RegisterTextRequest";
-import { registerTextMock } from "../mocks/contentMock";
+import { API_BASE_URL } from "../api/apiClient";
 
-const mockRegisterFile = async ({ fileName }) => ({
-  title: fileName || "Archivo recibido",
-  category: "Pendiente de integración",
-  confidence: 0.5,
-});
+export async function getContents() {
+  const response = await fetch(`${API_BASE_URL}/contents`);
 
-export async function registerText(request) {
-  return registerTextMock(request);
+  if (!response.ok) {
+    throw new Error(`Error al obtener contenidos: ${response.status}`);
+  }
+
+  return response.json();
 }
 
-export async function registerFile({ fileName }) {
-  return mockRegisterFile({ fileName });
+export async function registerText(request) {
+  const response = await fetch(`${API_BASE_URL}/contents/text`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al registrar contenido: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+export async function registerFile(formData) {
+  const response = await fetch(`${API_BASE_URL}/contents/file`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al registrar archivo: ${response.status}`);
+  }
+
+  return response.json();
 }
 
 export async function analyzeContent({ contentType, formData }) {
   if (contentType === "TEXT") {
-    const request = createRegisterTextRequest(
-      formData.title,
-      formData.textContent,
-    );
-
-    return registerText(request);
+    return registerText({
+      title: formData.title,
+      text: formData.textContent,
+      metadata: formData.metadata || {},
+    });
   }
 
-  return registerFile({ fileName: formData.fileName });
+  const multipartData = new FormData();
+
+  multipartData.append("title", formData.title || "");
+  multipartData.append("file", formData.file);
+
+  if (formData.metadata) {
+    multipartData.append("metadata", JSON.stringify(formData.metadata));
+  }
+
+  return registerFile(multipartData);
 }
