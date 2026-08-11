@@ -166,11 +166,9 @@ Fecha: ${new Date().toLocaleString("es-ES")}
             color="text.secondary"
             sx={{
               mb: 2,
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              minHeight: "3.6em",
+              maxHeight: "100px",
+              overflowY: "auto",
+              pr: 1,
             }}
           >
             {content.summary}
@@ -209,8 +207,8 @@ Fecha: ${new Date().toLocaleString("es-ES")}
                     label={content.category}
                     size="small"
                     sx={{
-                      bgcolor: "primary.light",
-                      color: "primary.dark",
+                      bgcolor: "grey.200",
+                      color: "grey.800",
                       fontWeight: 600,
                     }}
                   />
