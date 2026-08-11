@@ -53,7 +53,7 @@ Thumbs.db
 .env
 
 # Modelos entrenados
-models/
+# models/
 artifacts/
 
 # Archivos grandes de entrenamiento (si en algún momento deciden no versionarlos)
