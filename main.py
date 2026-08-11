@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, UploadFile, File
 from pydantic import BaseModel
 from typing import List
 import traceback
@@ -120,33 +120,41 @@ async def predict_text(request: TextRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/v1/predict/file", response_model=PredictionResponse)
-async def predict_file(request: Request):
+async def predict_file(file: UploadFile = File(...)):
     try:
-        form = await request.form()
-        file_item = form.get("file") or form.get("files") or form.get("document")
-        
-        if file_item and hasattr(file_item, "read"):
-            # Validacion basica: solo texto
-            filename = getattr(file_item, "filename", "archivo.txt")
-            if not filename.endswith(".txt") and not filename.endswith(".md") and not filename.endswith(".csv"):
-                raise HTTPException(status_code=400, detail="Solo se permiten archivos de texto plano (.txt, .md, .csv)")
-                
-            content_bytes = await file_item.read()
-            text = content_bytes.decode('utf-8', errors='ignore')
-        else:
-            content_bytes = await request.body()
-            text = content_bytes.decode('utf-8', errors='ignore')
+        filename = file.filename or "archivo.txt"
+
+        if not filename.lower().endswith((".txt", ".md", ".csv")):
+            raise HTTPException(
+                status_code=400,
+                detail="Solo se permiten archivos .txt, .md o .csv",
+            )
+
+        content_bytes = await file.read()
+
+        text = content_bytes.decode(
+            "utf-8",
+            errors="ignore",
+        )
 
         if not text.strip():
-            raise HTTPException(status_code=400, detail="El texto está vacío.")
+            raise HTTPException(
+                status_code=400,
+                detail="El texto está vacío.",
+            )
 
         return _process_prediction(text)
+
     except HTTPException:
         raise
+
     except Exception as e:
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
-
+        raise HTTPException(
+            status_code=500,
+            detail=str(e),
+        )
+    
 @app.get("/")
 def read_root():
     return {"message": "TechMind API is running", "model_loaded": model_bundle is not None}
