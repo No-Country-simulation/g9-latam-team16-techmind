@@ -25,6 +25,8 @@ public class Contenido {
     private UUID id;
 
     private String title;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String summary;
 
     @Enumerated(EnumType.STRING)
