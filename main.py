@@ -5,6 +5,8 @@ import traceback
 import sys
 import os
 import numpy as np
+from datetime import datetime, timezone
+
 
 # Añadir src al path por si acaso para las importaciones
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
@@ -39,12 +41,21 @@ class Keyword(BaseModel):
     term: str
     score: float
 
-class PredictionResponse(BaseModel):
+
+class Classification(BaseModel):
     category: str
     subcategory: str
     confidence: float
-    modelVersion: str
     keywords: List[Keyword]
+    summary: str = ""
+
+
+class PredictionResponse(BaseModel):
+    status: str
+    classification: Classification
+    processingTime: int
+    modelVersion: str
+    timestamp: str
 
 # --- Funciones Auxiliares ---
 def _extract_keywords(text: str, vectorizer, top_n: int = 3) -> List[Keyword]:
@@ -73,6 +84,9 @@ def _extract_keywords(text: str, vectorizer, top_n: int = 3) -> List[Keyword]:
         return []
 
 def _process_prediction(text: str) -> PredictionResponse:
+
+    start_time = datetime.now(timezone.utc)
+
     if not model_bundle:
         raise HTTPException(status_code=503, detail="Modelo no cargado. Revisa los logs del servidor.")
     
@@ -99,13 +113,22 @@ def _process_prediction(text: str) -> PredictionResponse:
         
     # 4. Extraer keywords
     keywords = _extract_keywords(text, model_bundle.vectorizer)
+
+    end_time = datetime.now(timezone.utc)
+    processing_time = int((end_time - start_time).total_seconds() * 1000)
     
     return PredictionResponse(
-        category=category,
-        subcategory=subcategory,
-        confidence=float(round(confidence, 4)),
+        status="SUCCESS",
+        classification=Classification(
+            category=category,
+            subcategory=subcategory,
+            confidence=float(round(confidence, 4)),
+            keywords=keywords,
+            summary=""
+        ),
+        processingTime=processing_time,
         modelVersion=model_bundle.metadata.version,
-        keywords=keywords
+        timestamp=end_time.isoformat()
     )
 
 # --- Endpoints ---

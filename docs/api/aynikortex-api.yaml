@@ -291,24 +291,37 @@ components:
 
         keywords:
           type: array
-          description: Lista de palabras clave identificadas.
-
+          description: Lista de palabras clave identificadas con su puntuación de relevancia.
           items:
-            type: string
-
-          example:
-            - spring
-            - backend
-            - api
-            - java
+            $ref: '#/components/schemas/Keyword'
 
         summary:
-          type: string
-          description: Resumen descriptivo generado automáticamente por el componente Data Science.
-          example: >
-            Documento técnico que describe la arquitectura Backend
-            utilizando Spring Boot y una API REST para integrar
-            componentes de Machine Learning.
+           type: string
+           description: Resumen descriptivo generado automáticamente por el componente Data Science.
+           example: >
+             Documento técnico que describe la arquitectura Backend
+             utilizando Spring Boot y una API REST para integrar
+             componentes de Machine Learning.
+
+
+    Keyword:
+        type: object
+
+        required:
+            - term
+            - score
+
+        properties:
+
+           term:
+              type: string
+              description: Palabra clave identificada.
+
+           score:
+              type: number
+              format: float
+              description: Puntuación de relevancia de la palabra clave.
+
 
     ClassificationResponse:
       type: object
