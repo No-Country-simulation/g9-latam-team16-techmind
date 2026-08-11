@@ -30,8 +30,7 @@ public class Contenido {
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
-    @Lob
-    @Column(name = "text_content")
+    @Column(name = "text_content", columnDefinition = "LONGTEXT")
     private String textContent;
     private String fileName;
     private String filePath;
