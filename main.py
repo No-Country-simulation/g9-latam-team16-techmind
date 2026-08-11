@@ -12,8 +12,12 @@ from datetime import datetime, timezone
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 from src.data_science.ml.persistence.repositories.filesystem_artifact_repository import FilesystemArtifactRepository
 
+from src.data_science.ml.inference.summary_generator import SummaryGenerator
+
 # Variables globales para los modelos
 model_bundle = None
+
+summary_generator = SummaryGenerator(max_sentences=3)
 
 # Lifespan context manager para cargar el modelo al arrancar
 from contextlib import asynccontextmanager
@@ -114,9 +118,20 @@ def _process_prediction(text: str) -> PredictionResponse:
     # 4. Extraer keywords
     keywords = _extract_keywords(text, model_bundle.vectorizer)
 
+    # 5. Generar resumen extractivo
+    summary = summary_generator.generate(
+        text,
+        model_bundle.vectorizer,
+    )
+
     end_time = datetime.now(timezone.utc)
     processing_time = int((end_time - start_time).total_seconds() * 1000)
     
+    end_time = datetime.now(timezone.utc)
+    processing_time = int(
+        (end_time - start_time).total_seconds() * 1000
+    )
+
     return PredictionResponse(
         status="SUCCESS",
         classification=Classification(
@@ -124,12 +139,13 @@ def _process_prediction(text: str) -> PredictionResponse:
             subcategory=subcategory,
             confidence=float(round(confidence, 4)),
             keywords=keywords,
-            summary=""
+            summary=summary,
         ),
         processingTime=processing_time,
         modelVersion=model_bundle.metadata.version,
-        timestamp=end_time.isoformat()
+        timestamp=datetime.now(timezone.utc).isoformat(),
     )
+
 
 # --- Endpoints ---
 @app.post("/api/v1/predict/text", response_model=PredictionResponse)
