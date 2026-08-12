@@ -9,7 +9,7 @@ function KeywordsCard({ keywords }) {
     <Card variant="outlined" sx={{ borderRadius: 3 }}>
       <CardContent>
         <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-          Keywords
+          Palabras Clave
         </Typography>
 
         <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">

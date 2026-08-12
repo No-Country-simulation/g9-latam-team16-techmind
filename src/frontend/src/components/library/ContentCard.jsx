@@ -298,7 +298,7 @@ Fecha: ${new Date().toLocaleString("es-ES")}
                     color: "text.secondary",
                   }}
                 >
-                  KEYWORDS
+                  PALABRAS CLAVE
                 </Typography>
 
                 <Box
@@ -344,7 +344,7 @@ Fecha: ${new Date().toLocaleString("es-ES")}
               borderRadius: 2,
             }}
           >
-            {expanded ? "Hide Details" : "Show Details"}
+            {expanded ? "Ocultar detalles" : "Mostrar Detalles"}
           </Button>
 
           <Button
@@ -359,7 +359,7 @@ Fecha: ${new Date().toLocaleString("es-ES")}
               borderRadius: 2,
             }}
           >
-            Download
+            Descargar
           </Button>
 
           <Button
@@ -375,7 +375,7 @@ Fecha: ${new Date().toLocaleString("es-ES")}
               borderRadius: 2,
             }}
           >
-            Delete
+            Borrar
           </Button>
         </CardActions>
       </Card>
