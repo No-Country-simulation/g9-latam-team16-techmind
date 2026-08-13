@@ -112,7 +112,7 @@ public class DataScienceClientImpl implements DataScienceClient {
     @Override
     public HealthResponse checkHealth() {
         return dataScienceRestClient.get()
-                .uri("/")
+                .uri("/api/v1/health")
                 .retrieve()
                 .onStatus(
                         HttpStatusCode::isError,

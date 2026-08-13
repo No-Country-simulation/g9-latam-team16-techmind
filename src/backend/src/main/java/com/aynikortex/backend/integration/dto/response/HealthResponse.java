@@ -3,10 +3,13 @@ package com.aynikortex.backend.integration.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record HealthResponse(
-        String message,
+import java.time.Instant;
 
-        @JsonProperty("model_loaded")
-        Boolean modelLoaded
+public record HealthResponse(
+        String serviceStatus,
+        String service,
+        String version,
+        Long uptime,
+        Instant timestamp
 ) {
 }
