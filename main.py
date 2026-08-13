@@ -6,6 +6,7 @@ import sys
 import os
 import numpy as np
 from datetime import datetime, timezone
+from pypdf import PdfReader
 
 
 # Añadir src al path por si acaso para las importaciones
@@ -162,24 +163,62 @@ async def predict_text(request: TextRequest):
 async def predict_file(file: UploadFile = File(...)):
     try:
         filename = file.filename or "archivo.txt"
+        extension = os.path.splitext(filename.lower())[1]
 
-        if not filename.lower().endswith((".txt", ".md", ".csv")):
+        allowed_extensions = (".txt", ".md", ".csv", ".pdf")
+
+        if extension not in allowed_extensions:
             raise HTTPException(
                 status_code=400,
-                detail="Solo se permiten archivos .txt, .md o .csv",
+                detail="Solo se permiten archivos .txt, .md, .csv o .pdf",
             )
 
         content_bytes = await file.read()
 
-        text = content_bytes.decode(
-            "utf-8",
-            errors="ignore",
-        )
+        if not content_bytes:
+            raise HTTPException(
+                status_code=400,
+                detail="El archivo está vacío.",
+            )
+
+        # -----------------------------------------
+        # Archivos PDF
+        # -----------------------------------------
+        if extension == ".pdf":
+            try:
+                from io import BytesIO
+
+                pdf_reader = PdfReader(BytesIO(content_bytes))
+
+                text_parts = []
+
+                for page in pdf_reader.pages:
+                    page_text = page.extract_text()
+
+                    if page_text:
+                        text_parts.append(page_text)
+
+                text = "\n".join(text_parts)
+
+            except Exception as e:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"No se pudo extraer texto del PDF: {str(e)}",
+                )
+
+        # -----------------------------------------
+        # Archivos de texto
+        # -----------------------------------------
+        else:
+            text = content_bytes.decode(
+                "utf-8",
+                errors="ignore",
+            )
 
         if not text.strip():
             raise HTTPException(
                 status_code=400,
-                detail="El texto está vacío.",
+                detail="No se pudo extraer texto del archivo.",
             )
 
         return _process_prediction(text)
@@ -189,11 +228,12 @@ async def predict_file(file: UploadFile = File(...)):
 
     except Exception as e:
         traceback.print_exc()
+
         raise HTTPException(
             status_code=500,
             detail=str(e),
         )
-    
+
 @app.get("/")
 def read_root():
     return {"message": "TechMind API is running", "model_loaded": model_bundle is not None}
