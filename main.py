@@ -18,6 +18,8 @@ from src.data_science.ml.inference.summary_generator import SummaryGenerator
 # Variables globales para los modelos
 model_bundle = None
 
+APP_START_TIME = datetime.now(timezone.utc)
+
 summary_generator = SummaryGenerator(max_sentences=3)
 
 # Lifespan context manager para cargar el modelo al arrancar
@@ -233,6 +235,22 @@ async def predict_file(file: UploadFile = File(...)):
             status_code=500,
             detail=str(e),
         )
+
+@app.get("/api/v1/health")
+def health_check():
+    now = datetime.now(timezone.utc)
+
+    uptime = int(
+        (now - APP_START_TIME).total_seconds()
+    )
+
+    return {
+        "serviceStatus": "UP",
+        "service": "TechMind Data Science",
+        "version": "1.0.0",
+        "uptime": uptime,
+        "timestamp": now.isoformat(),
+    }
 
 @app.get("/")
 def read_root():
