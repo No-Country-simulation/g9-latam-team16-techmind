@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "../components/common/Navbar";
 
-import Home from "../pages/home/Home";
+import Home from "../pages/Home/Home";
 import RegisterContent from "../pages/RegisterContent/RegisterContent";
 import Library from "../pages/Library/Library";
 

@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # 1. Servicio de Base de Datos MySQL
   aynikortex-db:
@@ -11,7 +9,7 @@ services:
       MYSQL_USER: ayni_user
       MYSQL_PASSWORD: ayni_password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
@@ -21,15 +19,20 @@ services:
   backend-api:
     build:
       context: ./src/backend
-      dockerfile: Dockerfile # O DockerFile dependiendo de cómo lo tenga nombrado
+      dockerfile: Dockerfile
     container_name: aynikortex_backend
     ports:
       - "8080:8080"
+
     environment:
-      # AQUI ESTA LA MAGIA: En vez de localhost, usa el nombre del contenedor de la DB
+      # Conexión con Data Science en OCI
+      - DATASCIENCE_BASE_URL=http://40.233.31.115:8000
+
+      # Conexión con MySQL Docker
       - DB_URL=jdbc:mysql://aynikortex-db:3306/aynikortex_db
       - DB_USERNAME=ayni_user
       - DB_PASSWORD=ayni_password
+
     depends_on:
       - aynikortex-db
     restart: unless-stopped

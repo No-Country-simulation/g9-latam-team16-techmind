@@ -1,7 +1,7 @@
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, Stack } from "@mui/material";
-import FeatureCard from "../home/FeatureCard";
+import FeatureCard from "./FeatureCard";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import BoltIcon from "@mui/icons-material/Bolt";
