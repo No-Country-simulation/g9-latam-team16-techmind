@@ -6,16 +6,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
 
-// representa configuración externa de la aplicación
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "datascience")
 public class DataScienceProperties {
 
-    private String baseUrl = "http://localhost:8000";
+    private String baseUrl;
 
-    private Duration connectTimeout = Duration.ofSeconds(5);
+    private Duration connectTimeout;
 
-    private Duration readTimeout = Duration.ofSeconds(10);
+    private Duration readTimeout;
 
 }

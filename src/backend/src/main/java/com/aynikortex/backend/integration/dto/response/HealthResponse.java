@@ -1,5 +1,8 @@
 package com.aynikortex.backend.integration.dto.response;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 
 public record HealthResponse(
