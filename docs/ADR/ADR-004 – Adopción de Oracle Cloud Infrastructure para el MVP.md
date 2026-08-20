@@ -1,35 +1,33 @@
+# ☁️ ADR-004 — Adopción de Oracle Cloud Infrastructure para el MVP
+
+> **Versión:** 1.1  
+> **Estado:** Aceptado  
+> **Proyecto:** AyniKortex – Organización Inteligente del Conocimiento Técnico  
+> **Decisión original:** Julio 2026
 
 ---
-| ADR     | Decisión                                                          | Tipo                   |
-| ------- | ----------------------------------------------------------------- | ---------------------- |
-| ADR-001 | Adopción de una Arquitectura Basada en Backend y Ciencia de Datos | Arquitectura           |
-| ADR-002 | Adopción de Machine Learning Clásico para el MVP                  | Arquitectura           |
-| ADR-003 | Integración mediante llamada directa a `predict()`                | Arquitectura           |
-| ADR-004 | Backend como único punto de acceso al sistema                     | Arquitectura           |
-| ADR-005 | Uso de Oracle Cloud Infrastructure                                | Infraestructura        |
-| ADR-006 | Exclusión de IA Generativa y Arquitecturas RAG                    | Alcance Arquitectónico |
 
+## 📚 Registro de decisiones relacionadas
 
----
-# ADR-004 – Adopción de Oracle Cloud Infrastructure para el MVP
-
-| Campo | Valor |
-|--------|-------|
-| **Proyecto** | TechMind – Organización Inteligente del Conocimiento Técnico |
-| **ADR** | 004 |
-| **Estado** | Aceptado |
-| **Versión** | 1.0 |
-| **Fecha** | Julio 2026 |
+| ADR | Decisión | Estado |
+|---|---|---|
+| ADR-001 | Arquitectura Backend–Ciencia de Datos | Reemplazado |
+| ADR-002 | Adopción de Machine Learning Clásico para el MVP | Aceptado |
+| ADR-003 | Integración mediante llamadas directas a funciones | Reemplazado |
+| ADR-004 | Adopción de Oracle Cloud Infrastructure para el MVP | **Aceptado** |
+| ADR-005 | Exclusión de IA Generativa | Aceptado |
 
 ---
 
 # 1. Contexto
 
-El proyecto TechMind requiere almacenar los artefactos generados durante el desarrollo y disponer de una infraestructura que permita publicar el MVP.
+AyniKortex requiere una infraestructura que permita ejecutar y publicar el MVP desarrollado durante el Hackathon ONE – Oracle Next Education.
 
-Adicionalmente, el Hackathon ONE establece como requisito la integración con al menos un servicio de Oracle Cloud Infrastructure (OCI).
+Además, el Hackathon establece como requisito la integración con al menos un servicio de Oracle Cloud Infrastructure (OCI).
 
-Era necesario seleccionar una plataforma que permitiera cumplir este requerimiento manteniendo una arquitectura simple y alineada con los objetivos del proyecto.
+Durante el desarrollo se evaluó una infraestructura que permitiera mantener una arquitectura sencilla, facilitar el despliegue de los componentes y disponer de un entorno funcional para demostración.
+
+Oracle Cloud Infrastructure fue seleccionada como plataforma de infraestructura para el MVP.
 
 ---
 
@@ -37,44 +35,79 @@ Era necesario seleccionar una plataforma que permitiera cumplir este requerimien
 
 Era necesario definir una infraestructura que permitiera:
 
-- Almacenar los artefactos generados por el proyecto.
-- Facilitar el despliegue del Backend.
-- Cumplir los requisitos del Hackathon.
-- Reducir la complejidad operativa.
-- Permitir una evolución gradual del sistema.
+- Desplegar los componentes funcionales del MVP.
+- Cumplir con los requisitos de integración con Oracle Cloud Infrastructure.
+- Mantener una infraestructura sencilla y adecuada al alcance del proyecto.
+- Facilitar la publicación de una versión funcional para demostración.
+- Permitir la evolución gradual de la solución.
+- Gestionar los artefactos y recursos asociados al componente de Ciencia de Datos.
 
 ---
 
 # 3. Decisión
 
-Se adopta Oracle Cloud Infrastructure (OCI) como plataforma de infraestructura para el MVP.
+Se adopta **Oracle Cloud Infrastructure (OCI)** como plataforma de infraestructura para AyniKortex.
 
-Inicialmente se utilizarán los siguientes servicios:
+OCI se utiliza como entorno de despliegue del MVP, permitiendo disponer de una versión funcional de la solución accesible para demostración.
 
-- OCI Object Storage para almacenar modelos, datasets y documentación.
-- OCI Compute como opción para el despliegue del Backend cuando sea requerido.
+La infraestructura mantiene separados los componentes de aplicación y permite desplegar los servicios necesarios para el funcionamiento de:
 
-La incorporación de nuevos servicios de OCI deberá justificarse en función de las necesidades del proyecto y del valor que aporten al MVP.
+- Frontend.
+- Backend.
+- Data Science.
+- Modelo de Machine Learning.
+
+Adicionalmente, se utiliza almacenamiento de objetos de OCI para gestionar recursos asociados al proyecto, como datasets y artefactos de Ciencia de Datos, mediante procesos automatizados cuando corresponde.
+
+La incorporación de nuevos servicios de OCI deberá justificarse en función de las necesidades reales del proyecto y del valor que aporten a la solución.
+
+---
+
+## ☁️ Arquitectura de despliegue
+
+La utilización de OCI permite disponer de los principales componentes del MVP en un entorno de infraestructura cloud.
+
+```mermaid
+flowchart LR
+    "🌐 Frontend" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🤖 Data Science"
+    "⚙️ Backend" --> "🗄️ MySQL"
+    "🤖 Data Science" --> "🧠 Modelo de Machine Learning"
+
+    "☁️ Oracle Cloud Infrastructure" -. "Infraestructura" .-> "🌐 Frontend"
+    "☁️ Oracle Cloud Infrastructure" -. "Infraestructura" .-> "⚙️ Backend"
+    "☁️ Oracle Cloud Infrastructure" -. "Infraestructura" .-> "🤖 Data Science"
+```
+
+El detalle de configuración y procedimientos de despliegue se encuentra en:
+
+👉 [Guía de despliegue](../Deployment-Guide/Deployment-Guide.md)
 
 ---
 
 # 4. Justificación
 
-Oracle Cloud Infrastructure satisface los requerimientos del Hackathon y proporciona los servicios necesarios para soportar la arquitectura definida en el SDS.
+Oracle Cloud Infrastructure permite cumplir los requerimientos del Hackathon y proporciona una plataforma adecuada para desplegar el MVP.
 
-La utilización inicial de un número reducido de servicios mantiene la infraestructura simple y evita incrementar la complejidad operativa del proyecto.
+La utilización de OCI permite:
 
-Esta decisión también permite ampliar el uso de OCI en futuras versiones sin modificar la arquitectura general del sistema.
+- Disponer de un entorno cloud para demostración.
+- Integrar los componentes desplegados de la solución.
+- Gestionar recursos asociados al proyecto.
+- Mantener una infraestructura proporcional al alcance del MVP.
+- Permitir futuras ampliaciones de infraestructura sin modificar necesariamente la lógica de negocio.
+
+La adopción de OCI también mantiene alineada la solución con el ecosistema tecnológico definido para el Hackathon.
 
 ---
 
-# 5. Alternativas Evaluadas
+# 5. Alternativas evaluadas
 
 ## Infraestructura completamente local
 
 **Resultado:** No seleccionada.
 
-Aunque simplifica el desarrollo inicial, no cumple con el requisito de integración con Oracle Cloud Infrastructure establecido por el Hackathon.
+Aunque simplifica el desarrollo inicial, no permite cumplir con el requisito de integración con Oracle Cloud Infrastructure establecido por el Hackathon ni proporciona un entorno cloud para la demostración del MVP.
 
 ---
 
@@ -82,7 +115,7 @@ Aunque simplifica el desarrollo inicial, no cumple con el requisito de integraci
 
 **Resultado:** No seleccionados.
 
-Servicios como AWS, Microsoft Azure o Google Cloud Platform ofrecen capacidades similares, pero no satisfacen el requerimiento específico del Hackathon de utilizar Oracle Cloud Infrastructure.
+Servicios como AWS, Microsoft Azure o Google Cloud Platform ofrecen capacidades equivalentes, pero no satisfacen el requisito específico del Hackathon de utilizar Oracle Cloud Infrastructure.
 
 ---
 
@@ -90,7 +123,7 @@ Servicios como AWS, Microsoft Azure o Google Cloud Platform ofrecen capacidades 
 
 **Resultado:** No seleccionado.
 
-Se descartó incorporar servicios adicionales que no aportaran valor directo al MVP, con el objetivo de mantener una infraestructura sencilla y fácil de administrar.
+Se decidió utilizar únicamente los recursos de OCI necesarios para el funcionamiento y soporte del MVP, evitando incorporar servicios adicionales que no aportaran valor directo a la solución.
 
 ---
 
@@ -99,37 +132,47 @@ Se descartó incorporar servicios adicionales que no aportaran valor directo al 
 ## Positivas
 
 - Cumplimiento de los requisitos del Hackathon.
-- Infraestructura alineada con la arquitectura del sistema.
-- Centralización de los artefactos del proyecto.
-- Facilidad para futuras ampliaciones.
-- Baja complejidad operativa.
-- Integración sencilla con el Backend.
+- MVP funcional desplegado en infraestructura cloud.
+- Infraestructura alineada con la arquitectura de la solución.
+- Posibilidad de demostrar la solución fuera del entorno local.
+- Gestión centralizada de recursos cloud.
+- Posibilidad de ampliar progresivamente la infraestructura.
+- Integración con servicios de OCI para soportar los recursos del proyecto.
 
 ## Negativas
 
-- Dependencia parcial de Oracle Cloud Infrastructure para determinadas funcionalidades.
-- Posibles limitaciones asociadas a la disponibilidad de recursos o cuotas del entorno utilizado.
+- Dependencia de Oracle Cloud Infrastructure para el entorno desplegado.
+- Posibles limitaciones asociadas a disponibilidad de recursos, cuotas o capacidad del entorno.
+- La administración de infraestructura cloud introduce responsabilidades operativas adicionales frente a una ejecución exclusivamente local.
 
 ---
 
-# 7. Impacto Arquitectónico
+# 7. Impacto arquitectónico
 
-Esta decisión define la infraestructura oficial del MVP.
+La adopción de OCI establece la infraestructura cloud utilizada para el MVP de AyniKortex.
 
-La arquitectura del sistema mantiene desacoplada la lógica de negocio de los servicios de infraestructura, permitiendo que futuras modificaciones en la plataforma puedan evaluarse sin afectar significativamente a los componentes Backend y Ciencia de Datos.
+La lógica de negocio y los componentes de la aplicación mantienen separación respecto de la infraestructura, permitiendo que futuras modificaciones de la plataforma cloud puedan evaluarse sin rediseñar necesariamente la solución.
+
+La infraestructura puede evolucionar de acuerdo con las necesidades de escalabilidad, disponibilidad, almacenamiento y operación del sistema.
 
 ---
 
 # 8. Referencias
 
-- SDS v0.1 – Capítulo 6. Arquitectura General.
-- SDS v0.1 – Capítulo 9. Infraestructura (OCI).
-- SDS v0.1 – Capítulo 11. Evolución del MVP.
+- [Arquitectura de AyniKortex](../Architecture/Architecture.md)
+- [Guía de despliegue](../Deployment-Guide/Deployment-Guide.md)
+- [Roadmap técnico](../ROADMAP/Technical-Roadmap.md)
 
 ---
 
-# Estado
+---
+
+## Estado
 
 **Aceptado**
 
-Oracle Cloud Infrastructure constituye la plataforma de infraestructura adoptada para el desarrollo y despliegue del MVP de TechMind.
+Oracle Cloud Infrastructure constituye la plataforma de infraestructura cloud adoptada para el desarrollo, soporte y despliegue del MVP de AyniKortex.
+
+La decisión permanece vigente mientras OCI continúe proporcionando los recursos necesarios para la operación y demostración del MVP.
+
+---

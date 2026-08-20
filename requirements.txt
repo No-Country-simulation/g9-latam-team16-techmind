@@ -27,7 +27,7 @@ pypdf==6.0.0
 # Machine Learning
 # ==========================
 
-scikit-learn==1.9.0
+scikit-learn==1.7.1
 joblib==1.5.2
 
 # ==========================

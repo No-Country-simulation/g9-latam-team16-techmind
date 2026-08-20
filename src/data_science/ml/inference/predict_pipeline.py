@@ -1,19 +1,19 @@
-"""
+﻿"""
 ----------------------------------------------------------
 Proyecto : TechMind
 Sprint   : DS-08 - Motor de Inferencia
-Módulo   : Data Science
+MÃ³dulo   : Data Science
 Archivo  : predict_pipeline.py
 ----------------------------------------------------------
 """
 
-from data_science.data.domain import DocumentRecord
+from src.data_science.data.domain import DocumentRecord
 
-from data_science.ml.inference.prediction_result import PredictionResult
+from src.data_science.ml.inference.prediction_result import PredictionResult
 
-from data_science.ml.persistence.domain.artifact_bundle import ArtifactBundle
+from src.data_science.ml.persistence.domain.artifact_bundle import ArtifactBundle
 
-from data_science.preprocessing.preprocessing_pipeline import (
+from src.data_science.preprocessing.preprocessing_pipeline import (
     PreprocessingPipeline,
 )
 
@@ -79,3 +79,4 @@ class PredictPipeline:
             category=prediction,
             confidence=float(confidence),
         )
+

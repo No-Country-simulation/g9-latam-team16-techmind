@@ -1,4 +1,4 @@
-"""
+﻿"""
 ==========================================================
 TechMind
 Data Science Component
@@ -23,12 +23,12 @@ import re
 
 from nltk.stem import WordNetLemmatizer
 
-from data_science.data.domain import (
+from src.data_science.data.domain import (
     DocumentRecord,
     ProcessedDocument,
 )
 
-from data_science.preprocessing.base_preprocessor import (
+from src.data_science.preprocessing.base_preprocessor import (
     BasePreprocessor,
 )
 
@@ -82,3 +82,5 @@ class Lemmatizer(BasePreprocessor):
         )
 
         return [self._LEMMATIZER.lemmatize(word) for word in words]
+
+

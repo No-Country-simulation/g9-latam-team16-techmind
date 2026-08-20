@@ -1,239 +1,211 @@
-# 🏛️ Arquitectura de AyniKortex
+# 🏗️ Arquitectura de AyniKortex
 
-> **Versión:** 2.0  
-> **Estado:** En desarrollo  
-> **Proyecto:** AyniKortex – Transformando documentación técnica en conocimiento inteligente.
-
----
-
-# 🎯 Propósito
-
-Este documento presenta la arquitectura general de **AyniKortex**, describiendo los componentes principales del sistema, sus responsabilidades y la forma en que interactúan para transformar documentación técnica en conocimiento organizado e inteligente.
-
-Su objetivo es proporcionar una visión técnica de alto nivel que facilite la comprensión del sistema por parte de desarrolladores, colaboradores y nuevos integrantes del proyecto.
-
-Los detalles específicos de implementación, contratos entre componentes y decisiones de diseño se documentan en archivos especializados para mantener una única fuente de verdad y evitar duplicidad de información.
+> **Versión:** 3.0  
+> **Estado:** MVP funcional desplegado  
+> **Proyecto:** AyniKortex – Organización Inteligente del Conocimiento Técnico.
 
 ---
 
-# 🌐 Visión General del Sistema
+## 🎯 Propósito
 
-AyniKortex es una plataforma diseñada para organizar y clasificar documentación técnica mediante técnicas de Machine Learning.
+Este documento presenta la arquitectura general de **AyniKortex**, describiendo sus componentes principales, responsabilidades y relaciones.
 
-El sistema está compuesto por cuatro componentes principales que trabajan de manera coordinada:
+AyniKortex es una plataforma orientada a la **organización y clasificación de documentación técnica mediante Inteligencia Artificial**, integrando una interfaz web, un Backend, un componente de Ciencia de Datos y una base de datos.
 
-- 🎨 **Frontend**, encargado de la interacción con el usuario.
-- ⚙️ **Backend**, responsable de la lógica de negocio y la orquestación del sistema.
-- 🤖 **Data Science**, encargado del procesamiento e inferencia mediante modelos de Machine Learning.
-- 🗄️ **Base de Datos**, destinada al almacenamiento de la información generada por la plataforma.
+El objetivo de este documento es proporcionar una visión técnica de alto nivel que facilite la comprensión de la solución por parte de desarrolladores, colaboradores y nuevos integrantes del proyecto.
 
-Cada componente posee responsabilidades claramente definidas, permitiendo una arquitectura modular, mantenible y preparada para evolucionar conforme crezcan las necesidades del proyecto.
-
-La comunicación entre componentes sigue una arquitectura basada en APIs, donde el Backend actúa como punto central de integración entre la interfaz de usuario, el componente de Ciencia de Datos y la persistencia de la información.
+Los detalles específicos de implementación, contratos de integración, decisiones arquitectónicas y procedimientos de despliegue se mantienen en documentos especializados para evitar duplicidad y conservar una única fuente de verdad.
 
 ---
 
-# 🏗️ Principios Arquitectónicos
+## 🧭 Principios arquitectónicos
 
 La arquitectura de AyniKortex se basa en los siguientes principios:
 
 | Principio | Descripción |
-|-----------|-------------|
-| Separación de Responsabilidades | Cada componente tiene una función claramente definida y especializada. |
-| Bajo Acoplamiento | Los componentes interactúan mediante interfaces bien definidas, reduciendo dependencias directas. |
-| Alta Cohesión | Cada módulo concentra funcionalidades relacionadas con una única responsabilidad. |
-| Escalabilidad | La arquitectura permite evolucionar cada componente de forma independiente. |
-| Mantenibilidad | La organización del proyecto facilita la incorporación de nuevas funcionalidades y el mantenimiento del código. |
-| Desarrollo Incremental | El sistema evoluciona mediante iteraciones controladas, manteniendo siempre una arquitectura estable. |
-| Documentación como Fuente de Verdad | Cada documento describe un único tema, evitando duplicidad y facilitando su mantenimiento. |
+|---|---|
+| **Separación de responsabilidades** | Cada componente concentra responsabilidades específicas. |
+| **Bajo acoplamiento** | Los componentes se comunican mediante interfaces claramente definidas. |
+| **Alta cohesión** | Cada componente agrupa funcionalidades relacionadas con su propósito. |
+| **Mantenibilidad** | La estructura facilita la evolución y mantenimiento de la solución. |
+| **Escalabilidad** | Los componentes pueden evolucionar de forma independiente. |
+| **Desarrollo incremental** | La solución se construye y mejora mediante iteraciones controladas. |
+| **Documentación como fuente de verdad** | Cada tema se documenta en el lugar correspondiente, evitando duplicidad. |
 
 ---
 
----
+## 🧩 Arquitectura de alto nivel
 
-# 🧩 Arquitectura de Alto Nivel
-
-La arquitectura de AyniKortex está organizada en componentes especializados que colaboran para ofrecer una plataforma capaz de gestionar y clasificar documentación técnica de forma inteligente.
-
-Cada componente tiene una responsabilidad claramente definida y se comunica mediante interfaces bien establecidas, favoreciendo un bajo acoplamiento, una alta cohesión y una evolución independiente de cada módulo.
+AyniKortex está compuesto por componentes especializados que trabajan de forma integrada para procesar y clasificar documentación técnica.
 
 ```mermaid
 flowchart LR
-
-    Usuario["👤 Usuario"]
-
-    Frontend["🎨 Frontend<br/>React"]
-
-    Backend["⚙️ Backend<br/>Spring Boot"]
-
-    CienciaDatos["🤖 Data Science<br/>FastAPI"]
-
-    ModeloClasificacion["🧠 Modelo de Machine Learning"]
-
-    BaseDatos[("🗄️ MySQL")]
-
-    Usuario --> Frontend
-
-    Frontend --> Backend
-
-    Backend --> CienciaDatos
-
-    CienciaDatos --> ModeloClasificacion
-
-    Backend --> BaseDatos
+    "👤 Usuario" --> "🌐 Frontend"
+    "🌐 Frontend" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🤖 Data Science"
+    "🤖 Data Science" --> "🧠 Modelo de Machine Learning"
+    "⚙️ Backend" --> "🗄️ MySQL"
 ```
 
-El Backend actúa como punto central de integración del sistema, coordinando la comunicación entre la interfaz de usuario, el componente de Ciencia de Datos y la base de datos.
+### Responsabilidades principales
 
-Esta arquitectura facilita el mantenimiento, la incorporación de nuevas funcionalidades y la evolución independiente de cada componente.
+- **🌐 Frontend:** proporciona la interfaz mediante la cual el usuario interactúa con la plataforma.
+- **⚙️ Backend:** gestiona la lógica de negocio, las solicitudes y la persistencia.
+- **🤖 Data Science:** procesa el contenido y ejecuta la inferencia del modelo.
+- **🧠 Modelo de Machine Learning:** analiza el contenido y genera la clasificación.
+- **🗄️ MySQL:** almacena la información gestionada por la aplicación.
+
+El **Backend actúa como punto central de integración**, coordinando la comunicación entre la interfaz, Data Science y la persistencia.
 
 ---
 
-# 🔄 Flujo General del Sistema
+## 🔄 Flujo principal de clasificación
 
-El siguiente diagrama muestra el recorrido de una solicitud desde que un usuario interactúa con la plataforma hasta que obtiene un resultado.
+El siguiente flujo representa el proceso principal desde que el usuario proporciona información hasta que recibe el resultado de la clasificación.
 
 ```mermaid
 sequenceDiagram
+    participant "👤 Usuario" as Usuario
+    participant "🌐 Frontend" as Frontend
+    participant "⚙️ Backend" as Backend
+    participant "🤖 Data Science" as DataScience
+    participant "🧠 Modelo de Machine Learning" as Modelo
 
-    participant Usuario
-
-    participant Frontend
-
-    participant Backend
-
-    participant CienciaDatos
-
-    participant ModeloClasificacion
-
-    participant BaseDatos
-
-    Usuario->>Frontend: Solicita clasificación de un documento
-
-    Frontend->>Backend: Envía la solicitud
-
-    Backend->>CienciaDatos: Solicita inferencia
-
-    CienciaDatos->>ModeloClasificacion: Ejecuta predicción
-
-    ModeloClasificacion-->>CienciaDatos: Resultado de clasificación
-
-    CienciaDatos-->>Backend: Categoría obtenida
-
-    Backend->>BaseDatos: Guarda información
-
-    Backend-->>Frontend: Respuesta
-
-    Frontend-->>Usuario: Muestra el resultado
+    Usuario->>Frontend: Ingresa texto o documento
+    Frontend->>Backend: Envía información
+    Backend->>DataScience: Solicita clasificación
+    DataScience->>Modelo: Ejecuta inferencia
+    Modelo-->>DataScience: Genera clasificación
+    DataScience-->>Backend: Devuelve resultado
+    Backend-->>Frontend: Devuelve respuesta
+    Frontend-->>Usuario: Muestra resultado
 ```
 
-## Proceso General
+### Proceso general
 
-1. El usuario interactúa con la interfaz de AyniKortex.
-2. El Frontend envía la solicitud al Backend.
-3. El Backend valida y procesa la información recibida.
-4. Cuando es necesario clasificar contenido técnico, el Backend solicita una inferencia al componente de Data Science.
-5. El componente de Data Science utiliza el modelo de Machine Learning para generar la clasificación correspondiente.
-6. El Backend almacena la información relevante en la base de datos.
-7. Finalmente, el Backend devuelve la respuesta al Frontend para que sea presentada al usuario.
+1. El usuario proporciona texto o un documento.
+2. El Frontend envía la información al Backend.
+3. El Backend procesa la solicitud y coordina la clasificación.
+4. Data Science analiza el contenido recibido.
+5. El modelo de Machine Learning genera la predicción.
+6. Data Science devuelve el resultado al Backend.
+7. El Backend entrega la respuesta al Frontend.
+8. El usuario visualiza el resultado.
 
 ---
 
-# 📦 Componentes del Sistema
+## 📦 Componentes del sistema
 
-La solución está organizada en cuatro componentes principales.
+La solución se organiza en cuatro componentes principales:
 
 | Componente | Responsabilidad |
-|------------|-----------------|
-| 🎨 **Frontend** | Proporciona la interfaz de usuario para consultar, registrar y visualizar documentación técnica. |
-| ⚙️ **Backend** | Implementa la lógica de negocio, expone la API REST, coordina la comunicación entre componentes y gestiona la persistencia de datos. |
-| 🤖 **Data Science** | Ejecuta el procesamiento de documentos y la inferencia mediante modelos de Machine Learning para realizar la clasificación automática. |
-| 🗄️ **Base de Datos** | Almacena la información técnica, los resultados de clasificación y los datos necesarios para el funcionamiento del sistema. |
+|---|---|
+| 🌐 **Frontend** | Interfaz web para la interacción con el usuario. |
+| ⚙️ **Backend** | Lógica de negocio, API e integración entre componentes. |
+| 🤖 **Data Science** | Procesamiento e inferencia mediante Machine Learning. |
+| 🗄️ **Base de Datos** | Persistencia de la información de la aplicación. |
 
 ---
 
----
+## 🎨 Frontend
 
-# 🎨 Frontend
-
-El Frontend constituye el punto de interacción entre los usuarios y la plataforma AyniKortex.
-
-Su principal responsabilidad es proporcionar una experiencia de usuario intuitiva para consultar, registrar y gestionar documentación técnica, consumiendo los servicios expuestos por el Backend mediante APIs REST.
+El Frontend constituye el punto de interacción entre el usuario y AyniKortex.
 
 ### Responsabilidades
 
-- Presentar la interfaz gráfica del sistema.
+- Presentar la interfaz web.
 - Gestionar la interacción con el usuario.
-- Consumir los servicios del Backend.
-- Mostrar los resultados de clasificación.
-- Validar información básica antes de enviarla al Backend.
+- Enviar información al Backend.
+- Presentar los resultados de clasificación.
+- Facilitar el uso de las funcionalidades disponibles en la plataforma.
 
-### Tecnologías
+### Tecnologías principales
 
 - React
-- HTML5
-- CSS3
+- Vite
 - JavaScript
+- Nginx
 
 ---
 
-# ⚙️ Backend
+## ⚙️ Backend
 
-El Backend representa el núcleo de la aplicación y actúa como orquestador de todos los componentes del sistema.
-
-Es responsable de centralizar la lógica de negocio, gestionar la persistencia de la información y coordinar la comunicación con el componente de Data Science.
+El Backend representa el núcleo de la aplicación y coordina la comunicación entre los diferentes componentes.
 
 ### Responsabilidades
 
-- Exponer la API REST.
-- Gestionar la lógica de negocio.
-- Validar solicitudes.
-- Administrar la persistencia de datos.
-- Solicitar inferencias al componente de Data Science.
-- Consolidar la información enviada al Frontend.
+- Implementar la lógica de negocio.
+- Exponer la API de la aplicación.
+- Validar y procesar solicitudes.
+- Coordinar las solicitudes de clasificación.
+- Comunicarse con Data Science.
+- Gestionar la persistencia de información.
+- Entregar los resultados al Frontend.
 
-### Tecnologías
+### Tecnologías principales
 
-- Spring Boot
 - Java
+- Spring Boot
 - MySQL
 
 ---
 
-# 🤖 Data Science
+## 🤖 Data Science
 
-El componente de Data Science incorpora las capacidades de Machine Learning dentro de AyniKortex.
+El componente de Data Science incorpora las capacidades de Machine Learning de AyniKortex.
 
-Su función principal es analizar documentación técnica y generar clasificaciones utilizando modelos previamente entrenados.
+Su función principal es procesar el contenido recibido y ejecutar el modelo entrenado para generar una clasificación.
 
 ### Responsabilidades
 
-- Preprocesar documentos.
-- Ejecutar inferencias.
-- Administrar el modelo entrenado.
-- Generar categorías.
-- Devolver resultados al Backend.
+- Procesar el contenido recibido.
+- Preparar la información para inferencia.
+- Ejecutar el modelo de Machine Learning.
+- Generar la clasificación.
+- Generar información complementaria del resultado.
+- Devolver el resultado al Backend.
+- Gestionar la versión del modelo utilizada para la inferencia.
 
-### Tecnologías
+### Tecnologías principales
 
 - Python
 - FastAPI
-- Scikit-learn
-- Pandas
+- scikit-learn
+- pandas
 - NumPy
 
 ---
 
-# 🗄️ Base de Datos
+## 🧠 Modelo de Machine Learning
 
-La base de datos almacena la información utilizada por la plataforma y permite conservar el historial de documentos y resultados obtenidos durante el funcionamiento del sistema.
+El modelo de Machine Learning constituye el componente encargado de realizar la clasificación automática del contenido.
+
+A partir de los patrones aprendidos durante el entrenamiento, el modelo analiza la información recibida y genera una predicción.
+
+El resultado puede incluir:
+
+- Categoría.
+- Subcategoría.
+- Nivel de confianza.
+- Palabras clave.
+- Resumen del contenido.
+- Versión del modelo.
+- Tiempo de procesamiento.
+
+Los detalles del proceso de preparación de datos, entrenamiento, evaluación, persistencia e inferencia se encuentran en la documentación específica de Data Science.
+
+---
+
+## 🗄️ Base de datos
+
+MySQL proporciona la persistencia necesaria para el funcionamiento de la aplicación.
 
 ### Responsabilidades
 
-- Almacenar información del sistema.
-- Persistir resultados de clasificación.
-- Gestionar consultas.
-- Garantizar la integridad de la información.
+- Almacenar información gestionada por la plataforma.
+- Persistir los datos necesarios para la operación del Backend.
+- Mantener la integridad de la información.
+- Permitir la consulta y recuperación de los datos almacenados.
 
 ### Tecnología
 
@@ -241,279 +213,213 @@ La base de datos almacena la información utilizada por la plataforma y permite 
 
 ---
 
----
+## 🔗 Comunicación entre componentes
 
-# 🔗 Comunicación entre Componentes
+Los componentes de AyniKortex se comunican mediante interfaces definidas, manteniendo responsabilidades separadas.
 
-Los componentes de AyniKortex interactúan mediante interfaces claramente definidas, reduciendo el acoplamiento y facilitando el mantenimiento del sistema.
-
-| Origen | Destino | Medio de Comunicación |
-|---------|----------|-----------------------|
-| Usuario | Frontend | Interfaz Web |
-| Frontend | Backend | API REST (HTTP/JSON) |
-| Backend | Data Science | API REST (FastAPI) |
-| Backend | Base de Datos | JDBC / JPA |
-| Data Science | Modelo de Machine Learning | Llamadas internas |
+| Origen | Destino | Medio de comunicación |
+|---|---|---|
+| 👤 Usuario | 🌐 Frontend | Interfaz web |
+| 🌐 Frontend | ⚙️ Backend | API REST |
+| ⚙️ Backend | 🤖 Data Science | API REST mediante FastAPI |
+| ⚙️ Backend | 🗄️ MySQL | JDBC / JPA |
+| 🤖 Data Science | 🧠 Modelo | Ejecución interna de inferencia |
 
 ---
 
----
-
-# 💻 Stack Tecnológico
-
-AyniKortex integra diferentes tecnologías especializadas para construir una plataforma modular, escalable y orientada a la gestión inteligente del conocimiento técnico.
-
-| Capa | Tecnología | Propósito |
-|------|------------|-----------|
-| 🎨 Presentación | React | Desarrollo de la interfaz de usuario. |
-| ⚙️ Aplicación | Spring Boot | Implementación de la lógica de negocio y exposición de la API REST. |
-| 🤖 Inteligencia | Python | Desarrollo del componente de Ciencia de Datos. |
-| 🤖 Inferencia | FastAPI | Exposición de los servicios de Machine Learning para su consumo por el Backend. |
-| 🧠 Machine Learning | Scikit-learn | Entrenamiento e inferencia del modelo de clasificación. |
-| 📊 Procesamiento | Pandas | Manipulación y preparación de datos. |
-| 🔢 Computación | NumPy | Operaciones numéricas utilizadas durante el procesamiento. |
-| 🗄️ Persistencia | MySQL | Almacenamiento de la información del sistema. |
-| 🔧 Control de versiones | Git & GitHub | Gestión colaborativa del código fuente. |
-
-La selección de estas tecnologías responde a criterios de mantenibilidad, escalabilidad, integración y disponibilidad de herramientas ampliamente utilizadas por la comunidad.
-
----
-
-# 📂 Organización del Repositorio
-
-El repositorio se organiza de forma modular para facilitar el desarrollo independiente de cada componente y mantener una estructura clara para todos los colaboradores.
-
-```text
-AyniKortex/
-
-├── .github/
-│   ├── CONTRIBUTING.md
-│   ├── CODE_OF_CONDUCT.md
-│   ├── SECURITY.md
-│   └── SUPPORT.md
-│
-├── frontend/
-│
-├── backend/
-│
-├── data_science/
-│
-├── docs/
-│   ├── architecture/
-│   ├── roadmap/
-│   └── documentation/
-│
-├── README.md
-└── LICENSE
-```
-
-La estructura podrá evolucionar conforme el proyecto incorpore nuevos componentes y documentación adicional.
-
----
-
-# 📈 Escalabilidad
-
-La arquitectura de AyniKortex ha sido diseñada para facilitar su evolución sin comprometer la estabilidad de los componentes existentes.
-
-Entre las principales capacidades de crecimiento se encuentran:
-
-- Incorporar nuevos modelos de Machine Learning sin modificar el Frontend.
-- Sustituir o mejorar el componente de Data Science manteniendo la integración con el Backend.
-- Ampliar la funcionalidad del Backend mediante nuevos servicios.
-- Escalar la interfaz de usuario con nuevos módulos y funcionalidades.
-- Integrar nuevos mecanismos de autenticación y autorización.
-- Incorporar nuevas fuentes de información y tipos documentales.
-
-La separación de responsabilidades permite que cada componente evolucione de manera independiente, reduciendo el impacto de los cambios sobre el resto del sistema.
-
----
-
-# 🚧 Alcance del MVP
-
-La primera versión de AyniKortex se enfoca en validar la arquitectura propuesta y demostrar el funcionamiento integral de la plataforma.
-
-## Incluye
-
-- Gestión de documentación técnica.
-- Clasificación automática mediante Machine Learning.
-- Integración entre Frontend, Backend y Data Science.
-- Persistencia de la información.
-- Consulta de resultados desde la interfaz de usuario.
-
-## No incluye
-
-- Autenticación y autorización avanzada.
-- Procesamiento distribuido.
-- Arquitectura basada en microservicios.
-- Inteligencia Artificial Generativa.
-- Modelos de Lenguaje (LLM).
-- Retrieval-Augmented Generation (RAG).
-- Bases de datos vectoriales.
-- Procesamiento en tiempo real.
-- Infraestructura de alta disponibilidad.
-
-Estas capacidades podrán evaluarse en futuras etapas del proyecto conforme evolucionen los objetivos y necesidades de la plataforma.
-
----
-
-# 📚 Referencias
-
-La arquitectura de AyniKortex se complementa con la documentación especializada disponible en el repositorio.
-
-- 📘 README.md
-- 📖 DOCUMENTATION_STYLE_GUIDE.md
-- 🗺️ ROADMAP.md
-- 🤝 CONTRIBUTING.md
-- 🔒 SECURITY.md
-- 📜 CODE_OF_CONDUCT.md
-
-Cada documento aborda un aspecto específico del proyecto, evitando la duplicidad de información y manteniendo una única fuente de verdad para cada tema.
-
----
-
-# Ciclo de Vida del Modelo en Producción
-
-## Objetivo
-
-Una vez desplegado el MVP, el modelo de Machine Learning no permanece estático. La arquitectura de AyniKortex está diseñada para permitir la evolución continua del modelo mediante la incorporación de nuevos datos, la actualización del Dataset Maestro y el entrenamiento controlado de nuevas versiones.
-
-Este proceso **no forma parte del alcance del MVP del Hackathon**, pero representa la evolución natural del producto hacia un entorno de producción.
-
----
-
-## Ciclo de Vida del Modelo
+## 🔗 Flujo de comunicación
 
 ```mermaid
 flowchart LR
-
-subgraph Operacion["Operación del Sistema"]
-
-Usuario["Usuario"]
-Frontend["Frontend React"]
-Backend["Backend Spring Boot"]
-ServicioInferencia["Servicio FastAPI"]
-ModeloProduccion["Modelo en Producción"]
-Repositorio["Repositorio de Documentos"]
-
-Usuario --> Frontend
-Frontend --> Backend
-Backend --> ServicioInferencia
-ServicioInferencia --> ModeloProduccion
-ModeloProduccion --> Backend
-Backend --> Repositorio
-
-end
-
-subgraph Evolucion["Evolución Continua del Modelo"]
-
-NuevosDocumentos["Nuevos Documentos"]
-Curacion["Validación y Curación"]
-DatasetMaestro["Dataset Maestro"]
-Preprocesamiento["Preprocesamiento"]
-Entrenamiento["Entrenamiento"]
-Evaluacion["Evaluación"]
-RegistroModelos["Registro de Modelos"]
-ModeloNuevo["Nueva Versión del Modelo"]
-
-Repositorio --> NuevosDocumentos
-NuevosDocumentos --> Curacion
-Curacion --> DatasetMaestro
-DatasetMaestro --> Preprocesamiento
-Preprocesamiento --> Entrenamiento
-Entrenamiento --> Evaluacion
-Evaluacion --> RegistroModelos
-RegistroModelos --> ModeloNuevo
-
-ModeloNuevo -. Despliegue Controlado .-> ServicioInferencia
-
-end
+    "🌐 Frontend" -->|"API REST"| "⚙️ Backend"
+    "⚙️ Backend" -->|"API REST"| "🤖 Data Science"
+    "⚙️ Backend" -->|"Persistencia"| "🗄️ MySQL"
+    "🤖 Data Science" -->|"Inferencia"| "🧠 Modelo de Machine Learning"
 ```
 
 ---
 
-## Descripción del proceso
+## 💻 Stack tecnológico
 
-### Operación diaria
-
-Durante la operación normal del sistema, los usuarios interactúan con la plataforma mediante el Frontend. Las solicitudes son gestionadas por Spring Boot, que consume el servicio de inferencia implementado con FastAPI.
-
-El modelo únicamente realiza predicciones utilizando el conocimiento adquirido durante el entrenamiento y devuelve la clasificación correspondiente.
-
-Los documentos procesados y sus resultados son almacenados en el repositorio del sistema para su trazabilidad.
-
----
-
-### Incorporación de nuevos datos
-
-Los documentos almacenados representan una fuente potencial de información para mejorar futuras versiones del modelo.
-
-Sin embargo, **los nuevos documentos no reentrenan automáticamente el modelo**.
-
-Antes de ser utilizados para entrenamiento deben pasar por un proceso de:
-
-- validación
-- limpieza
-- curación
-- etiquetado
-- control de calidad
-
-Solo los documentos validados son incorporados al Dataset Maestro.
+| Área | Tecnología | Propósito |
+|---|---|---|
+| 🌐 Presentación | React + Vite | Interfaz web |
+| ⚙️ Backend | Java + Spring Boot | Lógica de negocio y API |
+| 🤖 Data Science | Python | Procesamiento e inferencia |
+| 🔌 Servicio de inferencia | FastAPI | Exposición del servicio de Data Science |
+| 🧠 Machine Learning | scikit-learn | Clasificación automática |
+| 📊 Procesamiento | pandas | Preparación y manipulación de datos |
+| 🔢 Computación | NumPy | Operaciones numéricas |
+| 🗄️ Persistencia | MySQL | Almacenamiento de información |
+| 🐳 Contenedores | Docker | Empaquetado y ejecución |
+| ☁️ Cloud | Oracle Cloud Infrastructure | Infraestructura de despliegue |
+| 🔧 Versionamiento | Git + GitHub | Control de versiones y colaboración |
+| 🔄 Automatización | GitHub Actions | Automatización de procesos |
 
 ---
 
-### Reentrenamiento controlado
+## ☁️ Despliegue
 
-Cuando existe suficiente información nueva o se identifica la necesidad de mejorar el desempeño del modelo, el equipo de Ciencia de Datos ejecuta un nuevo proceso de entrenamiento.
+AyniKortex cuenta con un **MVP funcional desplegado en Oracle Cloud Infrastructure (OCI)**.
 
-Este proceso reutiliza el pipeline completo definido durante el desarrollo:
+La solución utiliza contenedores para facilitar el empaquetado y despliegue de sus componentes.
 
-1. Preprocesamiento
-2. Ingeniería de características
-3. Entrenamiento
-4. Evaluación
-5. Comparación con la versión actual
+```mermaid
+flowchart LR
+    "🌐 Frontend" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🤖 Data Science"
+    "⚙️ Backend" --> "🗄️ MySQL"
+    "🤖 Data Science" --> "🧠 Modelo de Machine Learning"
 
----
+    "🌐 Frontend" -. "Despliegue" .-> "☁️ Oracle Cloud Infrastructure"
+    "⚙️ Backend" -. "Despliegue" .-> "☁️ Oracle Cloud Infrastructure"
+    "🤖 Data Science" -. "Despliegue" .-> "☁️ Oracle Cloud Infrastructure"
+```
 
-### Versionado del modelo
+La configuración y los procedimientos específicos de despliegue se encuentran documentados en:
 
-Cada proceso de entrenamiento genera una nueva versión del modelo.
-
-Las versiones anteriores permanecen registradas para facilitar:
-
-- auditoría
-- trazabilidad
-- comparación de métricas
-- rollback
-- análisis histórico
-
-Una nueva versión solo es promovida a producción cuando demuestra un mejor desempeño respecto al modelo actualmente desplegado.
+👉 [Guía de despliegue](../Deployment-Guide/Deployment-Guide.md)
 
 ---
 
-### Despliegue
+## 📁 Organización del repositorio
 
-Una vez aprobada una nueva versión, el servicio de inferencia actualiza el modelo utilizado para responder las solicitudes del sistema.
+La estructura del proyecto separa el código fuente, documentación, datos, modelos y herramientas de soporte.
 
-Este proceso se realiza de forma controlada, sin afectar la continuidad del servicio.
+```text
+AyniKortex/
+│
+├── .github/
+│   └── workflows/
+│
+├── datasets/
+│
+├── docs/
+│   ├── ADR/
+│   ├── api/
+│   ├── Architecture/
+│   ├── Deployment-Guide/
+│   ├── meetings/
+│   ├── ROADMAP/
+│   ├── SDS/
+│   ├── SPRINTS/
+│   ├── Standards/
+│   └── templates/
+│
+├── models/
+├── scripts/
+├── src/
+│   ├── backend/
+│   ├── data_science/
+│   └── frontend/
+│
+├── tests/
+│
+├── docker-compose.yml
+├── README.md
+└── requirements.txt
+```
+
+La estructura permite mantener separados los diferentes componentes de la solución y facilita la colaboración entre las áreas de desarrollo, Ciencia de Datos y documentación.
 
 ---
 
-## Beneficios de la arquitectura
+## 📈 Escalabilidad y evolución
 
-| Beneficio | Descripción |
-|-----------|-------------|
-| Separación de responsabilidades | La operación diaria y el entrenamiento del modelo son procesos independientes. |
-| Escalabilidad | Permite incorporar grandes volúmenes de información sin afectar la disponibilidad del sistema. |
-| Trazabilidad | Cada versión del modelo puede asociarse al dataset y a las métricas utilizadas durante su entrenamiento. |
-| Mantenibilidad | El modelo puede evolucionar sin modificar la lógica del Backend ni del Frontend. |
-| Versionado | Facilita la comparación entre modelos y la recuperación de versiones anteriores. |
-| Evolución hacia MLOps | La arquitectura permite incorporar en el futuro procesos automatizados de monitoreo, reentrenamiento y despliegue continuo. |
+La arquitectura de AyniKortex permite continuar evolucionando la solución sin modificar necesariamente todos sus componentes.
+
+Entre las posibilidades de evolución se encuentran:
+
+- Incorporar nuevos modelos de clasificación.
+- Mejorar el modelo existente mediante nuevos datos y entrenamiento.
+- Ampliar las categorías y subcategorías disponibles.
+- Incorporar nuevos tipos de documentos.
+- Agregar nuevas funcionalidades al Backend.
+- Ampliar la interfaz web.
+- Mejorar los mecanismos de autenticación y autorización.
+- Evolucionar la infraestructura de despliegue.
+
+La separación entre Frontend, Backend y Data Science permite que cada área pueda evolucionar manteniendo contratos de integración definidos.
 
 ---
 
-## Consideraciones
+## 🚀 Alcance del MVP
 
-Este flujo representa la evolución prevista de AyniKortex una vez finalizado el MVP.
+El MVP de AyniKortex tiene como objetivo demostrar el funcionamiento integral de una plataforma capaz de analizar y clasificar documentación técnica mediante Machine Learning.
 
-Durante el Hackathon, el alcance del proyecto contempla el entrenamiento, evaluación, integración y despliegue del modelo seleccionado. La automatización del ciclo de vida del modelo y su reentrenamiento continuo constituyen una evolución futura del producto y sientan las bases para una arquitectura orientada a MLOps.
+### Incluye
+
+- Plataforma web funcional.
+- Backend integrado.
+- Servicio de Data Science.
+- Modelo de Machine Learning entrenado.
+- Clasificación automática.
+- Procesamiento de texto y documentos compatibles.
+- Persistencia mediante MySQL.
+- Integración entre los componentes.
+- Ejecución mediante contenedores.
+- Despliegue en Oracle Cloud Infrastructure.
+
+### Fuera del alcance actual
+
+Las siguientes capacidades no forman parte del MVP actual:
+
+- Inteligencia Artificial Generativa.
+- Modelos de Lenguaje de gran escala (LLM).
+- Retrieval-Augmented Generation (RAG).
+- Bases de datos vectoriales.
+- Procesamiento distribuido.
+- Arquitectura basada en microservicios.
+- Infraestructura de alta disponibilidad.
+
+Estas capacidades podrán evaluarse en futuras etapas de evolución del proyecto.
+
+---
+
+## 📚 Documentación relacionada
+
+Este documento proporciona la visión arquitectónica general de AyniKortex.
+
+Para profundizar en aspectos específicos, consultar:
+
+### 🔌 API e integración
+
+- [Documentación de API](../api/README.md)
+- [Contrato Backend–Data Science](../api/Backend-Data-Contract.md)
+- [Modelo de datos](../api/Backend-Data-Model.md)
+- [Especificación OpenAPI](../api/aynikortex-api.yaml)
+
+### 🧠 Ciencia de Datos
+
+- [Documentación de Sprints de Data Science](../SPRINTS/data-science/)
+
+### ☁️ Despliegue
+
+- [Guía de despliegue](../Deployment-Guide/Deployment-Guide.md)
+
+### 🧭 Decisiones arquitectónicas
+
+- [Architecture Decision Records](../ADR/)
+
+### 📋 Diseño y planificación
+
+- [SDS](../SDS/SDS.md)
+- [Roadmap técnico](../ROADMAP/Technical-Roadmap.md)
+
+### 📐 Estándares
+
+- [Engineering Standards](../Standards/Engineering-Standards.md)
+
+---
+
+---
+
+## 📌 Fuente de verdad
+
+La arquitectura descrita en este documento representa la **arquitectura actual del MVP de AyniKortex**.
+
+Las decisiones históricas se mantienen en `docs/ADR/`, mientras que los detalles de implementación y operación se documentan en sus respectivas áreas.
+
+La documentación debe actualizarse cuando una modificación de arquitectura sea aprobada y pase a formar parte del estado vigente del sistema.
+
+---

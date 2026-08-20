@@ -1,4 +1,4 @@
-"""
+﻿"""
 ==========================================================
 TechMind
 Data Science Component
@@ -20,28 +20,28 @@ Sprint:
 
 from copy import deepcopy
 
-from data_science.data.domain import (
+from src.data_science.data.domain import (
     DocumentRecord,
     ProcessedDocument,
 )
 
-from data_science.preprocessing.text_cleaner import (
+from src.data_science.preprocessing.text_cleaner import (
     TextCleaner,
 )
 
-from data_science.preprocessing.text_normalizer import (
+from src.data_science.preprocessing.text_normalizer import (
     TextNormalizer,
 )
 
-from data_science.preprocessing.stopwords_remover import (
+from src.data_science.preprocessing.stopwords_remover import (
     StopWordsRemover,
 )
 
-from data_science.preprocessing.tokenizer import (
+from src.data_science.preprocessing.tokenizer import (
     Tokenizer,
 )
 
-from data_science.preprocessing.lemmatizer import (
+from src.data_science.preprocessing.lemmatizer import (
     Lemmatizer,
 )
 
@@ -123,3 +123,5 @@ class PreprocessingPipeline:
             tokens=tokens.tokens,
             lemmas=lemmas.lemmas,
         )
+
+

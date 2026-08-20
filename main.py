@@ -1,15 +1,16 @@
-from fastapi import FastAPI, HTTPException, Request, UploadFile, File
+﻿from fastapi import FastAPI, HTTPException, Request, UploadFile, File
 from pydantic import BaseModel
 from typing import List
 import traceback
 import sys
 import os
+import re
 import numpy as np
 from datetime import datetime, timezone
 from pypdf import PdfReader
 
 
-# Añadir src al path por si acaso para las importaciones
+# AÃ±adir src al path por si acaso para las importaciones
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 from src.data_science.ml.persistence.repositories.filesystem_artifact_repository import FilesystemArtifactRepository
 
@@ -31,7 +32,7 @@ async def lifespan(app: FastAPI):
     print("Cargando modelo de Machine Learning...")
     try:
         repo = FilesystemArtifactRepository(root_directory=os.path.join(os.path.dirname(__file__), "models"))
-        model_bundle = repo.load("aynikortex_classifier-v1.4.0")
+        model_bundle = repo.load("aynikortex_classifier-v1.8.0")
         print("Modelo cargado exitosamente.")
     except Exception as e:
         print(f"Error al cargar el modelo: {e}")
@@ -90,13 +91,128 @@ def _extract_keywords(text: str, vectorizer, top_n: int = 3) -> List[Keyword]:
         print(f"Error extrayendo keywords: {e}")
         return []
 
+
+def _contains_technical_signals(text: str) -> bool:
+    technical_terms = {
+        # API / Backend
+        "api",
+        "rest api",
+        "endpoint",
+        "spring boot",
+        "java",
+        "python",
+        "javascript",
+        "typescript",
+        "backend",
+        "frontend",
+        "fastapi",
+
+        # Bases de datos
+        "sql",
+        "mysql",
+        "postgresql",
+        "mongodb",
+        "database",
+        "base de datos",
+        "oracle",
+
+        # Cloud / Infraestructura
+        "cloud",
+        "aws",
+        "oci",
+        "azure",
+        "docker",
+        "kubernetes",
+        "linux",
+        "servidor",
+        "contenedor",
+
+        # DevOps
+        "git",
+        "github",
+        "gitlab",
+        "ci/cd",
+        "cicd",
+        "pipeline",
+        "despliegue",
+        "microservicios",
+        "variables de entorno",
+
+        # Data Engineering
+        "etl",
+        "elt",
+        "data warehouse",
+        "data lake",
+        "data pipeline",
+        "data engineering",
+        "data engineer",
+        "ingenieria de datos",
+        "ingeniería de datos",
+        "almacen de datos",
+        "almacén de datos",
+        "transformacion de datos",
+        "transformación de datos",
+        "extraccion de datos",
+        "extracción de datos",
+        "carga de datos",
+
+        # Machine Learning / AI
+        "algoritmo",
+        "dataset",
+        "machine learning",
+        "inteligencia artificial",
+        "artificial intelligence",
+        "modelo de machine learning",
+        "aprendizaje automatico",
+        "aprendizaje automático",
+        "tensorflow",
+        "scikit-learn",
+        "pandas",
+        "numpy",
+        "langchain",
+
+        # Otros conceptos técnicos
+        "framework",
+        "spring",
+    }
+
+    normalized = text.lower()
+
+    return any(
+        re.search(
+            rf"\b{re.escape(term)}\b",
+            normalized
+        )
+        for term in technical_terms
+    )
+
+
+
 def _process_prediction(text: str) -> PredictionResponse:
 
     start_time = datetime.now(timezone.utc)
 
     if not model_bundle:
         raise HTTPException(status_code=503, detail="Modelo no cargado. Revisa los logs del servidor.")
-    
+
+    if not _contains_technical_signals(text):
+        return PredictionResponse(
+            status="SUCCESS",
+            classification=Classification(
+                category="NON_TECHNICAL",
+                subcategory="General",
+                confidence=1.0,
+                keywords=[],
+                summary=summary_generator.generate(
+                    text,
+                    model_bundle.vectorizer,
+                ),
+            ),
+            processingTime=0,
+            modelVersion=model_bundle.metadata.version,
+            timestamp=datetime.now(timezone.utc).isoformat(),
+        )
+   
     # 1. Extraer caracteristicas
     X = model_bundle.vectorizer.transform([text])
     
@@ -127,9 +243,7 @@ def _process_prediction(text: str) -> PredictionResponse:
         model_bundle.vectorizer,
     )
 
-    end_time = datetime.now(timezone.utc)
-    processing_time = int((end_time - start_time).total_seconds() * 1000)
-    
+
     end_time = datetime.now(timezone.utc)
     processing_time = int(
         (end_time - start_time).total_seconds() * 1000
@@ -180,7 +294,7 @@ async def predict_file(file: UploadFile = File(...)):
         if not content_bytes:
             raise HTTPException(
                 status_code=400,
-                detail="El archivo está vacío.",
+                detail="El archivo estÃ¡ vacÃ­o.",
             )
 
         # -----------------------------------------
@@ -255,3 +369,4 @@ def health_check():
 @app.get("/")
 def read_root():
     return {"message": "TechMind API is running", "model_loaded": model_bundle is not None}
+

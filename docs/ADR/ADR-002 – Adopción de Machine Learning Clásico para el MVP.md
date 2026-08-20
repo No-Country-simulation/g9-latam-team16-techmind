@@ -1,33 +1,29 @@
+# 🧠 ADR-002 — Adopción de Machine Learning Clásico para el MVP
+
+> **Versión:** 1.1  
+> **Estado:** Aceptado  
+> **Proyecto:** AyniKortex – Organización Inteligente del Conocimiento Técnico  
+> **Decisión original:** Julio 2026
 
 ---
-| ADR     | Decisión                                                          | Tipo                   |
-| ------- | ----------------------------------------------------------------- | ---------------------- |
-| ADR-001 | Adopción de una Arquitectura Basada en Backend y Ciencia de Datos | Arquitectura           |
-| ADR-002 | Adopción de Machine Learning Clásico para el MVP                  | Arquitectura           |
-| ADR-003 | Integración mediante llamada directa a `predict()`                | Arquitectura           |
-| ADR-004 | Backend como único punto de acceso al sistema                     | Arquitectura           |
-| ADR-005 | Uso de Oracle Cloud Infrastructure                                | Infraestructura        |
-| ADR-006 | Exclusión de IA Generativa y Arquitecturas RAG                    | Alcance Arquitectónico |
 
+## 📚 Registro de decisiones relacionadas
 
----
-# ADR-002 – Adopción de Machine Learning Clásico para el MVP
-
-| Campo | Valor |
-|--------|-------|
-| **Proyecto** | TechMind – Organización Inteligente del Conocimiento Técnico |
-| **ADR** | 002 |
-| **Estado** | Aceptado |
-| **Versión** | 1.0 |
-| **Fecha** | Julio 2026 |
+| ADR | Decisión | Estado |
+|---|---|---|
+| ADR-001 | Arquitectura Backend–Ciencia de Datos | Reemplazado |
+| ADR-002 | Adopción de Machine Learning Clásico para el MVP | **Aceptado** |
+| ADR-003 | Integración mediante llamadas directas a funciones | Reemplazado |
+| ADR-004 | Adopción de Oracle Cloud Infrastructure para el MVP | Aceptado |
+| ADR-005 | Exclusión de IA Generativa | Aceptado |
 
 ---
 
 # 1. Contexto
 
-TechMind tiene como objetivo organizar contenido técnico mediante técnicas de procesamiento de texto y aprendizaje automático.
+AyniKortex tiene como objetivo organizar y clasificar contenido técnico mediante técnicas de procesamiento de texto y aprendizaje automático.
 
-Durante la etapa de diseño arquitectónico se evaluaron diferentes enfoques para resolver el problema, incluyendo modelos tradicionales de Machine Learning y tecnologías basadas en Inteligencia Artificial Generativa.
+Durante la etapa de diseño se evaluaron diferentes enfoques para resolver el problema, incluyendo modelos tradicionales de Machine Learning y tecnologías basadas en Inteligencia Artificial Generativa.
 
 La solución debía satisfacer los objetivos funcionales del MVP, respetar el tiempo disponible del Hackathon y mantener una arquitectura simple, mantenible y de bajo costo operativo.
 
@@ -38,62 +34,66 @@ La solución debía satisfacer los objetivos funcionales del MVP, respetar el ti
 Era necesario seleccionar una estrategia de procesamiento de texto que permitiera:
 
 - Clasificar contenido técnico.
-- Extraer palabras clave relevantes.
-- Recomendar documentos similares.
+- Identificar palabras relevantes del contenido.
 - Obtener resultados reproducibles.
+- Generar información complementaria para facilitar la interpretación del resultado.
 - Reducir la complejidad del sistema.
-- Facilitar el desarrollo y mantenimiento del MVP.
+- Facilitar el desarrollo, evaluación y mantenimiento del MVP.
 
 ---
 
 # 3. Decisión
 
-Se adopta un enfoque basado en Machine Learning clásico utilizando algoritmos de Scikit-Learn.
+Se adopta un enfoque basado en **Machine Learning clásico** utilizando herramientas de `scikit-learn`.
 
-La solución emplea principalmente:
+El componente de Ciencia de Datos utiliza principalmente:
 
-- TF-IDF para la representación vectorial del texto.
-- Logistic Regression para la clasificación.
-- Cosine Similarity para la recomendación de contenido relacionado.
-- Joblib para la persistencia de los artefactos del modelo.
+- **TF-IDF** para representar el contenido textual como características numéricas.
+- **Logistic Regression** para realizar la clasificación.
+- **Label Encoding** para gestionar las categorías utilizadas por el modelo.
+- **Joblib** para la persistencia de los artefactos del modelo.
 
-Este enfoque constituye el núcleo del componente de Ciencia de Datos.
+El modelo constituye el núcleo de la capacidad de clasificación automática de AyniKortex.
+
+Durante la inferencia, el sistema genera una clasificación acompañada de información complementaria como nivel de confianza, palabras clave, resumen, versión del modelo y tiempo de procesamiento.
 
 ---
 
 # 4. Justificación
 
-Las técnicas de Machine Learning clásico permiten resolver los objetivos funcionales del MVP sin incorporar infraestructura adicional ni dependencias asociadas a modelos generativos.
+Las técnicas de Machine Learning clásico permiten resolver los objetivos principales del MVP sin incorporar infraestructura adicional ni dependencias asociadas a modelos generativos.
 
-La solución ofrece un comportamiento determinista, facilita la evaluación mediante métricas tradicionales y simplifica el proceso de entrenamiento y despliegue.
+La solución facilita la evaluación mediante métricas tradicionales y simplifica los procesos de entrenamiento, persistencia e inferencia.
 
-Asimismo, este enfoque reduce el consumo de recursos computacionales y elimina la dependencia de servicios externos durante la ejecución del sistema.
+Asimismo, este enfoque reduce los requerimientos computacionales y evita depender de servicios externos de Inteligencia Artificial Generativa durante la ejecución del sistema.
+
+La elección también permite mantener una arquitectura adecuada al alcance y los recursos disponibles durante el Hackathon.
 
 ---
 
-# 5. Alternativas Evaluadas
+# 5. Alternativas evaluadas
 
-## Modelos de IA Generativa (LLM)
+## Modelos de Inteligencia Artificial Generativa (LLM)
 
-**Resultado:** No seleccionados.
+**Resultado:** No seleccionados para el MVP.
 
-Aunque ofrecen capacidades avanzadas de comprensión del lenguaje, exceden los requerimientos funcionales del MVP e incrementan significativamente la complejidad técnica y operativa del proyecto.
+Aunque ofrecen capacidades avanzadas de comprensión y generación de lenguaje, exceden los requerimientos funcionales definidos para el MVP e incrementarían la complejidad técnica y operativa de la solución.
 
 ---
 
 ## Arquitecturas RAG
 
-**Resultado:** No seleccionadas.
+**Resultado:** No seleccionadas para el MVP.
 
-Requieren infraestructura adicional, almacenamiento vectorial y componentes que no aportan un beneficio proporcional para el alcance definido del Hackathon.
+Requieren componentes adicionales, como mecanismos de recuperación de información y almacenamiento vectorial, que no aportan un beneficio proporcional al alcance definido para esta versión.
 
 ---
 
 ## Modelos basados en Deep Learning
 
-**Resultado:** No seleccionados.
+**Resultado:** No seleccionados para el MVP.
 
-Su entrenamiento y mantenimiento demandan mayores recursos computacionales y un volumen de datos superior al disponible para el proyecto.
+Su entrenamiento y mantenimiento requieren mayores recursos computacionales y un volumen de datos superior al disponible para el alcance actual del proyecto.
 
 ---
 
@@ -102,41 +102,50 @@ Su entrenamiento y mantenimiento demandan mayores recursos computacionales y un 
 ## Positivas
 
 - Arquitectura más simple.
-- Fácil entrenamiento del modelo.
+- Entrenamiento y evaluación accesibles.
 - Resultados reproducibles.
 - Bajo consumo de recursos.
 - Despliegue sencillo.
-- Independencia de servicios externos.
+- Independencia de servicios externos de IA generativa.
 - Menor complejidad de mantenimiento.
 
 ## Negativas
 
-- Menor capacidad para comprender relaciones semánticas complejas.
-- El rendimiento depende directamente de la calidad del dataset y del proceso de entrenamiento.
+- Menor capacidad para comprender relaciones semánticas complejas frente a modelos de lenguaje más avanzados.
+- El rendimiento depende directamente de la calidad y representatividad del dataset.
+- La ampliación hacia casos de uso más complejos podría requerir evaluar otros enfoques de Inteligencia Artificial.
 
 ---
 
-# 7. Impacto Arquitectónico
+# 7. Impacto arquitectónico
 
-Esta decisión define el núcleo tecnológico del componente de Ciencia de Datos.
+Esta decisión define el núcleo tecnológico del componente de Ciencia de Datos para el MVP.
 
-Todos los procesos de entrenamiento, predicción y recomendación fueron diseñados considerando un enfoque de Machine Learning clásico.
+Los procesos de entrenamiento, persistencia e inferencia fueron diseñados considerando un enfoque de Machine Learning clásico.
 
-La adopción de modelos generativos en futuras versiones requerirá una revisión de esta decisión y probablemente implicará cambios significativos en la arquitectura del sistema.
+La utilización de este enfoque permite mantener el componente de Data Science ligero y adecuado para su despliegue como servicio independiente mediante FastAPI.
+
+La adopción de modelos generativos o arquitecturas diferentes en futuras versiones requerirá revisar esta decisión y evaluar su impacto sobre la arquitectura, infraestructura y procesos de entrenamiento.
 
 ---
 
 # 8. Referencias
 
-- SDS v0.1 – Capítulo 4. Contexto del Proyecto.
-- SDS v0.1 – Capítulo 5. Alcance del MVP.
-- SDS v0.1 – Capítulo 8. Componente Ciencia de Datos.
-- SDS v0.1 – Capítulo 10. Integración Backend ↔ Ciencia de Datos.
+- [Arquitectura de AyniKortex](../Architecture/Architecture.md)
+- [Documentación de Data Science](../SPRINTS/data-science/)
+- [ADR-005 — Exclusión de IA Generativa](ADR-005%20%E2%80%93%20Exclusi%C3%B3n%20de%20IA%20Generativa.md)
 
 ---
 
-# Estado
+---
+
+## Estado
 
 **Aceptado**
 
-Esta decisión permanecerá vigente durante el desarrollo del MVP y establece la base tecnológica del componente de Ciencia de Datos.
+La decisión de utilizar Machine Learning clásico permanece vigente para el MVP de AyniKortex y constituye la base tecnológica del componente de Ciencia de Datos.
+
+Cualquier cambio hacia modelos generativos, Deep Learning u otros enfoques deberá evaluarse mediante una nueva decisión arquitectónica o una actualización de este ADR.
+
+---
+

@@ -1,4 +1,4 @@
-"""
+﻿"""
 TechMind
 Data Science Component
 
@@ -15,7 +15,7 @@ Sprint:
 
 from abc import ABC, abstractmethod
 
-from data_science.data.domain import (
+from src.data_science.data.domain import (
     DocumentRecord,
     ProcessedDocument,
 )
@@ -25,7 +25,7 @@ class BasePreprocessor(ABC):
     """
     Clase base para todos los componentes de preprocesamiento.
 
-    Cada implementación recibe un documento y devuelve un
+    Cada implementaciÃ³n recibe un documento y devuelve un
     ProcessedDocument con las transformaciones realizadas.
     """
 
@@ -48,3 +48,5 @@ class BasePreprocessor(ABC):
             Documento resultante del preprocesamiento.
         """
         raise NotImplementedError
+
+

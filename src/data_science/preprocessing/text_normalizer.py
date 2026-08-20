@@ -1,4 +1,4 @@
-"""
+﻿"""
 ==========================================================
 TechMind
 Data Science Component
@@ -21,12 +21,12 @@ Sprint:
 
 import unicodedata
 
-from data_science.data.domain import (
+from src.data_science.data.domain import (
     DocumentRecord,
     ProcessedDocument,
 )
 
-from data_science.preprocessing.base_preprocessor import (
+from src.data_science.preprocessing.base_preprocessor import (
     BasePreprocessor,
 )
 
@@ -37,8 +37,8 @@ from data_science.preprocessing.base_preprocessor import (
 
 class TextNormalizer(BasePreprocessor):
     """
-    Normaliza el texto para obtener una representación
-    consistente antes del procesamiento lingüístico.
+    Normaliza el texto para obtener una representaciÃ³n
+    consistente antes del procesamiento lingÃ¼Ã­stico.
     """
 
     def process(
@@ -46,7 +46,7 @@ class TextNormalizer(BasePreprocessor):
         document: DocumentRecord,
     ) -> ProcessedDocument:
         """
-        Ejecuta la normalización básica del texto.
+        Ejecuta la normalizaciÃ³n bÃ¡sica del texto.
 
         Parameters
         ----------
@@ -75,7 +75,7 @@ class TextNormalizer(BasePreprocessor):
     ) -> str:
         """
         Normaliza el texto utilizando Unicode y
-        convirtiéndolo a minúsculas.
+        convirtiÃ©ndolo a minÃºsculas.
 
         Parameters
         ----------
@@ -94,3 +94,5 @@ class TextNormalizer(BasePreprocessor):
         )
 
         return text.lower()
+
+

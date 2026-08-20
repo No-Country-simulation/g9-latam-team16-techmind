@@ -1,4 +1,4 @@
-"""
+﻿"""
 ==========================================================
 TechMind
 Data Science Component
@@ -21,12 +21,12 @@ Sprint:
 
 import re
 
-from data_science.data.domain import (
+from src.data_science.data.domain import (
     DocumentRecord,
     ProcessedDocument,
 )
 
-from data_science.preprocessing.base_preprocessor import (
+from src.data_science.preprocessing.base_preprocessor import (
     BasePreprocessor,
 )
 
@@ -38,7 +38,7 @@ from data_science.preprocessing.base_preprocessor import (
 class TextCleaner(BasePreprocessor):
     """
     Limpia el texto eliminando espacios innecesarios y
-    normalizando caracteres de separación.
+    normalizando caracteres de separaciÃ³n.
     """
 
     def process(
@@ -46,7 +46,7 @@ class TextCleaner(BasePreprocessor):
         document: DocumentRecord,
     ) -> ProcessedDocument:
         """
-        Ejecuta la limpieza básica del texto.
+        Ejecuta la limpieza bÃ¡sica del texto.
 
         Parameters
         ----------
@@ -79,3 +79,5 @@ class TextCleaner(BasePreprocessor):
         text = re.sub(r"\s+", " ", text)
 
         return text.strip()
+
+

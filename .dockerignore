@@ -1,0 +1,11 @@
+﻿.venv
+.git
+.gitignore
+__pycache__
+*.pyc
+.pytest_cache
+.coverage
+htmlcov
+src/**/__pycache__
+models/**/*.bak
+*.log

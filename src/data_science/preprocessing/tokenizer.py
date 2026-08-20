@@ -1,4 +1,4 @@
-"""
+﻿"""
 ==========================================================
 TechMind
 Data Science Component
@@ -21,12 +21,12 @@ Sprint:
 
 from nltk.tokenize import word_tokenize
 
-from data_science.data.domain import (
+from src.data_science.data.domain import (
     DocumentRecord,
     ProcessedDocument,
 )
 
-from data_science.preprocessing.base_preprocessor import (
+from src.data_science.preprocessing.base_preprocessor import (
     BasePreprocessor,
 )
 
@@ -73,3 +73,5 @@ class Tokenizer(BasePreprocessor):
             return []
 
         return word_tokenize(text)
+
+

@@ -1,174 +1,400 @@
 # 🗺️ Roadmap
 
 > **Proyecto:** AyniKortex  
-> **Estado:** En evolución
+> **Estado:** MVP funcional
 
-El Roadmap de AyniKortex describe la evolución prevista del proyecto desde la construcción del Producto Mínimo Viable (MVP) hasta futuras versiones de la plataforma.
+El Roadmap de AyniKortex describe la evolución del proyecto desde la definición del MVP hasta las posibles capacidades futuras de la plataforma.
 
-Más que un listado de tareas, representa la visión de crecimiento del proyecto y la incorporación progresiva de nuevas capacidades, manteniendo siempre los principios de calidad, modularidad y escalabilidad que definen su arquitectura.
+No representa un cronograma de trabajo ni una lista de tareas pendientes. Su propósito es mostrar los principales hitos alcanzados, el estado actual de la solución y las líneas de evolución previstas.
 
 ---
 
 # 🎯 Objetivo
 
-Este documento proporciona una visión estratégica sobre la evolución funcional y técnica de AyniKortex.
+Este documento proporciona una visión estratégica de la evolución funcional y técnica de AyniKortex.
 
-Su propósito es comunicar las metas del proyecto, los principales hitos alcanzados y las capacidades previstas para futuras versiones.
+Su propósito es:
 
-El Roadmap no constituye un cronograma de desarrollo ni un plan de gestión del proyecto. Es una guía que orienta el crecimiento de la plataforma y se actualizará conforme el proyecto evolucione.
+- Identificar los principales hitos alcanzados.
+- Mostrar la evolución de los componentes de la plataforma.
+- Establecer las principales líneas de evolución futura.
+- Mantener una visión coherente entre arquitectura, implementación y producto.
+
+El Roadmap se actualiza conforme evoluciona la plataforma y se alcanzan nuevos hitos relevantes.
 
 ---
 
 # 🌟 Visión
 
-AyniKortex busca convertirse en una plataforma capaz de organizar, clasificar y facilitar el acceso al conocimiento técnico mediante el uso de Inteligencia Artificial.
+AyniKortex busca facilitar la organización y clasificación inteligente de documentación técnica mediante técnicas de Machine Learning.
 
-Nuestra evolución está orientada a construir una solución abierta, mantenible y escalable, donde cada nueva capacidad se incorpore de forma incremental y alineada con la arquitectura del sistema.
+La evolución de la plataforma parte de un MVP funcional y contempla mejoras progresivas en:
 
-Cada fase del Roadmap representa un paso hacia una plataforma más completa, preparada para adaptarse a nuevos escenarios y necesidades.
+- Inteligencia Artificial.
+- Procesamiento de documentación.
+- Integración entre componentes.
+- Experiencia de usuario.
+- Automatización.
+- Infraestructura.
+- Escalabilidad.
+
+La evolución futura deberá mantener los principios de modularidad, mantenibilidad y separación de responsabilidades definidos en la arquitectura del sistema.
 
 ---
 
-# 📅 Evolución del Proyecto
+# 📅 Evolución del proyecto
 
 ```mermaid
 timeline
     title Evolución de AyniKortex
 
-    MVP : Arquitectura Base
-        : Frontend React
-        : Backend
-        : Modelo de Machine Learning
-        : Integración del MVP
+    "Definición del MVP" : "Problema y alcance"
+                         : "Arquitectura"
+                         : "Diseño de componentes"
 
-    v1.1 : Benchmark del modelo
-         : Mejoras funcionales
-         : Optimización
+    "Construcción" : "Data Science"
+                   : "Backend"
+                   : "Frontend"
+                   : "Base de datos"
 
-    v2.0 : Escalabilidad
-         : Automatización
-         : Nuevas capacidades
+    "Integración" : "Frontend ↔ Backend"
+                  : "Backend ↔ Data Science"
+                  : "Persistencia"
+                  : "Validación funcional"
 
-    Futuro : Plataforma inteligente
-            : IA avanzada
-            : Evolución continua
+    "Despliegue" : "Contenedorización"
+                 : "Oracle Cloud Infrastructure"
+                 : "MVP funcional"
+
+    "Evolución futura" : "Optimización"
+                      : "Escalabilidad"
+                      : "Nuevas capacidades"
+
+
+---
+
+# 🚀 Estado actual del MVP
+
+AyniKortex cuenta con un **MVP funcional de extremo a extremo**, resultado de la integración progresiva de sus componentes principales.
+
+La solución actual integra:
+
+- Frontend web.
+- Backend.
+- Servicio de Data Science.
+- Modelo de Machine Learning.
+- Base de datos.
+- Infraestructura en Oracle Cloud Infrastructure (OCI).
+
+## Estado por componente
+
+| Componente | Resultado actual | Estado |
+|---|---|:---:|
+| 📚 Documentación | Arquitectura, contratos, ADR, estándares y documentación técnica | ✅ |
+| 🎨 Frontend | Interfaz web integrada con el Backend | ✅ |
+| ⚙️ Backend | API REST, lógica de negocio y persistencia | ✅ |
+| 🤖 Data Science | Procesamiento, modelo ML, inferencia y servicio FastAPI | ✅ |
+| 🗄️ Base de datos | Persistencia mediante MySQL | ✅ |
+| 🔗 Integración | Flujo Frontend → Backend → Data Science | ✅ |
+| ☁️ Despliegue | Componentes preparados y desplegados en OCI | ✅ |
+
+## Flujo actual
+
+```mermaid
+flowchart LR
+    "👤 Usuario" --> "🌐 Frontend"
+    "🌐 Frontend" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🤖 Data Science"
+    "🤖 Data Science" --> "🧠 Modelo ML"
+    "🧠 Modelo ML" --> "📊 Resultado"
+    "📊 Resultado" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🗄️ MySQL"
+    "⚙️ Backend" --> "🌐 Frontend"
+    "🌐 Frontend" --> "👤 Usuario"
 ```
 
+## Capacidades actuales
+
+El MVP permite:
+
+- Recibir contenido técnico para procesamiento.
+- Procesar texto y archivos compatibles.
+- Ejecutar inferencia mediante el modelo de Machine Learning.
+- Generar una clasificación.
+- Obtener un nivel de confianza asociado a la predicción.
+- Identificar palabras relevantes.
+- Generar un resumen del contenido.
+- Persistir información mediante el Backend.
+- Ejecutar la solución en infraestructura cloud.
+
+La implementación detallada de cada componente se encuentra en la documentación técnica correspondiente.
+
 ---
 
-# 🚀 Estado del MVP
+# 🏆 Hitos alcanzados por componente
 
-El MVP de AyniKortex se construye de manera incremental mediante la colaboración entre los diferentes componentes del proyecto.
+## 🤖 Data Science
 
-| Componente | Objetivo | Estado |
-|------------|----------|:------:|
-| 📚 Documentación | Documentación comunitaria y técnica | 🚧 |
-| 🎨 Frontend | Desarrollo de la interfaz React | 🚧 |
-| ⚙️ Backend | API REST y lógica de negocio | 🚧 |
-| 🤖 Data Science | Modelo de clasificación | ✅ |
-| 🔗 Integración | Comunicación entre componentes | ⏳ |
-| 🚀 Despliegue | Publicación del MVP | ⏳ |
+El componente de Data Science evolucionó desde la construcción del dataset hasta la implementación del procesamiento, entrenamiento, evaluación, persistencia e inferencia del modelo de Machine Learning.
+
+Actualmente incluye:
+
+- Construcción y procesamiento del dataset.
+- Preprocesamiento del contenido.
+- Ingeniería de características.
+- Entrenamiento del modelo de clasificación.
+- Evaluación mediante métricas.
+- Persistencia de artefactos del modelo.
+- Motor de inferencia.
+- Generación de resultados de predicción.
+- Servicio de inferencia mediante FastAPI.
+- Pruebas automatizadas del componente.
+- Contenedorización para despliegue.
+
+La documentación detallada de la evolución de Data Science se conserva en:
+
+[🤖 Sprints de Data Science](../SPRINTS/data-science/)
 
 ---
 
-# 🤖 Hitos por Componente
+## ⚙️ Backend
 
-## Data Science
+El Backend implementa la lógica de negocio y constituye el punto de integración de la aplicación.
 
-El componente de Ciencia de Datos ha completado el alcance principal definido para el MVP, entregando un modelo entrenado, evaluado, persistido e integrado mediante la interfaz pública predict(title, text). En la etapa actual, el equipo participa en actividades de soporte a la integración con Backend y Frontend, así como en la validación experimental del modelo y las pruebas integrales del sistema.
+Entre los principales resultados alcanzados se encuentran:
 
-| Sprint | Objetivo                                                    | Estado |
-| ------ | ----------------------------------------------------------- | :----: |
-| DS-01  | Arquitectura del componente                                 |    ✅   |
-| DS-02  | Investigación y adquisición del dataset                     |    ✅   |
-| DS-03  | Construcción del Dataset Maestro                            |    ✅   |
-| DS-04  | Preprocesamiento del dataset                                |    ✅   |
-| DS-05  | Análisis Exploratorio de Datos (EDA)                        |    ✅   |
-| DS-06  | Entrenamiento y evaluación del modelo                       |    ✅   |
-| DS-07  | Integración del modelo con Backend (`predict(title, text)`) |    ✅   |
-| DS-08  | Persistencia y serialización del modelo                     |    ✅   |
-| DS-09  | Benchmark experimental del modelo                           |   🚧   |
-| DS-10  | Validación integral del MVP                                 |    ⏳   |
-
-## Frontend
-
-Los principales hitos previstos son:
-
-- Diseño de la interfaz de usuario.
-- Gestión de autenticación y sesiones.
-- Carga y administración de documentos.
-- Visualización de resultados de clasificación.
-- Mejoras en experiencia de usuario.
-
-## Backend
-
-Los principales hitos previstos son:
-
-- Desarrollo de APIs REST.
-- Gestión de documentos.
+- Implementación de API REST.
+- Gestión de las solicitudes de la aplicación.
 - Integración con Data Science.
-- Persistencia en MySQL.
-- Validaciones y seguridad.
+- Persistencia de información mediante MySQL.
+- Gestión de entidades y DTOs.
+- Validaciones de datos.
+- Configuración de CORS.
+- Preparación del componente para ejecución mediante contenedor.
+- Integración con la infraestructura de despliegue.
 
-## Integración
+La documentación específica de contratos, modelo de datos y API se encuentra en:
 
-Los hitos de integración contemplan:
-
-- Comunicación Frontend ↔ Backend.
-- Comunicación Backend ↔ Data Science.
-- Persistencia de resultados.
-- Validación extremo a extremo.
-- Preparación para despliegue del MVP.
+[🔗 Documentación de API e integración](../api/)
 
 ---
 
-# 📈 Evolución del Producto
+## 🎨 Frontend
 
-## 🌱 Fase 1 — MVP
+El Frontend proporciona la interfaz web para la interacción con la plataforma.
 
-Construcción de una plataforma funcional capaz de clasificar documentación técnica mediante Machine Learning.
+Los principales resultados alcanzados incluyen:
 
-## 🚀 Fase 2 — Integración y Estabilización
+- Implementación de la aplicación con React y Vite.
+- Navegación entre las principales vistas.
+- Integración con el Backend.
+- Consumo de los endpoints de la aplicación.
+- Presentación de los resultados al usuario.
+- Preparación para despliegue mediante contenedor y Nginx.
 
-Fortalecer la integración entre componentes, mejorar la experiencia de usuario y estabilizar el sistema.
-- Integración Backend ↔ Data Science
-- Integración Frontend ↔ Backend
-- Validación funcional del MVP
-- Benchmark del modelo
-- Optimización y Hardening
-- Pruebas End-to-End
+---
+
+## 🗄️ Base de datos
+
+La solución incorpora MySQL como mecanismo de persistencia para la información gestionada por el Backend.
+
+La base de datos forma parte del entorno de ejecución de la aplicación y se integra con el Backend mediante la configuración correspondiente.
+
+---
+
+## 🔗 Integración
+
+La integración entre los componentes permitió completar el flujo funcional de la plataforma:
+
+```mermaid
+flowchart LR
+    "👤 Usuario" --> "🌐 Frontend"
+    "🌐 Frontend" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🤖 Data Science"
+    "🤖 Data Science" --> "🧠 Modelo ML"
+    "🧠 Modelo ML" --> "📊 Clasificación"
+    "📊 Clasificación" --> "🤖 Data Science"
+    "🤖 Data Science" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🗄️ MySQL"
+    "⚙️ Backend" --> "🌐 Frontend"
+```
+
+Esta integración permite ejecutar el flujo principal de la solución de extremo a extremo.
+
+---
+
+## ☁️ Despliegue
+
+La solución fue preparada para ejecución mediante contenedores y desplegada utilizando Oracle Cloud Infrastructure.
+
+Los principales elementos considerados son:
+
+- Contenedores Docker para los componentes.
+- OCI como infraestructura cloud.
+- OCI Object Storage para almacenamiento de artefactos.
+- Configuración de variables de entorno.
+- Automatización mediante GitHub Actions.
+- Separación de configuración entre entornos.
+
+La documentación operativa del despliegue se encuentra en:
+
+[☁️ Deployment Guide](../Deployment-Guide/Deployment-Guide.md)
+
+---
+
+# 📈 Evolución del producto
+
+La evolución de AyniKortex se plantea de manera incremental, partiendo del MVP funcional actual y priorizando mejoras que aporten valor al producto sin comprometer la simplicidad de la arquitectura.
+
+## 🌱 Fase 1 — MVP funcional
+
+**Estado: Completada**
+
+Construcción e integración de los componentes fundamentales de la plataforma.
+
+Principales resultados:
+
+- Arquitectura definida.
+- Frontend implementado.
+- Backend implementado.
+- Componente de Data Science implementado.
+- Modelo de Machine Learning entrenado.
+- Persistencia mediante MySQL.
+- Integración entre componentes.
+- Contenedorización.
+- Despliegue en Oracle Cloud Infrastructure.
+- Documentación técnica y arquitectónica.
+
+---
+
+## 🚀 Fase 2 — Optimización y estabilización
+
+**Estado: Evolución futura**
+
+La siguiente etapa se orienta a fortalecer el MVP y mejorar su comportamiento operativo.
+
+Líneas principales:
+
+- Optimización del modelo de Machine Learning.
+- Ampliación y mejora del dataset.
+- Mejora de métricas de clasificación.
+- Optimización del tiempo de inferencia.
+- Ampliación de cobertura de pruebas.
+- Mejoras de experiencia de usuario.
+- Fortalecimiento de validaciones.
+- Mejoras de observabilidad.
+- Automatización de procesos de despliegue.
+
+---
 
 ## 📊 Fase 3 — Escalabilidad
 
-Optimizar el rendimiento, automatizar procesos e incorporar nuevas capacidades.
+**Estado: Evolución futura**
 
-## 🌍 Fase 4 — Evolución Continua
+Una vez estabilizada la solución, podrán incorporarse capacidades orientadas a soportar un mayor volumen de información y usuarios.
 
-Expandir la plataforma con nuevas funcionalidades, mejoras en Inteligencia Artificial e integraciones adicionales según las necesidades del proyecto.
+Entre ellas:
 
----
-
-# 🔮 Capacidades Futuras
-
-Entre las funcionalidades que podrán incorporarse en versiones posteriores se encuentran:
-
-| Área | Capacidades |
-|------|-------------|
-| 🤖 Inteligencia Artificial | Nuevos modelos de clasificación |
-| 📊 Analítica | Dashboards y métricas |
-| ⚙️ Backend | Nuevos servicios y APIs |
-| 🎨 Frontend | Mejoras de experiencia de usuario |
-| 🔐 Seguridad | Autenticación y control de acceso |
-| ☁️ Infraestructura | Automatización de despliegues |
-| 📚 Documentación | Publicación y gestión colaborativa |
+- Optimización de recursos.
+- Escalabilidad de los componentes.
+- Automatización de procesos.
+- Mejoras de infraestructura.
+- Monitoreo y observabilidad avanzada.
+- Gestión más robusta de artefactos y modelos.
+- Optimización del procesamiento de documentos.
 
 ---
 
-# 🌟 Nuestra Visión
+## 🌟 Fase 4 — Evolución avanzada
 
-AyniKortex evoluciona de manera incremental, priorizando la calidad, la colaboración y la mejora continua.
+**Estado: Visión futura**
 
-Este Roadmap representa una guía para el crecimiento del proyecto y se actualizará conforme se alcancen nuevos hitos y se incorporen nuevas capacidades.
+AyniKortex podrá evolucionar hacia una plataforma más amplia para la gestión inteligente del conocimiento técnico.
 
-Nuestro objetivo es construir una plataforma sostenible, abierta a la colaboración y preparada para enfrentar los desafíos de la gestión inteligente del conocimiento técnico.
+Las posibles líneas de evolución incluyen:
+
+- Nuevos modelos de clasificación.
+- Nuevas técnicas de procesamiento de lenguaje.
+- Análisis y explotación avanzada del conocimiento.
+- Nuevas capacidades de búsqueda y recomendación.
+- Integraciones con fuentes externas de documentación.
+- Capacidades avanzadas de Inteligencia Artificial.
+- Nuevos servicios y funcionalidades orientados a la gestión del conocimiento.
+
+Cualquier evolución que implique cambios significativos en la arquitectura deberá evaluarse mediante las decisiones arquitectónicas correspondientes.
+
+---
+
+# 🔮 Capacidades futuras
+
+Las siguientes capacidades representan líneas potenciales de evolución de AyniKortex. Su incorporación dependerá de las necesidades del producto, los resultados obtenidos y la evaluación técnica correspondiente.
+
+| Área | Posibles capacidades |
+|---|---|
+| 🤖 Inteligencia Artificial | Nuevos modelos de clasificación y mejora continua del modelo |
+| 📚 Documentación | Mayor variedad de formatos y fuentes de documentación |
+| 📊 Analítica | Métricas, indicadores y visualización del conocimiento procesado |
+| ⚙️ Backend | Nuevos servicios, funcionalidades y capacidades de integración |
+| 🎨 Frontend | Mejoras de experiencia de usuario y nuevas interfaces |
+| ☁️ Infraestructura | Mayor automatización, observabilidad y escalabilidad |
+| 🔗 Integraciones | Conexión con nuevas fuentes y sistemas externos |
+| 🧠 Conocimiento | Nuevas capacidades para búsqueda, recomendación y organización |
+
+---
+
+# 🧭 Criterios para la evolución
+
+Las futuras capacidades deberán evaluarse considerando:
+
+- Valor funcional para los usuarios.
+- Viabilidad técnica.
+- Impacto sobre la arquitectura existente.
+- Complejidad operativa.
+- Costos de infraestructura.
+- Seguridad.
+- Mantenibilidad.
+- Escalabilidad.
+
+Las modificaciones que impliquen cambios significativos en la arquitectura deberán documentarse mediante los mecanismos establecidos en los Architecture Decision Records (ADR).
+
+---
+
+# 📚 Relación con la documentación del proyecto
+
+El Roadmap mantiene una relación directa con los principales documentos técnicos del proyecto:
+
+```mermaid
+flowchart LR
+    "🗺️ Roadmap" --> "📘 SDS"
+    "🗺️ Roadmap" --> "🏗️ Arquitectura"
+    "🗺️ Roadmap" --> "📚 ADR"
+    "🗺️ Roadmap" --> "🤖 Data Science"
+    "🗺️ Roadmap" --> "🔗 API"
+    "🗺️ Roadmap" --> "☁️ Deployment"
+
+Cada documento cumple una función diferente:
+
+SDS: describe el diseño general del sistema.
+Architecture: desarrolla la arquitectura con mayor detalle.
+ADR: registra las decisiones arquitectónicas.
+Data Science: documenta el componente de Ciencia de Datos.
+API: define los contratos de integración.
+Deployment: documenta el despliegue y la infraestructura.
+
+El Roadmap no sustituye estos documentos ni duplica su contenido.
+
+---
+
+🌟 Estado del Roadmap
+
+Estado: Vigente
+
+El MVP funcional de AyniKortex constituye la primera etapa completada de la evolución del producto.
+
+Las fases posteriores representan líneas de evolución y no compromisos de implementación.
+
+El Roadmap será actualizado cuando se produzcan cambios relevantes en el producto, la arquitectura o las capacidades de la plataforma.
+
+---
+
 

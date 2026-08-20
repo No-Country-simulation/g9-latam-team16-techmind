@@ -1,25 +1,25 @@
-"""
+﻿"""
 ----------------------------------------------------------
 Proyecto : TechMind
 Sprint   : DS-08 - Motor de Inferencia
-Módulo   : Data Science
+MÃ³dulo   : Data Science
 Archivo  : predict.py
 ----------------------------------------------------------
 """
 
-from data_science.ml.inference.inference_engine import (
+from src.data_science.ml.inference.inference_engine import (
     InferenceEngine,
 )
 
-from data_science.ml.inference.prediction_result import (
+from src.data_science.ml.inference.prediction_result import (
     PredictionResult,
 )
 
-from data_science.ml.persistence.contracts.artifact_repository import (
+from src.data_science.ml.persistence.contracts.artifact_repository import (
     ArtifactRepository,
 )
 
-from data_science.ml.persistence.services.artifact_loader import (
+from src.data_science.ml.persistence.services.artifact_loader import (
     ArtifactLoader,
 )
 
@@ -31,7 +31,7 @@ def predict(
     repository: ArtifactRepository,
 ) -> PredictionResult:
     """
-    Punto de entrada público del Motor de Inferencia.
+    Punto de entrada pÃºblico del Motor de Inferencia.
     """
 
     loader = ArtifactLoader(
@@ -47,3 +47,4 @@ def predict(
         title=title,
         content=content,
     )
+

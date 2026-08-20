@@ -1,21 +1,21 @@
-"""
+﻿"""
 ----------------------------------------------------------
 Proyecto : TechMind
 Sprint   : DS-08 - Motor de Inferencia
-Módulo   : Data Science
+MÃ³dulo   : Data Science
 Archivo  : inference_engine.py
 ----------------------------------------------------------
 """
 
-from data_science.ml.inference.predict_pipeline import (
+from src.data_science.ml.inference.predict_pipeline import (
     PredictPipeline,
 )
 
-from data_science.ml.inference.prediction_result import (
+from src.data_science.ml.inference.prediction_result import (
     PredictionResult,
 )
 
-from data_science.ml.persistence.services.artifact_loader import (
+from src.data_science.ml.persistence.services.artifact_loader import (
     ArtifactLoader,
 )
 
@@ -41,7 +41,7 @@ class InferenceEngine:
         content: str,
     ) -> PredictionResult:
         """
-        Ejecuta una predicción utilizando el modelo indicado.
+        Ejecuta una predicciÃ³n utilizando el modelo indicado.
         """
 
         artifacts = self._loader.load(
@@ -53,3 +53,4 @@ class InferenceEngine:
             content=content,
             artifacts=artifacts,
         )
+

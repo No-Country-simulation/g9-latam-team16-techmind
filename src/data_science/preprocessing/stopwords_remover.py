@@ -1,4 +1,4 @@
-"""
+﻿"""
 ==========================================================
 TechMind
 Data Science Component
@@ -16,12 +16,12 @@ Sprint:
 
 from nltk.corpus import stopwords
 
-from data_science.data.domain import (
+from src.data_science.data.domain import (
     DocumentRecord,
     ProcessedDocument,
 )
 
-from data_science.preprocessing.base_preprocessor import (
+from src.data_science.preprocessing.base_preprocessor import (
     BasePreprocessor,
 )
 
@@ -85,3 +85,5 @@ class StopWordsRemover(BasePreprocessor):
         filtered_words = [word for word in words if word.lower() not in stop_words]
 
         return " ".join(filtered_words)
+
+

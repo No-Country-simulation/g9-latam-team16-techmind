@@ -1,47 +1,57 @@
-# TechMind
+# 🏛️ ADR-001 — Arquitectura Backend–Ciencia de Datos
 
-## Nombre del Documento
-
-Versión: 1.1
-
-Estado: Aceptado
-
-Última actualización: Julio 2026
-
-Autor: Equipo TechMind
-
-
----
-| ADR     | Decisión                                                          | Tipo                   |
-| ------- | ----------------------------------------------------------------- | ---------------------- |
-| ADR-001 | Adopción de una Arquitectura Basada en Backend y Ciencia de Datos | Arquitectura           |
-| ADR-002 | Adopción de Machine Learning Clásico para el MVP                  | Arquitectura           |
-| ADR-003 | Integración mediante llamada directa a `predict()`                | Arquitectura           |
-| ADR-004 | Backend como único punto de acceso al sistema                     | Arquitectura           |
-| ADR-005 | Uso de Oracle Cloud Infrastructure                                | Infraestructura        |
-| ADR-006 | Exclusión de IA Generativa y Arquitecturas RAG                    | Alcance Arquitectónico |
-
+> **Versión:** 1.2  
+> **Estado:** Reemplazado  
+> **Proyecto:** AyniKortex – Organización Inteligente del Conocimiento Técnico  
+> **Decisión original:** Julio 2026
 
 ---
 
+## ⚠️ Estado de la decisión
 
-# ADR-001 – Adopción de una Arquitectura Basada en Backend y Ciencia de Datos
+Esta decisión arquitectónica corresponde a una etapa anterior del desarrollo de AyniKortex.
 
-| Campo | Valor |
-|--------|-------|
-| **Proyecto** | TechMind – Organización Inteligente del Conocimiento Técnico |
-| **ADR** | 001 |
-| **Estado** | Aceptado |
-| **Versión** | 1.0 |
-| **Fecha** | Julio 2026 |
+En la decisión original se estableció una integración directa entre el Backend y el componente de Ciencia de Datos mediante la función:
+
+```python
+predict(title, text)
+```
+
+La arquitectura evolucionó posteriormente durante la implementación del MVP.
+
+### Arquitectura actual
+
+La implementación vigente utiliza **Data Science como un servicio independiente mediante FastAPI**, permitiendo que el Backend se comunique con el componente de Ciencia de Datos mediante una API HTTP.
+
+La arquitectura actual se encuentra documentada en:
+
+👉 [Arquitectura de AyniKortex](../Architecture/Architecture.md)
+
+La documentación de la integración actual se encuentra en:
+
+👉 [Documentación de API](../api/README.md)
+
+> **Nota:** Este ADR se conserva como registro histórico de la decisión original y no debe utilizarse como referencia de la arquitectura vigente.
+
+---
+
+## 📚 Registro de decisiones relacionadas
+
+| ADR | Decisión | Estado |
+|---|---|---|
+| ADR-001 | Arquitectura Backend–Ciencia de Datos | **Reemplazado** |
+| ADR-002 | Adopción de Machine Learning Clásico para el MVP | Aceptado |
+| ADR-003 | Integración mediante llamadas directas a funciones | **Reemplazado** |
+| ADR-004 | Adopción de Oracle Cloud Infrastructure para el MVP | Aceptado |
+| ADR-005 | Exclusión de IA Generativa | Aceptado |
 
 ---
 
 # 1. Contexto
 
-TechMind se desarrolla como un Producto Mínimo Viable (MVP) para el Hackathon ONE – Oracle Next Education.
+AyniKortex se desarrolla como un Producto Mínimo Viable (MVP) para el Hackathon ONE – Oracle Next Education.
 
-El proyecto requiere integrar un componente Backend y un componente de Ciencia de Datos para procesar contenido técnico mediante técnicas de Machine Learning clásico.
+Durante una etapa inicial del proyecto se planteó integrar un componente Backend y un componente de Ciencia de Datos para procesar contenido técnico mediante técnicas de Machine Learning clásico.
 
 Debido al tiempo limitado del Hackathon y a la necesidad de facilitar el trabajo paralelo del equipo, era necesario definir una arquitectura simple, modular y fácil de mantener.
 
@@ -56,63 +66,65 @@ Era necesario definir una arquitectura que permitiera:
 - Reducir el acoplamiento entre los componentes.
 - Simplificar la integración del sistema.
 - Facilitar el despliegue del MVP.
-- Permitir futuras evoluciones sin modificar la arquitectura principal.
+- Permitir futuras evoluciones sin modificar completamente la solución.
 
 ---
 
-# 3. Decisión
+# 3. Decisión original
 
-Se adopta una arquitectura compuesta por tres componentes principales:
+En la etapa inicial del proyecto se adoptó una arquitectura compuesta por:
 
-- Backend
-- Ciencia de Datos
-- Oracle Cloud Infrastructure (OCI)
+- Backend.
+- Ciencia de Datos.
+- Oracle Cloud Infrastructure (OCI).
 
-El Backend constituye el único punto de acceso al sistema mediante una API REST.
+El Backend constituía el punto de acceso al sistema mediante una API REST.
 
-El componente de Ciencia de Datos será responsable del procesamiento del contenido y de la ejecución del modelo de Machine Learning.
+El componente de Ciencia de Datos era responsable del procesamiento del contenido y de la ejecución del modelo de Machine Learning.
 
-La comunicación entre ambos componentes se realizará mediante una llamada directa a la función pública:
+La integración inicialmente definida entre Backend y Ciencia de Datos se realizaría mediante una llamada directa a la función pública:
 
 ```python
 predict(title, text)
 ```
 
-El componente de Ciencia de Datos no expondrá servicios HTTP ni APIs independientes.
+Bajo esta decisión, el componente de Ciencia de Datos no expondría servicios HTTP ni APIs independientes.
 
 ---
 
 # 4. Justificación
 
-Esta arquitectura fue seleccionada porque proporciona un equilibrio adecuado entre simplicidad, modularidad y mantenibilidad.
+La decisión original fue seleccionada porque proporcionaba un equilibrio adecuado entre simplicidad, modularidad y mantenibilidad para el alcance inicial del MVP.
 
-La separación entre Backend y Ciencia de Datos permite que ambos componentes evolucionen de manera independiente mientras se mantiene un contrato de integración estable.
+La separación entre Backend y Ciencia de Datos permitía que ambos componentes evolucionaran de manera independiente mientras se mantenía un contrato de integración estable.
 
-Asimismo, esta decisión reduce la complejidad de la solución, evita la incorporación de infraestructura adicional y facilita el cumplimiento de los objetivos del MVP dentro del tiempo disponible para el Hackathon.
+Asimismo, esta decisión reducía la complejidad de la solución y evitaba incorporar infraestructura adicional durante la etapa inicial del Hackathon.
 
-La arquitectura también permite incorporar futuras mejoras en el modelo de Machine Learning sin afectar el funcionamiento del Backend.
+La arquitectura también permitía incorporar futuras mejoras en el modelo de Machine Learning sin afectar directamente la lógica del Backend.
 
 ---
 
-# 5. Alternativas Evaluadas
+# 5. Alternativas evaluadas
 
-## Arquitectura basada en Microservicios
+## Arquitectura basada en microservicios
 
-**Resultado:** No seleccionada.
+**Resultado:** No seleccionada en la etapa inicial.
 
-Aunque proporciona una alta independencia entre componentes, introduce complejidad adicional en aspectos como despliegue, comunicación, monitoreo y mantenimiento, lo cual no aporta un beneficio proporcional para un MVP.
+Aunque proporciona una alta independencia entre componentes, introduce complejidad adicional en aspectos como despliegue, comunicación, monitoreo y mantenimiento, lo cual no aportaba un beneficio proporcional para el MVP inicial.
 
 ---
 
 ## Exponer Ciencia de Datos mediante una API independiente
 
-**Resultado:** No seleccionada.
+**Resultado:** No seleccionada en la decisión original.
 
-Esta alternativa requería mantener dos servicios HTTP y gestionar la comunicación entre ellos, incrementando el acoplamiento operativo y la complejidad del despliegue.
+Esta alternativa requería mantener un servicio HTTP adicional y gestionar la comunicación entre los componentes, incrementando la complejidad operativa y de despliegue.
+
+> **Nota:** Esta alternativa fue posteriormente adoptada durante la evolución de la implementación del MVP.
 
 ---
 
-## Arquitectura Monolítica
+## Arquitectura monolítica
 
 **Resultado:** Parcialmente considerada.
 
@@ -120,46 +132,71 @@ Aunque simplifica el despliegue, dificulta la separación de responsabilidades e
 
 ---
 
-# 6. Consecuencias
+# 6. Consecuencias de la decisión original
 
 ## Positivas
 
 - Arquitectura simple y fácil de comprender.
 - Separación clara de responsabilidades.
-- Bajo acoplamiento entre componentes.
+- Bajo acoplamiento conceptual entre componentes.
 - Desarrollo paralelo entre Backend y Ciencia de Datos.
 - Integración sencilla mediante una interfaz estable.
-- Facilita el mantenimiento y la evolución del sistema.
-- Reduce la complejidad del despliegue.
+- Menor complejidad operativa para el MVP inicial.
 
 ## Negativas
 
-- El Backend y el componente de Ciencia de Datos se ejecutan dentro del mismo proceso de la aplicación.
-- Si en el futuro se requiere escalabilidad independiente para cada componente, será necesario revisar esta decisión arquitectónica.
+- Backend y Ciencia de Datos dependían de una integración directa.
+- La solución tenía menor independencia operativa entre ambos componentes.
+- La evolución hacia un despliegue independiente requeriría una modificación arquitectónica.
 
 ---
 
-# 7. Impacto Arquitectónico
+# 7. Evolución de la arquitectura
 
-Esta decisión constituye la base de toda la arquitectura del sistema.
+Durante la implementación del MVP, la solución evolucionó respecto de la decisión original.
 
-Los demás componentes del proyecto fueron diseñados considerando esta separación de responsabilidades y el contrato de integración definido entre Backend y Ciencia de Datos.
+La arquitectura actual utiliza **FastAPI** para exponer el componente de Data Science como un servicio independiente.
 
-Cualquier modificación a esta decisión deberá evaluarse cuidadosamente, ya que podría afectar el diseño general del sistema y requerir cambios en múltiples componentes.
+El flujo vigente es:
+
+```mermaid
+flowchart LR
+    "🌐 Frontend" --> "⚙️ Backend"
+    "⚙️ Backend" --> "🤖 Data Science mediante FastAPI"
+    "🤖 Data Science mediante FastAPI" --> "🧠 Modelo de Machine Learning"
+```
+
+Esta evolución permite separar operacionalmente el Backend y Data Science, facilitando su despliegue y evolución independiente.
+
+La arquitectura vigente se encuentra documentada en:
+
+👉 [Architecture.md](../Architecture/Architecture.md)
+
+La definición de los contratos de integración se encuentra en:
+
+👉 [Backend-Data-Contract.md](../api/Backend-Data-Contract.md)
 
 ---
 
-# 8. Referencias
+# 8. Estado de la decisión
 
-- SDS v1.1 – Capítulo 6. Arquitectura General.
-- SDS v1.1 – Capítulo 7. Componente Backend.
-- SDS v1.1 – Capítulo 8. Componente Ciencia de Datos.
-- SDS v1.1 – Capítulo 10. Integración Backend ↔ Ciencia de Datos.
+**Reemplazado.**
+
+La decisión original de integrar Backend y Ciencia de Datos mediante una llamada directa a `predict()` dejó de representar la arquitectura implementada en el MVP.
+
+La arquitectura vigente utiliza un servicio FastAPI para Data Science y comunicación mediante API HTTP.
+
+Este ADR se conserva como **registro histórico de la evolución arquitectónica del proyecto**.
 
 ---
 
-# Estado
+# 9. Referencias
 
-**Aceptado**
+- [Arquitectura actual de AyniKortex](../Architecture/Architecture.md)
+- [Documentación de API](../api/README.md)
+- [Contrato Backend–Data Science](../api/Backend-Data-Contract.md)
+- [Modelo de datos](../api/Backend-Data-Model.md)
+- [ADR-003 — Integración mediante llamadas directas a funciones](ADR-003%20%E2%80%93%20Integraci%C3%B3n%20mediante%20Llamadas%20Directas%20a%20Funciones.md)
 
-Esta decisión arquitectónica permanecerá vigente durante el desarrollo del MVP y servirá como base para las futuras decisiones documentadas en los Architecture Decision Records (ADR) del proyecto.
+---
+
